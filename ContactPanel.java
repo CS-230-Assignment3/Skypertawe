@@ -22,20 +22,28 @@ public class ContactPanel extends JFrame {
 		String date = "12/12/12" ;
 		String numOfMessages = "12";
 
-		ArrayList<String> list = ReadContactFile.contactReader();
-
+		ArrayList<String> contactList = ReadContactFile.contactReader();
+		
+		for (int i = 0; i < contactList.size(); i++) {
+			System.out.print(contactList.get(i));
+			
+		}
+		
 		JFrame frame = new JFrame();
 
-		
 		JPanel displayContact = new JPanel();
 		JLabel contactLbl = new JLabel("Contacts");
 
-		for (int i = 0; i < list.size(); i++) {
-			JButton Ai = new JButton(list.get(i));
+		for (int i = 0; i < contactList.size(); i++) {
+			String[] parts = contactList.get(i).split(",");
+			String part1 = parts[0];
+			String part2 = parts[1];
+			String part3 = parts[2];
+			JButton Ai = new JButton(part1);
 			displayContact.add(Ai);
-			JLabel Bi = new JLabel(numOfMessages);
+			JLabel Bi = new JLabel(part2);
 			displayContact.add(Bi);
-			JLabel Ci = new JLabel(date);
+			JLabel Ci = new JLabel(part3);
 			displayContact.add(Ci);
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
@@ -52,12 +60,16 @@ public class ContactPanel extends JFrame {
 		JPanel displayGroups = new JPanel();
 		JLabel groupLbl = new JLabel("Group");
 
-		for (int i = 0; i < list.size(); i++) {
-			JButton Ai = new JButton(list.get(i));
+		for (int i = 0; i < contactList.size(); i++) {
+			String[] parts = contactList.get(i).split(",");
+			String part1 = parts[0];
+			String part2 = parts[1];
+			String part3 = parts[2];
+			JButton Ai = new JButton(part1);
 			displayGroups.add(Ai);
-			JLabel Bi = new JLabel(numOfMessages);
+			JLabel Bi = new JLabel(part2);
 			displayGroups.add(Bi);
-			JLabel Ci = new JLabel(date);
+			JLabel Ci = new JLabel(part3);
 			displayGroups.add(Ci);
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
