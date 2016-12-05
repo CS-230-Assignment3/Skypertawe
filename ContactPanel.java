@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 
 
 public class ContactPanel extends JFrame {
+	public ContactPanel() {
+	}
 
 	/**
 	 * Launch the application.
@@ -43,6 +45,10 @@ public class ContactPanel extends JFrame {
 			displayContact.add(Ai);
 			JLabel Bi = new JLabel(part2);
 			displayContact.add(Bi);
+			if(!part2.replaceAll("\\s+","").equals("0")){
+				Bi.setBackground(Color.CYAN);
+				Bi.setOpaque(true);
+			}
 			JLabel Ci = new JLabel(part3);
 			displayContact.add(Ci);
 			Ai.setBackground(Color.BLACK);
@@ -69,6 +75,10 @@ public class ContactPanel extends JFrame {
 			displayGroups.add(Ai);
 			JLabel Bi = new JLabel(part2);
 			displayGroups.add(Bi);
+			if(!part2.replaceAll("\\s+","").equals("0")){
+				Bi.setBackground(Color.CYAN);
+				Bi.setOpaque(true);
+			}
 			JLabel Ci = new JLabel(part3);
 			displayGroups.add(Ci);
 			Ai.setBackground(Color.BLACK);
