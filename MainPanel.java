@@ -1,8 +1,7 @@
 import java.awt.Dimension;
 
-public class MainPanel extends MainWindow {
+public class MainPanel {
 	public MainPanel() {
-		this.setPreferredSize(new Dimension());
 		
 		
 		
