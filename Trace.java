@@ -6,17 +6,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.FileWriter;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Trace extends JPanel implements MouseListener, MouseMotionListener {
-    private int mouseX ;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int mouseX ;
     private int mouseY;
     private int mouseX1;
     private int mouseY1;
-    private ArrayList<Integer> drawing = new ArrayList<Integer>(); 
     
     public Trace(String name) {
         super();
@@ -47,7 +49,6 @@ public class Trace extends JPanel implements MouseListener, MouseMotionListener 
     	setMouseY(e.getY());
     	setMouseX1(e.getX());
     	setMouseY1(e.getY());
-    	SaveDrawing add = new SaveDrawing();
     	try {
 			saveDrawing(e.getX());
 			saveDrawing(e.getY());
