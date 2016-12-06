@@ -16,40 +16,50 @@ public class MessageHistory {
 		m_accountRecieve = accountRecieve;
 	}
 	
+	public String[] getUsers() {
+		return m_users;
+	}
+	
+	public String getMessage() {
+		return m_message;
+	}
+	
+	public String getTime() {
+		return m_time;
+	}
+	
+	public String getDate() {
+		return m_date;
+	}
+	
+	public int[] getAccountColour() {
+		return m_accountColour;
+	}
+	
+	public void setMessage(String fileName, String message) {
+		m_message = message;
+	}
+	
+	public void setAccountColour(int[] colour) {
+		m_accountColour = colour;
+	}
+	
+	public void setUsers(String[] users) {
+		m_users = users;
+	}
+	
+	public void setTime(String time) {
+		m_time = time;
+	}
+	
+	public void setDate(String date) {
+		m_date = date;
+	}
+
 	public void writeToFile(String message) {
 	}
 	
 	public Message[] readFromFile() {
-	}
-	
-	public String getUsers() {
-	}
-	
-	public void setUsers(String[] users) {
-	}
-	
-	public String getMessage() {
-	}
-	
-	public void setMessage(String fileName, String message) {
-	}
-	
-	public String getTime() {
-	}
-	
-	public void setTime(String time) {
-	}
-	
-	public String getDate() {
-	}
-	
-	public void setDate(String date) {
-	}
-	
-	public int[] getAccountColour() {
-	}
-	
-	public void setAccountColour(int[] colour) {
 	}
 	
 	private boolean isFileValid(String filePath) {
