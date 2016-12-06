@@ -10,7 +10,7 @@ import javax.swing.JPanel;
 public class MainWindow extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private final int M_FRAME_WIDTH = 1200;
-	private final int M_FRAME_HEIGHT = 750;
+	private final int M_FRAME_HEIGHT = 750;;
 	
 	public MainWindow() {
 		this.setTitle("Skypertawe version 1.0.0");
