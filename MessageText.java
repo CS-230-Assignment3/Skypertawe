@@ -1,4 +1,3 @@
-
 public class MessageText {
 	private String m_msgText;
 	private Account m_accountSend;
@@ -13,6 +12,7 @@ public class MessageText {
 	public void send() {
 	}
 	
-	public String display() {	
+	public String display() {
+		return "Test";
 	}
 }

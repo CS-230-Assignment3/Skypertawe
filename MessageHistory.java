@@ -1,3 +1,9 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Scanner;
 
 public class MessageHistory {
 	private String m_message;
@@ -56,12 +62,34 @@ public class MessageHistory {
 		m_date = date;
 	}
 
-	public void writeToFile(String message) {
+	public void writeToFile(String message) {	
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(m_fileName))) {
+			bw.write(message);
+			//bw.close();
+			
+		} catch(IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
-	public Message[] readFromFile() {
-	}
-	
-	private boolean isFileValid(String filePath) {
+	public String readFromFile() {
+		String line = "";
+		Scanner in = null;
+		File read = null;
+		
+		try {
+			read = new File(m_fileName);
+			in = new Scanner(read);
+			
+			if(read.exists() && read.isDirectory()) {
+				while(in.hasNextLine()) {
+					line = in.nextLine();
+				}
+			}
+			in.close();
+		} catch(FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return line;
 	}
 }

@@ -1,4 +1,5 @@
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public abstract class Message {
@@ -6,11 +7,9 @@ public abstract class Message {
 	protected Account m_accountSend;
 	protected ArrayList<Account> m_accountRecieve;
 	
-	public abstract void Display();
-	
 	public Message(Account accountSend, Account accountRecieve) {
 		m_accountSend = accountSend;
-		m_accountRecieve = new ArrayList<Account>;
+		m_accountRecieve = new ArrayList<Account>();
 		m_accountRecieve.add(accountRecieve);
 		setSendTime();
 	}
@@ -26,8 +25,10 @@ public abstract class Message {
 	}
 	
 	private void setSendTime() {
-		Date d = new Date();
-		SimpleDateFormat ft = new SimpleDateFormat("dd.mm.yy HH:mm:ss");
-		m_timeSent = ft.toString();
+		Date date = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		m_timeSent = ft.format(date).toString();
 	}
+	
+	public abstract void Display();
 }
