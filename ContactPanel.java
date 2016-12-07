@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -13,22 +14,34 @@ import javax.swing.JLabel;
 
 
 public class ContactPanel extends JFrame {
-	
-	private ArrayList<String> contactList = new ArrayList<String>();
-	private ArrayList<String> groupList = new ArrayList<String>(); 
-
 	/**
 	 * Launch the application.
 	 * @throws Exception 
 	 */
+	private static final long serialVersionUID = 1L;
+	private ArrayList<String> contactList = new ArrayList<String>();
+	private ArrayList<String> groupList = new ArrayList<String>(); 
+
 	
-	public static void main(String[] args) throws Exception {
-		ContactPanel scroll = new ContactPanel();
-		JScrollPane scrollPane = scroll.groupPanel();
-		JScrollPane scrollPane1 = scroll.contactPanel();
+	public ContactPanel() throws Exception {
+
+		this.setTitle("Skypertawe");
+		this.setContentPane(buildPanel());
+		this.setSize(510, 430);
+		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
+		this.setLayout(null);
+		this.setResizable(false);
+		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+	}
+	
+	
+	public JPanel buildPanel () throws Exception{
+		
+		JScrollPane scrollPane = groupPanel();
+		JScrollPane scrollPane1 = contactPanel();
 		
 		
-		JFrame frame = new JFrame();
 		JLabel contactLbl = new JLabel("Contacts");
 		JLabel groupLbl = new JLabel("Group");
 		
@@ -40,26 +53,20 @@ public class ContactPanel extends JFrame {
 		groupTitle.setBounds(250, 0, 250, 70);
 		groupTitle.add(groupLbl);
 
-		
-
-		
 		JPanel contentPane = new JPanel(null);
 		contentPane.setPreferredSize(new Dimension(500, 400));
 		contentPane.add(scrollPane);
 		contentPane.add(scrollPane1);
 		contentPane.add(contactTitle);
 		contentPane.add(groupTitle);
-
-		frame.setContentPane(contentPane);
-		frame.pack();
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setVisible(true);
+		
+		return contentPane;
+		
 	}
-	
 
 	public JScrollPane groupPanel() throws Exception{
 		JPanel displayGroups = new JPanel();
-		setContactList();
+		setGroupList();
 		for (int i = 0; i < getGroupList().size(); i++) {
 			String[] parts = getGroupList().get(i).split(",");
 			String part1 = parts[0];
@@ -78,7 +85,7 @@ public class ContactPanel extends JFrame {
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Ai.setForeground(Color.WHITE);
+					new ChatPanel();
 				}
 			});
 		}
@@ -93,7 +100,7 @@ public class ContactPanel extends JFrame {
 	public JScrollPane contactPanel() throws Exception{
 
 		JPanel displayContact = new JPanel();
-		setGroupList();
+		setContactList();
 		
 		for (int i = 0; i < getContactList().size(); i++) {
 			String[] parts = getContactList().get(i).split(",");
@@ -126,19 +133,23 @@ public class ContactPanel extends JFrame {
 	}
 	
 	public ArrayList<String> setContactList() throws Exception {
-		return contactList = ReadContactFile.contactReader();
+		
+		return contactList = ReadForContactsPanel.contactReader();
 	}
 	
 	public ArrayList<String> setGroupList() throws Exception {
-		return groupList = ReadContactFile.contactReader(); //reads in groups list here instead of contact list
+		return groupList = ReadForContactsPanel.groupReader(); //reads in groups list here instead of contact list
 	}
 	public ArrayList<String> getGroupList() {
-		return contactList;
+		return groupList;
 	}
 	
 	public ArrayList<String> getContactList() {
 		return contactList;
 	}
 	
+	public static void main(String[] args) throws Exception {
+		new ContactPanel();
+	}
 
 }
