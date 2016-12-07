@@ -1,16 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
 
-/**
- * Created by Sam on 07/12/2016.
- */
 public class SearchResultsPanel extends JFrame {
     private AccountsGraph m_accountsGraph;
 
-    public SearchResultsPanel(AccountsGraph accountsGraph) {
-        m_accountsGraph = accountsGraph;
-        JPanel searchPanel = new JPanel();
-
+    //Just to test
+    public SearchResultsPanel() {
         this.setTitle("Search");
         this.setSize(250, 500);
         this.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
@@ -18,9 +13,25 @@ public class SearchResultsPanel extends JFrame {
         this.setLayout(null);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        loadAssets();
+    }
 
-        //set bounds doesn't seem to actually change the components
-        searchPanel = new JPanel();
+
+    public SearchResultsPanel(AccountsGraph accountsGraph) {
+        this.setTitle("Search");
+        this.setSize(250, 500);
+        this.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(null);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+        m_accountsGraph = accountsGraph;
+        loadAssets();
+    }
+
+    private void loadAssets() {
+        JPanel searchPanel = new JPanel();
+
         searchPanel.setBounds(0, 0, 250, 500);
 
         JLabel searchLabel = new JLabel("Search");
@@ -34,10 +45,7 @@ public class SearchResultsPanel extends JFrame {
         searchPanel.add(searchBox);
         searchLabel.add(searchButton);
 
-
         this.add(searchPanel);
         this.setContentPane(searchPanel);
-
-
     }
 }

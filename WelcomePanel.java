@@ -69,6 +69,8 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new WelcomePanel();
+		//new WelcomePanel();
+		//For testing
+		new SearchResultsPanel();
 	}
 }
