@@ -1,0 +1,2 @@
+//This makes a edge between usernameA and usernameB and vice versa
+usernameA,usernameB
