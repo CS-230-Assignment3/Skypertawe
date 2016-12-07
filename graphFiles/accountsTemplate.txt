@@ -1,0 +1,1 @@
+username,firstname,phoneNum,password,lastLogin("yyyy/MM/dd HH:mm:ss"),boolean(birthday given),boolean(city given),birthday,city
