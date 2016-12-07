@@ -13,6 +13,7 @@ public class WelcomePanel extends JFrame implements ActionListener {
 		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setResizable(false);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 		loadAssets();
 	}
@@ -58,11 +59,16 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	}
 
 	private void loadRegister() {
-
+		new RegisterPanel();
+		this.dispose();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
+	}
+
+	public static void main(String[] args) {
+		new WelcomePanel();
 	}
 }
