@@ -12,22 +12,22 @@ public class SearchResultsPanel extends JFrame {
         JPanel searchPanel = new JPanel();
 
         this.setTitle("Search");
-        this.setSize(500, 400);
+        this.setSize(250, 500);
         this.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         this.setResizable(false);
         this.setLayout(null);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
 
-
+        //set bounds doesn't seem to actually change the components
         searchPanel = new JPanel();
-        searchPanel.setBounds(0, 0, 500, 400);
+        searchPanel.setBounds(0, 0, 250, 500);
 
         JLabel searchLabel = new JLabel("Search");
-        searchLabel.setBounds(200, 10, 50, 10);
-        searchLabel.setSize(50, 10);
+        searchLabel.setBounds(110, 10, 10, 10);
 
         JTextField searchBox = new JTextField();
-        searchBox.setBounds(200, 20, 50, 10);
-        searchBox.setSize(50, 10);
+        searchBox.setBounds(125, 10, 20, 10);
 
         JButton searchButton = new JButton();
         searchPanel.add(searchLabel);
@@ -37,8 +37,6 @@ public class SearchResultsPanel extends JFrame {
 
         this.add(searchPanel);
         this.setContentPane(searchPanel);
-        this.pack();
-        this.setVisible(true);
 
 
     }
