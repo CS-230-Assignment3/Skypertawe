@@ -5,36 +5,21 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
 
-public class ContactPanel extends JFrame {
+public class ContactPanel {
 	/**
 	 * Launch the application.
 	 * @throws Exception 
 	 */
-	private static final long serialVersionUID = 1L;
 	private ArrayList<String> contactList = new ArrayList<String>();
 	private ArrayList<String> groupList = new ArrayList<String>(); 
 
-	
-	public ContactPanel() throws Exception {
 
-		this.setTitle("Skypertawe");
-		this.setContentPane(buildPanel());
-		this.setSize(510, 430);
-		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
-		this.setLayout(null);
-		this.setResizable(false);
-		this.setLocationRelativeTo(null);
-		this.setVisible(true);
-	}
-	
 	
 	public JPanel buildPanel () throws Exception{
 		
@@ -85,7 +70,7 @@ public class ContactPanel extends JFrame {
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ChatPanel();
+					//new ChatPanel();
 				}
 			});
 		}
@@ -104,6 +89,7 @@ public class ContactPanel extends JFrame {
 		
 		for (int i = 0; i < getContactList().size(); i++) {
 			String[] parts = getContactList().get(i).split(",");
+			//get(i) unreadmessages
 			String part1 = parts[0];
 			String part2 = parts[1];
 			String part3 = parts[2];
@@ -134,11 +120,11 @@ public class ContactPanel extends JFrame {
 	
 	public ArrayList<String> setContactList() throws Exception {
 		
-		return contactList = ReadForContactsPanel.contactReader();
+		return contactList = ReadContactFile.contactReader();
 	}
 	
 	public ArrayList<String> setGroupList() throws Exception {
-		return groupList = ReadForContactsPanel.groupReader(); //reads in groups list here instead of contact list
+		return groupList = ReadContactFile.contactReader(); //reads in groups list here instead of contact list
 	}
 	public ArrayList<String> getGroupList() {
 		return groupList;
@@ -147,9 +133,4 @@ public class ContactPanel extends JFrame {
 	public ArrayList<String> getContactList() {
 		return contactList;
 	}
-	
-	public static void main(String[] args) throws Exception {
-		new ContactPanel();
-	}
-
 }
