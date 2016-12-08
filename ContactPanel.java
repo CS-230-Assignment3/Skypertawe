@@ -5,8 +5,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
@@ -18,7 +16,6 @@ public class ContactPanel {
 	 * Launch the application.
 	 * @throws Exception 
 	 */
-	private static final long serialVersionUID = 1L;
 	private ArrayList<String> contactList = new ArrayList<String>();
 	private ArrayList<String> groupList = new ArrayList<String>(); 
 
@@ -136,9 +133,4 @@ public class ContactPanel {
 	public ArrayList<String> getContactList() {
 		return contactList;
 	}
-	
-	public static void main(String[] args) throws Exception {
-		new ContactPanel();
-	}
-
 }
