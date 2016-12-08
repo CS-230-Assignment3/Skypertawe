@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MainWindow extends JFrame implements ActionListener {
-    public MainWindow() {
+    public MainWindow() throws Exception {
 		this.setTitle("Skypertawe - Welcome");
 		this.setSize(1000, 700);
 		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
@@ -13,7 +13,7 @@ public class MainWindow extends JFrame implements ActionListener {
 		this.setResizable(false);
 		this.setVisible(true);
         //loadAssets();
-		//loadContacts();
+		loadContacts();
 	}
 
 	private void loadAssets() {
@@ -21,8 +21,16 @@ public class MainWindow extends JFrame implements ActionListener {
 		//That have no context
     }
 
-    private void loadContacts() {
-		//Jamie, add your contactslist here
+    private void loadContacts() throws Exception {
+    	ContactPanel panel = new ContactPanel();
+    	JPanel panel1 = panel.buildPanel();
+    	panel1.setBounds(0, 100, 500,400);
+    	this.setContentPane(panel1);
+    	
+    	
+    	
+    	
+    	//Jamie, add your contactslist here
 		//Add them to the window by doing "this.add(<jpanelhere>);"
 		//Don't create JFrame cause it's extending it
 		//Also wouldn't use pack() cause it'll fuck the window dimensions up ;)
@@ -30,6 +38,9 @@ public class MainWindow extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+	}
+	public static void main(String[] args) throws Exception {
+		new MainWindow();
 	}
 }
 
