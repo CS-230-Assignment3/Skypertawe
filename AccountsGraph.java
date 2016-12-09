@@ -4,15 +4,23 @@ import java.util.ArrayList;
  * @author Samuel O'Reilly (824712)
  * @file AccountsGraph.java
  * @date 24 Nov 2016
- * <p>
+ * @see Account.java
+ * @see AccountsFile.java for how Account objects are read from file
+ * @see ContactsListFile.java for how contact relationships are created
  * Class that manages the holding and creating of Account objects, as well as the adding and removal of a contact relationship.
  */
 public class AccountsGraph {
     //list of all Accounts in system, is always in alphabetical order, by username of Account
     private ArrayList<Account> m_accounts;
+    //File read/write classes
     private AccountsFile m_accountsFile = new AccountsFile();
     private ContactsListFile m_contactsListFile = new ContactsListFile();
 
+
+    /**
+     * Constructor for AccountsGraph, it creates all Account objects using AccountsFile and also forms contact relationships
+     * using ContactsListFile
+     */
     public AccountsGraph() {
         //This makes all accounts from the accounts.txt file, and saves them to m_accounts
         m_accounts = m_accountsFile.makeAccounts();
@@ -20,10 +28,19 @@ public class AccountsGraph {
         m_contactsListFile.formContactsList(m_accounts);
     }
 
+    /**
+     * Gets the list of all accounts in Skypertawe
+     *
+     * @return ArrayList of all Account objects
+     */
     public ArrayList<Account> getAccounts() {
         return m_accounts;
     }
 
+    /**
+     * Adds a new account to the list of accounts, as well as writing it to file
+     * @param newAccount Account to be added
+     */
     public void addAccount(Account newAccount) {
         String newUsername = newAccount.getUser();
 
@@ -70,6 +87,11 @@ public class AccountsGraph {
         return account;
     }
 
+    /**
+     * Determine if a given username already exists
+     * @param newUsername username to check if exists
+     * @return true if it does not exists, otherwise false
+     */
     public boolean isFreeUsername(String newUsername) {
         boolean exists = false;
         int curIndex = 0;
@@ -83,10 +105,20 @@ public class AccountsGraph {
         return exists;
     }
 
+    /**
+     * Adds an invite to the second account to become a contact of the first
+     * @param fromAccount who the invite if from
+     * @param targetAccount who the invite is directed to
+     */
     public void inviteContact(Account fromAccount, Account targetAccount) {
         targetAccount.addInvite(fromAccount);
     }
 
+    /**
+     * Adds a contact relationship between two given accounts, and updates the file
+     * @param firstAccount contact to add to second account
+     * @param secondAccount contact to add to first account
+     */
     public void addContact(Account firstAccount, Account secondAccount) {
         firstAccount.addFriend(secondAccount);
         secondAccount.addFriend(firstAccount);
@@ -94,6 +126,11 @@ public class AccountsGraph {
         m_contactsListFile.addContactToFile(firstAccount, secondAccount);
     }
 
+    /**
+     * Removes a contact relationship between two accounts, and updates file
+     * @param firstAccount remove second account from this account
+     * @param secondAccount remove first account from this account
+     */
     public void removeContact(Account firstAccount, Account secondAccount) {
         firstAccount.removeFriend(secondAccount);
         secondAccount.removeFriend(firstAccount);
