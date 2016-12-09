@@ -96,7 +96,13 @@ public class RegisterPanel extends JFrame {
                 m_dob = dob.getText();
 
                 if(checkFormValidation()) {
-                    submitForm();
+                    AccountValidation account = new AccountValidation(m_username);
+                    if(account.checkRegister()) {
+                        submitForm();
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(panel, "That account is already taken!");
+                    }
                 }
             }
         });
@@ -133,7 +139,6 @@ public class RegisterPanel extends JFrame {
 
     private boolean checkFormValidation() {
         boolean m_isValid = false;
-
         if(m_username.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }

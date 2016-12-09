@@ -1,44 +1,41 @@
 import java.util.ArrayList;
 
 public class AccountValidation {
-
-    private String m_checkUsername;
-    private String m_checkPassword;
-    private ArrayList<Account> m_accounts = new ArrayList<Account>();
-    ;
-    private AccountsFile m_accountsFile = new AccountsFile();
+    private String m_username;
+    private String m_password;
+    private ArrayList<Account> accounts = new ArrayList<Account>();
+    private AccountsFile accountsFile = new AccountsFile();
 
     public AccountValidation(String username, String password) {
-        m_checkUsername = username;
-        m_checkPassword = password;
-        m_accounts = m_accountsFile.makeAccounts();
+        m_username = username;
+        m_password = password;
+        accounts = accountsFile.makeAccounts();
+    }
+
+    public AccountValidation(String username) {
+        m_username = username;
+        accounts = accountsFile.makeAccounts();
     }
 
     public boolean checkRegister() {
-        boolean ans = true;
-        int counter = 0;
-        while (ans = true && m_accounts.size() > counter) {
-            Account checkAccount = m_accounts.get(counter);
-            if (checkAccount.getUser() == m_checkUsername) {
-                ans = false;
+        boolean isAccountFree = true;
+        for(Account obj : accounts) {
+            if(obj.getUser().equals(m_username)) {
+                isAccountFree = false;
+                break;
             }
-            counter++;
         }
-        return ans;
+        return isAccountFree;
     }
 
     public boolean checkLogin() {
-        boolean ans = false;
-        int counter = 0;
-        while (ans = true && m_accounts.size() > counter) {
-            Account checkAccount = m_accounts.get(counter);
-            if (checkAccount.getUser() == m_checkUsername && checkAccount.getPassword() == m_checkPassword) {
-                ans = true;
+        boolean isAccountValid = false;
+        for(Account obj : accounts) {
+            if(obj.getUser().equals(m_username) && obj.getPassword().equals(m_password)) {
+                isAccountValid = true;
+                break;
             }
-            counter++;
         }
-        return ans;
+        return isAccountValid;
     }
-
-
 }
