@@ -48,7 +48,7 @@ public class AccountsFile {
                 city = accountInfo.next();
             }
 
-            Account newAccount = new Account(username, firstName, lastName, birthday, city, password, "profilePics\\" + username + ".png", phoneNum);
+            Account newAccount = new Account(username.toLowerCase(), firstName, lastName, birthday, city, password, "profilePics\\" + username + ".png", phoneNum);
             newAccount.setLastLogInTime(lastLoginTime);
 
             accountsList.add(newAccount);
@@ -111,7 +111,7 @@ public class AccountsFile {
         FileWriter writer = null;
         try {
             writer = new FileWriter(accounts, true);
-            String newLine = newAccount.getUser() + "," + newAccount.getFirst() + "," + newAccount.getLastName()
+            String newLine = newAccount.getUser().toLowerCase() + "," + newAccount.getFirst() + "," + newAccount.getLastName()
                     + "," + newAccount.getPhoneNum() + "," + newAccount.getPassword() + "," + newAccount.getLastLogInTime();
 
             newLine += accountDetermineBirthdayCity(newAccount);
