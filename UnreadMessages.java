@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -27,50 +28,61 @@ public class UnreadMessages {
     }
 
     public boolean isUnreadMessages() {
-        ArrayList<String> lines = new ArrayList<>();
-        try {
-            Scanner in = new Scanner(m_messagesFile);
-            while (in.hasNext()) {
-                lines.add(in.nextLine());
-            }
-            in.close();
-
-        } catch (FileNotFoundException notFoundEx) {
-            System.err.println("Messages file for " + m_currentAccount.getUser() + " "
-                    + m_otherAccount.getUser() + "not found\n" + notFoundEx.getStackTrace());
-            return false;
-        }
+        ArrayList<String> lines = getMessages(m_messagesFile);
 
         boolean unreadMessage = false;
-        int curIndex = lines.size();
+        int curIndex = lines.size() - 1;
         int[] lastLoginArray = splitTimeStamp(m_currentAccount.getLastLogInTime());
 
-        while (!unreadMessage || curIndex >= 0) {
+        do {
             Scanner lineReader = new Scanner(lines.get(curIndex));
             lineReader.useDelimiter(",");
 
             String sendAccount = lineReader.next();
 
-            if (sendAccount.equals(m_currentAccount.getUser())) {
+            if (sendAccount.equals(m_otherAccount.getUser())) {
                 String timestamp = lineReader.next();
                 int[] fileDateTimeArray = splitTimeStamp(timestamp);
-                boolean laterDate = false;
-                laterDate = fileDateTimeArray[0] >= lastLoginArray[0] &&
-                        fileDateTimeArray[1] >= lastLoginArray[1] &&
-                        fileDateTimeArray[2] >= lastLoginArray[2];
-
-                boolean laterTime = false;
-                laterTime = fileDateTimeArray[3] >= lastLoginArray[3] &&
-                        fileDateTimeArray[4] >= lastLoginArray[4] &&
-                        fileDateTimeArray[5] > lastLoginArray[5];
-
-                unreadMessage = laterDate && laterTime;
+                unreadMessage = messageUnread(fileDateTimeArray, lastLoginArray);
             }
-        }
+            lineReader.close();
+            curIndex--;
+        } while (!unreadMessage && curIndex >= 0);
         return unreadMessage;
     }
 
-    public int[] splitTimeStamp(String timestamp) {
+    public int unreadMessageCount() {
+        ArrayList<String> lines = getMessages(m_messagesFile);
+
+        int unreadMessageCount = 0;
+        int curIndex = lines.size() - 1;
+        int[] lastLoginArray = splitTimeStamp(m_currentAccount.getLastLogInTime());
+
+        boolean laterThanLastLogIn = false;
+
+        do {
+            Scanner lineReader = new Scanner(lines.get(curIndex));
+            lineReader.useDelimiter(",");
+
+            String sendAccount = lineReader.next();
+
+            if (sendAccount.equals(m_otherAccount.getUser())) {
+                String timestamp = lineReader.next();
+                int[] fileDateTimeArray = splitTimeStamp(timestamp);
+                if (messageUnread(fileDateTimeArray, lastLoginArray)) {
+                    unreadMessageCount++;
+                } else {
+                    laterThanLastLogIn = true;
+                }
+            }
+            lineReader.close();
+            curIndex--;
+        } while (!laterThanLastLogIn && curIndex >= 0);
+
+        return unreadMessageCount;
+    }
+
+    private int[] splitTimeStamp(String timestamp) {
         String[] dateAndTime = timestamp.split(" ");
         String date = dateAndTime[0];
         String time = dateAndTime[1];
@@ -80,16 +92,47 @@ public class UnreadMessages {
         String[] dateTimeArray = new String[dateArray.length + timeArray.length];
         int[] dateTimeArrayInt = new int[dateTimeArray.length];
 
-        for (int i = 0; i < dateAndTime.length; i++) {
+        for (int i = 0; i < dateTimeArrayInt.length; i++) {
             if (i < 3) {
-                dateTimeArrayInt[i] = Integer.parseInt(timeArray[i]);
+                dateTimeArrayInt[i] = Integer.parseInt(dateArray[i]);
             } else {
-                dateTimeArrayInt[i] = Integer.parseInt(timeArray[i]);
+                dateTimeArrayInt[i] = Integer.parseInt(timeArray[i - 3]);
             }
         }
 
         return dateTimeArrayInt;
     }
 
+    private ArrayList<String> getMessages(File file) {
+        ArrayList<String> lines = new ArrayList<>();
+        try {
+            Scanner in = new Scanner(m_messagesFile);
+            while (in.hasNext()) {
+                lines.add(in.nextLine());
+            }
+            in.close();
+            return lines;
+
+        } catch (FileNotFoundException notFoundEx) {
+            System.err.println("Messages file for " + m_currentAccount.getUser() + " "
+                    + m_otherAccount.getUser() + "not found\n" + notFoundEx.getStackTrace());
+            return null;
+        }
+    }
+
+    private boolean messageUnread(int[] fileArray, int[] lastLoginArray) {
+        LocalDateTime fileDateTime = LocalDateTime.of(fileArray[0], fileArray[1], fileArray[2],
+                fileArray[3], fileArray[4], fileArray[5]);
+
+        LocalDateTime lastLogInDateTime = LocalDateTime.of(lastLoginArray[0], lastLoginArray[1], lastLoginArray[2],
+                lastLoginArray[3], lastLoginArray[4], lastLoginArray[5]);
+
+        boolean messagesUnread = false;
+        if (fileDateTime.isAfter(lastLogInDateTime)) {
+            messagesUnread = true;
+        }
+
+        return messagesUnread;
+    }
 
 }
