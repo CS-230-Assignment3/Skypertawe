@@ -14,7 +14,6 @@ public class WelcomePanel extends JFrame implements ActionListener {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
-		this.setVisible(true);
 		loadAssets();
 	}
 
@@ -51,6 +50,7 @@ public class WelcomePanel extends JFrame implements ActionListener {
 		panel.add(loginBtn);
 		panel.add(regBtn);
 		this.add(panel);
+		this.setVisible(true);
 	}
 
 	private void loadLogin() {
@@ -69,6 +69,6 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new WelcomePanel();
+		new RegisterPanel();
 	}
 }
