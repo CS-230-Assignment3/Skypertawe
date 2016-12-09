@@ -67,7 +67,7 @@ public class GroupFile {
 	public void readGroupChat(){
 		
 	}
-	
+
 	public static void main(String args[]) throws IOException{
 		
 		AccountsGraph account1 = new AccountsGraph();

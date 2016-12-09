@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Account {
+public class Account implements Comparable<Account> {
 
 	private String m_username;
 	private String m_firstName;
@@ -128,6 +128,11 @@ public class Account {
 
 	public void addInvite(Account newAccount) {
 		m_invites.add(newAccount);
+	}
+
+	@Override
+	public int compareTo(Account user) {
+		return m_username.compareTo(user.getUser());
 	}
 
 }

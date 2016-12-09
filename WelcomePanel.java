@@ -20,17 +20,28 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	private void loadAssets() {
 		JPanel panel = new JPanel();
 		panel.setSize(this.getWidth(), this.getHeight());
+		panel.setBackground(new Color(42, 100,255,255));
 		panel.setLayout(null);
 
 		JLabel title = new JLabel("Skypertawe");
 		JButton loginBtn = new JButton("Login");
 		JButton regBtn = new JButton("Register");
 
-		title.setFont(new Font("Arial_Thin", Font.PLAIN, 50));
-		title.setBounds((this.getWidth() / 3 + 20), 150, this.getWidth(), 55);
+		title.setFont(new Font("Bauhaus 93", Font.PLAIN, 65));
+		title.setForeground(Color.white);
+		title.setBounds(this.getWidth() / 3, 150, this.getWidth(), 70);
 
 		loginBtn.setBounds((this.getWidth() / 3), this.getHeight() / 3, 150, 80);
-		regBtn.setBounds((this.getWidth() / 3 + 160), this.getHeight() / 3, 150, 80);
+		loginBtn.setFont(new Font("Century Gothic", Font.PLAIN, 25));
+		loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		loginBtn.setFocusPainted(false);
+		loginBtn.setBorderPainted(false);
+
+		regBtn.setBounds((this.getWidth() / 3 + 190), this.getHeight() / 3, 150, 80);
+		regBtn.setFont(new Font("Century Gothic", Font.PLAIN, 25));
+		regBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		regBtn.setBorderPainted(false);
+		regBtn.setFocusPainted(false);
 
 		loginBtn.addActionListener(new ActionListener() {
 			@Override
@@ -54,7 +65,7 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	}
 
 	private void loadLogin() {
-		new LoginPanel();
+		//new LoginPanel();
 		this.dispose();
 	}
 
@@ -69,6 +80,6 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		new RegisterPanel();
+		new WelcomePanel();
 	}
 }
