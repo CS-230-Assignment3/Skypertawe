@@ -3,6 +3,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Scanner;
 
 public class MessageHistory {
@@ -64,10 +66,14 @@ public class MessageHistory {
 
 	public void writeToFile(String message) {	
 		try (BufferedWriter bw = new BufferedWriter(new FileWriter(m_fileName))) {
-			bw.write(message);
-			//bw.close();
-			
-		} catch(IOException e) {
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String timestamp = ft.format(date).toString();
+            String line = m_accountSend.getUser() + "," + timestamp + "," + message;
+            bw.write(line);
+            bw.close();
+
+        } catch(IOException e) {
 			e.printStackTrace();
 		}
 	}
