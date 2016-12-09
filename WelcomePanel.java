@@ -4,16 +4,18 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class WelcomePanel extends JFrame implements ActionListener {
+public class WelcomePanel extends JFrame {
 	private static final long serialVersionUID = 1L;
+	private AccountsGraph graph;
 
-	public WelcomePanel() {
+	public WelcomePanel(AccountsGraph graph) {
 		this.setTitle("Skypertawe");
 		this.setSize(1000, 700);
 		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
+		this.graph = graph;
 		loadAssets();
 	}
 
@@ -70,16 +72,7 @@ public class WelcomePanel extends JFrame implements ActionListener {
 	}
 
 	private void loadRegister() {
-		new RegisterPanel();
+		new RegisterPanel(graph);
 		this.dispose();
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-	}
-
-	public static void main(String[] args) {
-		new WelcomePanel();
 	}
 }

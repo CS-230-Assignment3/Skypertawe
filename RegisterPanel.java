@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-public class RegisterPanel extends JFrame implements ActionListener {
+public class RegisterPanel extends JFrame {
     private String m_username;
     private String m_firstname;
     private String m_lastname;
@@ -16,14 +16,16 @@ public class RegisterPanel extends JFrame implements ActionListener {
     private String m_confirm;
     private String m_dob;
     private String m_city;
+    private AccountsGraph graph;
 
-    public RegisterPanel() {
+    public RegisterPanel(AccountsGraph graph) {
         this.setTitle("Skypertawe - Register");
         this.setSize(600, 400);
         this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.graph = graph;
         loadAssets();
     }
 
@@ -171,15 +173,20 @@ public class RegisterPanel extends JFrame implements ActionListener {
     }
 
     private void submitForm() {
-       //Take stored attributes and add them
+        Account newAccount;
+        newAccount = new Account(m_username,
+                m_firstname,
+                m_lastname,
+                m_dob,
+                m_city,
+                m_password,
+                "",
+                Integer.parseInt(m_phoneNumber));
+        graph.addAccount(newAccount);
     }
 
     private void cancelForm() {
-        new WelcomePanel();
+        new WelcomePanel(graph);
         this.dispose();
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
     }
 }
