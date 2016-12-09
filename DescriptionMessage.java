@@ -1,6 +1,7 @@
 /**
  * @file DescriptionMessage.java
  * @author Samuel O'Reilly (824712)
+ * @date 09 Dec 2016
  * @see Message.java
  */
 public abstract class DescriptionMessage extends Message {

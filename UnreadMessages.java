@@ -5,13 +5,22 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created by Sam on 08/12/2016.
+ * @file UnreadMessages.java
+ * @author Samuel O'Reilly (824712)
+ * @date 08 Dec 2016
+ * @see Account for account details
  */
 public class UnreadMessages {
     private Account m_currentAccount;
     private Account m_otherAccount;
     private File m_messagesFile;
 
+    /**
+     * Constructor takes two account objects, it compares unread messages from the second account to the first account
+     *
+     * @param currentAccount account to see if there are unread messages from the second to this one
+     * @param otherAccount   account to see if unread messages have been sent by
+     */
     public UnreadMessages(Account currentAccount, Account otherAccount) {
         m_currentAccount = currentAccount;
         m_otherAccount = otherAccount;
@@ -27,50 +36,91 @@ public class UnreadMessages {
         }
     }
 
+    /**
+     * Determines if there have been messages sent to current account since last login time by second account
+     * @return true if there are unread message, otherwise false
+     * @see getMessages
+     * @see splitTimeStamp
+     * @see isMessageUnread
+     */
     public boolean isUnreadMessages() {
+        //ArrayList of all messages in chat between current account and other account
         ArrayList<String> lines = getMessages(m_messagesFile);
 
-        boolean unreadMessage = false;
-        int curIndex = lines.size() - 1;
+        /* array of ints representing the timestamp of the last login time
+         * format is [year,month,day,hour,minute,second]
+         */
         int[] lastLoginArray = splitTimeStamp(m_currentAccount.getLastLogInTime());
-
+        //boolean of whether there is an unread message present
+        boolean unreadMessage = false;
+        //Start index, start at the max so you read from newest message to oldest message
+        int curIndex = lines.size() - 1;
         do {
+            //Scanner to parse each line of messages from ArrayList lines
             Scanner lineReader = new Scanner(lines.get(curIndex));
             lineReader.useDelimiter(",");
 
+            //Account sending the message
             String sendAccount = lineReader.next();
 
+            //If message was send by other user
             if (sendAccount.equals(m_otherAccount.getUser())) {
+                //Get the timestamp
                 String timestamp = lineReader.next();
+                //Put timestamp into array
                 int[] fileDateTimeArray = splitTimeStamp(timestamp);
-                unreadMessage = messageUnread(fileDateTimeArray, lastLoginArray);
+                //Determine if message was sent after last login
+                unreadMessage = isMessageUnread(fileDateTimeArray, lastLoginArray);
             }
             lineReader.close();
             curIndex--;
-        } while (!unreadMessage && curIndex >= 0);
+        }
+        while (!unreadMessage && curIndex >= 0); //Loop while not found an unread message, and not reached start of messages
         return unreadMessage;
     }
 
+    /**
+     * Gets the number of unread message, that is the number of messages sent to current account
+     * by other account since last login of current account
+     * @return integer of number of unread messages
+     * @see getMessages
+     * @see splitTimeStamp
+     * @see isMessageUnread
+     */
     public int unreadMessageCount() {
+        //ArrayList of all messages in chat between current account and other account
         ArrayList<String> lines = getMessages(m_messagesFile);
+
+        /* array of ints representing the timestamp of the last login time
+         * format is [year,month,day,hour,minute,second]
+         */
+        int[] lastLoginArray = splitTimeStamp(m_currentAccount.getLastLogInTime());
 
         int unreadMessageCount = 0;
         int curIndex = lines.size() - 1;
-        int[] lastLoginArray = splitTimeStamp(m_currentAccount.getLastLogInTime());
-
+        /* boolean of whether the last message checked is later than last login, when true all unread messages
+         * must have been read, so loop can exit
+         */
         boolean laterThanLastLogIn = false;
 
         do {
+            //Scanner to parse each line of messages from ArrayList lines
             Scanner lineReader = new Scanner(lines.get(curIndex));
             lineReader.useDelimiter(",");
 
+            //Account sending the message
             String sendAccount = lineReader.next();
 
+            //If message was send by other user
             if (sendAccount.equals(m_otherAccount.getUser())) {
+                //Get the timestamp
                 String timestamp = lineReader.next();
+                //Put timestamp into array
                 int[] fileDateTimeArray = splitTimeStamp(timestamp);
-                if (messageUnread(fileDateTimeArray, lastLoginArray)) {
+                //If message was sent after last login, increment unreadMessageCount
+                if (isMessageUnread(fileDateTimeArray, lastLoginArray)) {
                     unreadMessageCount++;
+                    //Else all unread messages have been found
                 } else {
                     laterThanLastLogIn = true;
                 }
@@ -82,16 +132,26 @@ public class UnreadMessages {
         return unreadMessageCount;
     }
 
+    /**
+     * Takes a timestamp in the format "yyyy/MM/dd HH:mm:ss" and splits it into an array in
+     * the format [year,month,day,hour,minute,second]
+     *
+     * @param timestamp String of format "yyyy/MM/dd HH:mm:ss"
+     * @return array with format [year,month,day,hour,minute,second]
+     */
     private int[] splitTimeStamp(String timestamp) {
+        //Split string into date and time
         String[] dateAndTime = timestamp.split(" ");
         String date = dateAndTime[0];
         String time = dateAndTime[1];
 
+        //Split date into array of Strings
         String[] dateArray = date.split("/");
+        //Split time into array of Strings
         String[] timeArray = time.split(":");
-        String[] dateTimeArray = new String[dateArray.length + timeArray.length];
-        int[] dateTimeArrayInt = new int[dateTimeArray.length];
 
+        //Loop through dateArray and timeArray, convert to int and add to dateTimeArrayInt
+        int[] dateTimeArrayInt = new int[dateArray.length + timeArray.length];
         for (int i = 0; i < dateTimeArrayInt.length; i++) {
             if (i < 3) {
                 dateTimeArrayInt[i] = Integer.parseInt(dateArray[i]);
@@ -103,11 +163,19 @@ public class UnreadMessages {
         return dateTimeArrayInt;
     }
 
+    /**
+     * Takes a chat file and adds each line to an ArrayList
+     * @param file chat file read
+     * @return ArrayList of each line in chat file, or null if file is not found
+     */
     private ArrayList<String> getMessages(File file) {
         ArrayList<String> lines = new ArrayList<>();
         try {
+            //Scanner to read each line in chat file
             Scanner in = new Scanner(m_messagesFile);
+            //Loop while chat file has an unread line
             while (in.hasNext()) {
+                //Add line to ArrayList
                 lines.add(in.nextLine());
             }
             in.close();
@@ -120,15 +188,23 @@ public class UnreadMessages {
         }
     }
 
-    private boolean messageUnread(int[] fileArray, int[] lastLoginArray) {
-        LocalDateTime fileDateTime = LocalDateTime.of(fileArray[0], fileArray[1], fileArray[2],
-                fileArray[3], fileArray[4], fileArray[5]);
-
-        LocalDateTime lastLogInDateTime = LocalDateTime.of(lastLoginArray[0], lastLoginArray[1], lastLoginArray[2],
-                lastLoginArray[3], lastLoginArray[4], lastLoginArray[5]);
+    /**
+     * Determines if date and time in first array if later than second array
+     *
+     * @param firstArray  array with format [year,month,day,hour,minute,second]
+     * @param secondArray array with format [year,month,day,hour,minute,second]
+     * @return true if date and time in first array is later than second array
+     */
+    private boolean isMessageUnread(int[] firstArray, int[] secondArray) {
+        //Convert first array to LocalDateTime
+        LocalDateTime firstDateAndTime = LocalDateTime.of(firstArray[0], firstArray[1], firstArray[2],
+                firstArray[3], firstArray[4], firstArray[5]);
+        //Convert second array to LocalDateTime
+        LocalDateTime lastLogInDateTime = LocalDateTime.of(secondArray[0], secondArray[1], secondArray[2],
+                secondArray[3], secondArray[4], secondArray[5]);
 
         boolean messagesUnread = false;
-        if (fileDateTime.isAfter(lastLogInDateTime)) {
+        if (firstDateAndTime.isAfter(lastLogInDateTime)) {
             messagesUnread = true;
         }
 
