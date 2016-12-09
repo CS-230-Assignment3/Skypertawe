@@ -2,14 +2,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class RegisterPanel extends JFrame implements ActionListener {
     private String m_username;
     private String m_firstname;
     private String m_lastname;
     private String m_phoneNumber;
-    private char[] m_password;
-    private char[] m_confirm;
+    private String m_password;
+    private String m_confirm;
     private String m_dob;
     private String m_city;
 
@@ -46,7 +50,7 @@ public class RegisterPanel extends JFrame implements ActionListener {
         JLabel textPassword = new JLabel("*Password ");
         JLabel textConfirm= new JLabel("*Confirm: ");
         JLabel textDOB = new JLabel("City: ");
-        JLabel textCity = new JLabel("Birthday: ");
+        JLabel textCity = new JLabel("Birthday:");
 
         username.setBounds(textUsername.getX() + 110, 10, 200, 25);
         firstname.setBounds(textFirstName.getX() + 110, 40, 200, 25);
@@ -66,8 +70,16 @@ public class RegisterPanel extends JFrame implements ActionListener {
         textDOB.setBounds(10, dob.getY(), 200, 25);
         textCity.setBounds(10, city.getY(), 200, 25);
 
-        submitBtn.setBounds(this.getWidth() / 5, textCity.getY() + 50, 150, 70);
-        cancelBtn.setBounds(this.getWidth() / 5 + 160, submitBtn.getY(), 150, 70);
+        submitBtn.setBounds(this.getWidth() / 5, textCity.getY() + 50, 150, 50);
+        cancelBtn.setBounds(this.getWidth() / 5 + 160, submitBtn.getY(), 150, 50);
+
+        submitBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 20));
+        submitBtn.setForeground(Color.black);
+        submitBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+        cancelBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 15));
+        cancelBtn.setForeground(Color.black);
+        cancelBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
         submitBtn.addActionListener(new ActionListener() {
             @Override
@@ -76,8 +88,8 @@ public class RegisterPanel extends JFrame implements ActionListener {
                 m_firstname = firstname.getText();
                 m_lastname = lastname.getText();
                 m_phoneNumber = phoneNumber.getText();
-                m_password = password.getPassword();
-                m_confirm = confirm.getPassword();
+                m_password = Arrays.toString(password.getPassword());
+                m_confirm = Arrays.toString(confirm.getPassword());
                 m_city = city.getText();
                 m_dob = dob.getText();
 
@@ -119,50 +131,37 @@ public class RegisterPanel extends JFrame implements ActionListener {
 
     private boolean checkFormValidation() {
         boolean m_isValid = false;
-        JLabel errorMsg = new JLabel();
-        errorMsg.setBounds(this.getWidth() / 2, this.getHeight() / 2, 25, 25);
-        errorMsg.setForeground(new Color(255, 63, 68,255));
 
         if(m_username.isEmpty()) {
-            errorMsg.setText("Please fill in all fields with an * by it.");
-            this.revalidate();
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }
         else if(m_firstname.isEmpty()) {
-            errorMsg.setText("Please fill in all fields with an * by it.");
-            this.revalidate();
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }
         else if(m_lastname.isEmpty()) {
-            errorMsg.setText("Please fill in all fields with an * by it.");
-            this.revalidate();
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }
         else if(m_phoneNumber.isEmpty()) {
-            errorMsg.setText("Please fill in all fields with an * by it.");
-            this.revalidate();
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }
         else if(m_password.toString().isEmpty()) {
-            errorMsg.setText("Please fill in all fields with an * by it.");
-            this.revalidate();
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }
         else if(m_confirm.toString().isEmpty()) {
-            errorMsg.setText("Please fill in all fields with an * by it.");
-            this.revalidate();
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
         }
         else {
             if(m_username.length() <= 5) {
-                errorMsg.setText("Username must be longer then 5 characters.");
-                this.revalidate();
+                JOptionPane.showMessageDialog(this, "Username must be longer then 5 characters.");
             }
             else if(m_phoneNumber.length() != 11) {
-                errorMsg.setText("Please enter a valid UK phone number.");
-                this.revalidate();
+                JOptionPane.showMessageDialog(this, "Please enter a valid UK phone number.");
             }
             else if(m_password.toString().length() < 6) {
-                errorMsg.setText("Password must be more then 5 characters longer.");
-                this.revalidate();
+                JOptionPane.showMessageDialog(this, "Password must be longer then 5 characters.");
             }
-            else if(m_password.toString().trim().toLowerCase() != m_confirm.toString().trim().toLowerCase()) {
-                errorMsg.setText("Passwords don't match.");
-                this.revalidate();
+            else if(!m_password.equals(m_confirm)) {
+                JOptionPane.showMessageDialog(this, m_password.toString() + " : " + m_confirm.toString());
             }
             else {
                 m_isValid = true;
