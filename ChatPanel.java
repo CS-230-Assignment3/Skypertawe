@@ -2,18 +2,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class ChatPanel extends JFrame {
-    private AccountsGraph graph;
+    private Account currentAccount;
+    private Account otherAccount;
+    private MessageHistory chatHistory;
 
-    public ChatPanel(AccountsGraph graph) {
+    public ChatPanel(Account currentAccount, Account otherAccount) {
         this.setTitle("Skypertawe - Chat");
         this.setSize(800, 600);
         this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.graph = graph;
+        this.currentAccount = currentAccount;
+        this.otherAccount = otherAccount;
+        chatHistory = new MessageHistory(currentAccount, otherAccount);
         loadAssets();
     }
 
@@ -21,30 +27,59 @@ public class ChatPanel extends JFrame {
         JPanel panel = new JPanel(null);
         panel.setSize(this.getWidth(), this.getHeight());
 
-        JTextField chatArea = new JTextField();
-        JScrollPane chat = new JScrollPane(chatArea);
-        JButton sendMsg = new JButton("Send");
+        JTextArea textArea = new JTextArea();
+        JScrollPane chatPane = new JScrollPane(textArea);
+        JTextField chatField = new JTextField();
+        JButton sendBtn = new JButton("Send");
 
-        chat.setBounds(20, 0, this.getWidth() - 40, this.getHeight() - 200);
-        chatArea.setBounds(0, chat.getHeight(), this.getWidth(), 30);
-        sendMsg.setBounds(this.getWidth() / 3, chatArea.getY() + 30, 150, 50);
+        textArea.setEnabled(false);
+        textArea.setDisabledTextColor(new Color(0, 0, 0,255));
+        textArea.setFont(new Font("Arial", Font.BOLD, 15));
 
-        chatArea.setFont(new Font("Arial", Font.PLAIN, 20));
+        chatPane.setSize(new Dimension(this.getWidth(), this.getHeight() - 150));
+        chatPane.setBackground(new Color(255,255,255,255));
 
-        sendMsg.addActionListener(new ActionListener() {
+        chatField.setBounds(0, chatPane.getHeight(), this.getWidth() - 150, 40);
+        chatField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+        sendBtn.setBounds(chatField.getWidth(), chatField.getY(), 150, 40);
+
+        sendBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!chatArea.getText().isEmpty()) {
-                    chat.add(chatArea.getText());
-                    chatArea.setText("");
-                }
+                sendMessage(textArea, chatField);
             }
         });
 
-        panel.add(chatArea);
-        panel.add(sendMsg);
-        panel.add(chat);
+        chatField.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    sendMessage(textArea, chatField);
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+        panel.add(sendBtn);
+        panel.add(chatField);
+        panel.add(chatPane);
         this.add(panel);
         this.setVisible(true);
+    }
+
+    private void sendMessage(JTextArea text, JTextField message) {
+        text.append(currentAccount.getUser() + ": " + message.getText() + "\n");
+        chatHistory.writeToFile(message.getText());
+        message.setText("");
     }
 }
