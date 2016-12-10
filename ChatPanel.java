@@ -13,7 +13,6 @@ public class ChatPanel extends JFrame {
     public ChatPanel(Account currentAccount, Account otherAccount) {
         this.setTitle("Skypertawe - Chat");
         this.setSize(800, 600);
-        this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
