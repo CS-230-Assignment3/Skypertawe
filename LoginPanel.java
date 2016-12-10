@@ -56,7 +56,11 @@ public class LoginPanel extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 m_username = username.getText();
-                m_password = Arrays.toString(password.getPassword());
+                char[] passwordArray = password.getPassword();
+                m_password = "";
+                for (char c : passwordArray) {
+                    m_password += c;
+                }
 
                 AccountValidation account = new AccountValidation(m_username, m_password);
                 if(account.checkLogin()) {
