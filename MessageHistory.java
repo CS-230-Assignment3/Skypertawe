@@ -29,8 +29,8 @@ public class MessageHistory {
 		if (accountSend.getUser().compareTo(accountRecieve.getUser()) <= 0) {
 			m_fileName = "messages\\" + accountSend.getUser() + "_" + accountRecieve.getUser() + ".txt";
 		} else { // Else firstAccount username > secondAccount username
-			m_fileName = "messages\\" + accountRecieve.getUser() + "_" + accountRecieve.getUser() + ".txt";
-		}
+            m_fileName = "messages\\" + accountRecieve.getUser() + "_" + accountSend.getUser() + ".txt";
+        }
 	}
 
 	public MessageHistory(Account accountSend, ArrayList<Account> accountRecieve) {
@@ -53,12 +53,12 @@ public class MessageHistory {
 	public void writeToFile(String message) {
 		File chatFile = new File(m_fileName);
 		try {
-			FileWriter writer = new FileWriter(m_fileName);
-			Date date = new Date();
+            FileWriter writer = new FileWriter(m_fileName, true);
+            Date date = new Date();
 			SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			String timestamp = ft.format(date).toString();
-			String line = m_accountSend.getUser() + "," + timestamp + "," + message;
-			writer.write(line);
+            String line = m_accountSend.getUser() + "," + timestamp + "," + message + "\n";
+            writer.write(line);
 			writer.close();
 
 		} catch (IOException e) {
