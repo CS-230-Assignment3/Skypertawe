@@ -21,9 +21,11 @@ public class ContactPanel extends JFrame{
 	private ArrayList<Account> contactList;
 	private ArrayList<String> groupList = new ArrayList<String>(); 
 	private Account m_currUser;
-	public ContactPanel( Account currUser){
+	private AccountsGraph m_Graph; 
+	
+	public ContactPanel(AccountsGraph graph, Account currUser){
 		m_currUser = currUser;
-		
+		m_Graph = graph;
 		
 	}
 
@@ -116,13 +118,14 @@ public class ContactPanel extends JFrame{
 				Bi.setBackground(Color.CYAN);
 				Bi.setOpaque(true);
 			}
-			JLabel Ci = new JLabel("Time of last message: \n"+unreadInfo.getTimeofLastSentMessage());
+			JLabel Ci = new JLabel("Time of last message:"+"\n"+unreadInfo.getTimeofLastSentMessage());
 			displayContact.add(Ci);
 			
+			Account g = a.get(i);
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Ai.setForeground(Color.WHITE);
+					new ChatPanel(m_currUser,g);
 				}
 			});
 		}
@@ -133,6 +136,4 @@ public class ContactPanel extends JFrame{
 		return scrollPane;
 		
 	}
-	
-
 }
