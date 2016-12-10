@@ -71,14 +71,16 @@ public class MessageHistory {
 		m_date = date;
 	}
 
-	public void writeToFile(String message) {	
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(m_fileName))) {
+    public void writeToFile(String message) {
+        File chatFile = new File(m_fileName);
+        try {
+            FileWriter writer = new FileWriter(m_fileName);
             Date date = new Date();
             SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String timestamp = ft.format(date).toString();
             String line = m_accountSend.getUser() + "," + timestamp + "," + message;
-            bw.write(line);
-            bw.close();
+            writer.write(line);
+            writer.close();
 
         } catch(IOException e) {
 			e.printStackTrace();
@@ -90,34 +92,29 @@ public class MessageHistory {
      * index 0 is the username of the sending account,
      * index 1 is the timestamp of the message sent and,
      * index 2 is the message itself
-     *
-     * @return String[] where 0 is username, 1 is timestamp, 2 is message
+     * @return String[] where 0 is the username, 1 is the timestamp, 2 is the message
      */
     public ArrayList<String[]> readFromFile() {
 
         File chatFile = new File(m_fileName);
-        Scanner in = null;
+        Scanner read = null;
+        ArrayList<String[]> chat = new ArrayList<>();
+        try {
+            read = new Scanner(chatFile);
 
+            while (read.hasNext()) {
+                Scanner line = new Scanner(read.next());
+                String[] lineArray = new String[3];
+                lineArray[0] = line.next();
+                lineArray[1] = line.next();
+                lineArray[2] = line.next();
+                chat.add(lineArray);
+            }
 
-		/*
-        String line = "";
-		Scanner in = null;
-		File read = null;
-		
-		try {
-			read = new File(m_fileName);
-			in = new Scanner(read);
-			
-			if(read.exists() && read.isDirectory()) {
-				while(in.hasNextLine()) {
-					line = in.nextLine();
-				}
-			}
-			in.close();
-		} catch(FileNotFoundException e) {
-			e.printStackTrace();
-		}
-		return line;
-		*/
+        } catch (FileNotFoundException e) {
+            System.err.println(m_fileName + " not found " + e.getStackTrace());
+        }
+
+        return chat;
     }
 }
