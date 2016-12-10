@@ -109,7 +109,10 @@ public class MessageHistory {
                 lineArray[1] = line.next();
                 lineArray[2] = line.next();
                 chat.add(lineArray);
+                line.close();
             }
+
+            read.close();
 
         } catch (FileNotFoundException e) {
             System.err.println(m_fileName + " not found " + e.getStackTrace());
