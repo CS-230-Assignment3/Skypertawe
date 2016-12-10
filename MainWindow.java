@@ -6,8 +6,11 @@ import java.util.ArrayList;
 
 public class MainWindow extends JFrame {
 	private AccountsGraph graph;
-
-    public MainWindow(AccountsGraph graph) {
+	private Account m_currUser;
+	
+    public MainWindow(AccountsGraph graph, Account currUser) {
+    	
+    	m_currUser = currUser;
 		this.setTitle("Skypertawe - Welcome ###username here ??");
 		this.setSize(1000, 700);
 		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
@@ -16,7 +19,7 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 		this.graph = graph;
         //loadAssets();
-		//loadContacts();
+		loadContacts();
 	}
 
 	private void loadAssets() {
@@ -24,19 +27,13 @@ public class MainWindow extends JFrame {
 		//That have no context
     }
 
-    private void loadContacts() throws Exception {
-    	ContactPanel panel = new ContactPanel();
+    private void loadContacts(){
+    	ContactPanel panel = new ContactPanel(m_currUser);
     	JPanel panel1 = panel.buildPanel();
-    	panel1.setBounds(0, 100, 500,400);
+    	panel1.setBounds(100, 50, 500,400);
     	this.setContentPane(panel1);
-    	
-    	
-    	
-    	
-    	//Jamie, add your contactslist here
-		//Add them to the window by doing "this.add(<jpanelhere>);"
-		//Don't create JFrame cause it's extending it
-		//Also wouldn't use pack() cause it'll fuck the window dimensions up ;)
+  
 	}
+
 }
 
