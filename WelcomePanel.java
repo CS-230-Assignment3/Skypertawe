@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 public class WelcomePanel extends JFrame {
-	private static final long serialVersionUID = 1L;
 	private AccountsGraph graph;
 
 	public WelcomePanel(AccountsGraph graph) {
@@ -67,7 +66,7 @@ public class WelcomePanel extends JFrame {
 	}
 
 	private void loadLogin() {
-		//new LoginPanel();
+		new LoginPanel(graph);
 		this.dispose();
 	}
 
