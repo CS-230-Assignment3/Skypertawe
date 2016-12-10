@@ -1,18 +1,16 @@
-	import java.io.BufferedWriter;
-	import java.io.File;
-	import java.io.FileNotFoundException;
-	import java.io.FileWriter;
-	import java.io.IOException;
-	import java.text.SimpleDateFormat;
-	import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-	import java.util.Scanner;
-public class MessageHistory1 {
+import java.util.Scanner;
 
+public class MessageHistory {
 
-
-		private String m_message;
+	private String m_message;
 		private String m_time;
 		private String m_date;
 		private String m_fileName;
@@ -24,7 +22,7 @@ public class MessageHistory1 {
 		private Account m_accountRecieve;
 		private ArrayList<Account> m_accountsRecieve;
 
-		public MessageHistory1(Account accountSend, Account accountRecieve) {
+		public MessageHistory(Account accountSend, Account accountRecieve) {
 			m_accountSend = accountSend;
 			m_accountRecieve = accountRecieve;
 	        // If accountSend username <= accountRecieve username
@@ -34,7 +32,7 @@ public class MessageHistory1 {
 	            m_fileName = "messages\\" + accountRecieve.getUser() + "_" + accountRecieve.getUser() + ".txt";
 	        }
 	    }
-		public MessageHistory1(Account accountSend, ArrayList<Account> accountRecieve) {
+		public MessageHistory(Account accountSend, ArrayList<Account> accountRecieve) {
 			m_accountSend = accountSend;
 			m_accountsRecieve = accountRecieve;
 			
@@ -174,4 +172,3 @@ public class MessageHistory1 {
 			m_date = date;
 		}
 }
-
