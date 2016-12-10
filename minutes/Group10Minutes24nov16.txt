@@ -10,7 +10,7 @@ date and time of next meeting: 29 Nov 2016
 topics discussed:
 	-- what went well and what went wrong in the design stage
 	-- the strengths and weaknesses of each member
-        -- which classes each member will need to implement
+    -- which classes each member will need to implement
 	-- what platform we will use to develop Skypertawe. Decided on github
 
 progress since last meeting:

@@ -11,11 +11,11 @@ topics discussed:
 	-- what still needs to be done with the implementation
 	-- the colour scheme of the gui's
 	-- how we are going to structure the data files
-	-- any issues we have with eachothers code, and what needs to be changed/adapted
-	-- how the video demonstartion is going to work
+	-- any issues we have with each others code, and what needs to be changed/adapted
+	-- how the video demonstration is going to work
 
 progress since last meeting:
-        -- more methods have been implemented and tested
+    -- more methods have been implemented and tested
 	-- all classes and data files are now on github
 	-- some members had issues getting git working on their IDE's, but this was resolved quickly
 

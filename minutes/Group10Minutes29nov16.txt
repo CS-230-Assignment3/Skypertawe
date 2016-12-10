@@ -9,12 +9,12 @@ date and time of next meeting: 7 Dec 2016
 
 topics discussed:
 	-- how the implementation of our classes is coming along
-	-- what we are stuggling with in out classes
+	-- what we are struggling with in out classes
 	-- questions about methods in other classes, like how the AccountsGraph will make the contacts list etc.
 	-- how much time we are putting into this work, everyone is busy with CS-250 assignment 2 currently
 
 progress since last meeting:
-        -- UML variables and methods have been made into java
+    -- UML variables and methods have been made into java
 	-- some methods have been implemented where possible
 	-- github project has been created and classes have been uploaded
 
