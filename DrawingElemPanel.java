@@ -71,9 +71,19 @@ public class DrawingElemPanel extends JPanel {
     /**
      * Two txt file for saving the all element which has drawn
      */
-    private String m_linefile = "SaveLine.txt";
+    private String m_linefile;
 
-    private String m_particalfile = "SavePartical.txt";
+    private String m_particalfile;
+
+    /**
+     * First account the drawing is between
+     */
+    private Account m_firstAccount;
+
+    /**
+     * Second account the drawing is between
+     */
+    private Account m_secondAccount;
 
     /**
      * @return the all lines which has drawn
@@ -182,7 +192,19 @@ public class DrawingElemPanel extends JPanel {
      * Constructor:
      * set up GUI
      */
-    public DrawingElemPanel() {
+    public DrawingElemPanel(Account firstAccount, Account secondAccount) {
+        m_firstAccount = firstAccount;
+        m_secondAccount = secondAccount;
+
+        // If first account username <= second account username
+        if (m_firstAccount.getUser().compareTo(m_secondAccount.getUser()) <= 0) {
+            m_linefile = "drawingFiles\\line_" + (m_firstAccount.getUser() + "_" + m_secondAccount.getUser() + ".txt");
+            m_particalfile = "drawingFiles\\partical_" + (m_firstAccount.getUser() + "_" + m_secondAccount.getUser() + ".txt");
+        } else { // Else second account username > first account username
+            m_linefile = "drawingFiles\\" + m_secondAccount.getUser() + "_" + (m_firstAccount.getUser() + ".txt");
+            m_particalfile = "drawingFiles\\partical_" + (m_secondAccount.getUser() + "_" + m_firstAccount.getUser() + ".txt");
+        }
+
         boolean test = false;
         if (test) {
             System.out.println("DrawingElemPanel::constructor() ");
