@@ -1,0 +1,24 @@
+Minutes of Meeting:Jamie, Luke, On, Sam
+---------------------------------------------------------
+date: 29 Nov '16
+start time: 12:00
+end time: 12:50
+
+date and time of next meeting: 7 Dec 2016
+
+
+topics discussed:
+	-- how the implementation of our classes is coming along
+	-- what we are stuggling with in out classes
+	-- questions about methods in other classes, like how the AccountsGraph will make the contacts list etc.
+	-- how much time we are putting into this work, everyone is busy with CS-250 assignment 2 currently
+
+progress since last meeting:
+        -- UML variables and methods have been made into java
+	-- some methods have been implemented where possible
+	-- github project has been created and classes have been uploaded
+
+
+TODO (for next meeting):
+	-- carry on implementing as much as we can, after the 2nd dec CS-250 work will be finished so we can dedicate more time to this assignment
+	-- get git working on our IDE's for easier development
