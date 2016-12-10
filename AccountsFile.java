@@ -68,7 +68,8 @@ public class AccountsFile {
                 city = accountInfo.next();
             }
 
-            Account newAccount = new Account(username.toLowerCase(), firstName, lastName, birthday, city, password, "profilePics\\" + username + ".png", phoneNum);
+            Account newAccount = new Account(username.toLowerCase(), firstName, lastName, "profilePics\\" + username + ".png",
+                    birthday, city, password, phoneNum);
             newAccount.setLastLogInTime(lastLoginTime); // lastLogIn time format "yyyy/MM/dd HH:mm:ss"
 
             accountsList.add(newAccount);
