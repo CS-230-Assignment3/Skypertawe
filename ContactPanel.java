@@ -134,9 +134,5 @@ public class ContactPanel extends JFrame{
 		
 	}
 	
-	public static void main (String args[]) throws Exception{
-	    AccountsGraph v = new AccountsGraph();
-	    Account v1 = v.findAccount("katie");
-	    new ContactPanel(v1);
-	   }
+
 }
