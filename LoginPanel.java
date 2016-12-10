@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 
 public class LoginPanel extends JFrame {
     private String m_username;
@@ -87,7 +86,6 @@ public class LoginPanel extends JFrame {
         panel.add(cancelBtn);
         this.add(panel);
         this.setVisible(true);
-
     }
 
     private void submitForm() {
