@@ -1,0 +1,23 @@
+Minutes of Meeting:Jamie, Luke, On, Sam
+---------------------------------------------------------
+date: 24 Nov '16
+start time: 14:00
+end time: 14:30
+
+date and time of next meeting: 29 Nov 2016
+
+
+topics discussed:
+	-- what went well and what went wrong in the design stage
+	-- the strengths and weaknesses of each member
+    -- which classes each member will need to implement
+	-- what platform we will use to develop Skypertawe. Decided on github
+
+progress since last meeting:
+        -- A1 marks were relseased, so we know what to improve in the implementation
+
+
+TODO (for next meeting):
+	-- make the UML into java
+	-- implement the basics, i.e. get and set methods
+	-- start to implement the more complicated methods if possible

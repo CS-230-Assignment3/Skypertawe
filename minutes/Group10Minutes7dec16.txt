@@ -1,0 +1,27 @@
+Minutes of Meeting:Jamie, Luke, On, Sam
+---------------------------------------------------------
+date: 7 Dec '16
+start time: 12:00
+end time: 12:50
+
+date and time of next meeting: 13 Dec 2016
+
+
+topics discussed:
+	-- what still needs to be done with the implementation
+	-- the colour scheme of the gui's
+	-- how we are going to structure the data files
+	-- any issues we have with each others code, and what needs to be changed/adapted
+	-- how the video demonstration is going to work
+
+progress since last meeting:
+    -- more methods have been implemented and tested
+	-- all classes and data files are now on github
+	-- some members had issues getting git working on their IDE's, but this was resolved quickly
+
+
+TODO (for next meeting):
+	-- finish the implementation
+	-- test our work, ensure it is all working well
+	-- sumbit work
+	-- get ready for our next meeting which will be a viva prep

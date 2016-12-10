@@ -7,23 +7,29 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 
 
-public class ContactPanel {
+public class ContactPanel extends JFrame{
 	/**
 	 * Launch the application.
 	 * @throws Exception 
 	 */
-	private ArrayList<String> contactList = new ArrayList<String>();
+	private ArrayList<Account> contactList;
 	private ArrayList<String> groupList = new ArrayList<String>(); 
-
-
-	
-	public JPanel buildPanel () throws Exception{
+	private Account m_currUser;
+	public ContactPanel( Account currUser){
+		m_currUser = currUser;
 		
-		JScrollPane scrollPane = groupPanel();
+		
+	}
+
+	public JPanel buildPanel (){
+		
+		//JScrollPane scrollPane = groupPanel();
 		JScrollPane scrollPane1 = contactPanel();
 		
 		
@@ -32,15 +38,15 @@ public class ContactPanel {
 		
 		JPanel contactTitle = new JPanel();
 		contactTitle.add(contactLbl);
-		contactTitle.setBounds(0, 0, 250, 70);
+		contactTitle.setBounds(0, 170, 250, 70);
 
 		JPanel groupTitle = new JPanel();
-		groupTitle.setBounds(250, 0, 250, 70);
+		groupTitle.setBounds(250, 170, 250, 70);
 		groupTitle.add(groupLbl);
 
 		JPanel contentPane = new JPanel(null);
 		contentPane.setPreferredSize(new Dimension(500, 400));
-		contentPane.add(scrollPane);
+		//contentPane.add(scrollPane);
 		contentPane.add(scrollPane1);
 		contentPane.add(contactTitle);
 		contentPane.add(groupTitle);
@@ -48,12 +54,17 @@ public class ContactPanel {
 		return contentPane;
 		
 	}
+	
+	public ArrayList<Account> getGroups(){
+		return null;
+		
+	}
 
-	public JScrollPane groupPanel() throws Exception{
+/*	public JScrollPane groupPanel() {
 		JPanel displayGroups = new JPanel();
-		setGroupList();
-		for (int i = 0; i < getGroupList().size(); i++) {
-			String[] parts = getGroupList().get(i).split(",");
+		ArrayList<String> l = m_currUser.getGroups();
+		for (int i = 0; i < l.size(); i++) {
+			String[] parts = l.get(i).split(",");
 			String part1 = parts[0];
 			String part2 = parts[1];
 			String part3 = parts[2];
@@ -80,29 +91,34 @@ public class ContactPanel {
 		
 		return scrollPane1;
 		
-	}
+	}*/
 	
-	public JScrollPane contactPanel() throws Exception{
+	public JScrollPane contactPanel() {
 
 		JPanel displayContact = new JPanel();
-		setContactList();
 		
-		for (int i = 0; i < getContactList().size(); i++) {
-			String[] parts = getContactList().get(i).split(",");
-			//get(i) unreadmessages
+		ArrayList<Account> a = m_currUser.getFriends();
+		
+		for (int i = 0; i < a.size(); i++) {
+			String[] parts = a.get(i).getUser().split(",");
+			
 			String part1 = parts[0];
-			String part2 = parts[1];
-			String part3 = parts[2];
+			
 			JButton Ai = new JButton(part1);
 			displayContact.add(Ai);
-			JLabel Bi = new JLabel(part2);
+			
+			UnreadMessages unreadInfo = new UnreadMessages(m_currUser,a.get(i));
+			int numOfUnreadMessages = unreadInfo.unreadMessageCount();
+			JLabel Bi = new JLabel("New Messages:" + String.valueOf(numOfUnreadMessages));// convert to string
 			displayContact.add(Bi);
-			if(!part2.replaceAll("\\s+","").equals("0")){
+		
+			if( numOfUnreadMessages == 0){
 				Bi.setBackground(Color.CYAN);
 				Bi.setOpaque(true);
 			}
-			JLabel Ci = new JLabel(part3);
+			JLabel Ci = new JLabel("Time of last message: \n"+unreadInfo.getTimeofLastSentMessage());
 			displayContact.add(Ci);
+			
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -112,25 +128,11 @@ public class ContactPanel {
 		}
 		displayContact.setLayout(new GridLayout(0, 1, 0, 0));
 		JScrollPane scrollPane = new JScrollPane(displayContact);
-		scrollPane.setBounds(0, 70, 250, 330);
+		scrollPane.setBounds(0, 200, 250, 330);
 		
 		return scrollPane;
 		
 	}
 	
-	public ArrayList<String> setContactList() throws Exception {
-		
-		return contactList = ReadContactFile.contactReader();
-	}
-	
-	public ArrayList<String> setGroupList() throws Exception {
-		return groupList = ReadContactFile.contactReader(); //reads in groups list here instead of contact list
-	}
-	public ArrayList<String> getGroupList() {
-		return groupList;
-	}
-	
-	public ArrayList<String> getContactList() {
-		return contactList;
-	}
+
 }
