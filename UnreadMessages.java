@@ -187,7 +187,28 @@ public class UnreadMessages {
             return null;
         }
     }
+    
+	public String getTimeofLastSentMessage() {
+		ArrayList<String> messages = getMessages(m_messagesFile);
+		String dtOlMS = null;
+		for (int i = 0; i < messages.size(); i++) {
+			String[] parts = messages.get(i).split(",");
+			for (int j = i + 1; j < messages.size(); j++) {
+				String[] parts1 = messages.get(j).split(",");
 
+				if (parts1[1].compareTo(parts[1]) > 0) {
+					dtOlMS = parts[1];
+				} else if (parts1[1].compareTo(parts[1]) < 0) {
+					dtOlMS = parts1[1];
+				} else {
+					dtOlMS = parts1[1];
+				}
+
+			}
+		}
+		return dtOlMS;
+	}
+	
     /**
      * Determines if date and time in first array if later than second array
      *
