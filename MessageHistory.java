@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -22,7 +23,13 @@ public class MessageHistory {
 	public MessageHistory(Account accountSend, Account accountRecieve) {
 		m_accountSend = accountSend;
 		m_accountRecieve = accountRecieve;
-	}
+        // If accountSend username <= accountRecieve username
+        if (accountSend.getUser().compareTo(accountRecieve.getUser()) <= 0) {
+            m_fileName = "messages\\" + accountSend.getUser() + "_" + accountRecieve.getUser() + ".txt";
+        } else { // Else firstAccount username > secondAccount username
+            m_fileName = "messages\\" + accountRecieve.getUser() + "_" + accountRecieve.getUser() + ".txt";
+        }
+    }
 	
 	public String[] getUsers() {
 		return m_users;
@@ -77,9 +84,23 @@ public class MessageHistory {
 			e.printStackTrace();
 		}
 	}
-	
-	public String readFromFile() {
-		String line = "";
+
+    /**
+     * Makes an ArrayList of each line in a chat file. The array list contains a String[], where
+     * index 0 is the username of the sending account,
+     * index 1 is the timestamp of the message sent and,
+     * index 2 is the message itself
+     *
+     * @return String[] where 0 is username, 1 is timestamp, 2 is message
+     */
+    public ArrayList<String[]> readFromFile() {
+
+        File chatFile = new File(m_fileName);
+        Scanner in = null;
+
+
+		/*
+        String line = "";
 		Scanner in = null;
 		File read = null;
 		
@@ -97,5 +118,6 @@ public class MessageHistory {
 			e.printStackTrace();
 		}
 		return line;
-	}
+		*/
+    }
 }
