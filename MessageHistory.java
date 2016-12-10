@@ -38,7 +38,7 @@ public class MessageHistory {
 		m_accountsRecieve = accountRecieve;
 
 		m_accountsRecieve.add(m_accountSend);
-		m_accountsRecieve.add(m_accountSend);
+		m_accountsRecieve.addAll(accountRecieve);
 		Collections.sort(m_accountsRecieve);
 
 		String userFileName = "";
