@@ -95,20 +95,22 @@ public class MainWindow extends JFrame {
 	}
 
 	private JComponent insertGroups(JComponent panel) {
-		int i = 0;
-		ArrayList<Account> groupList = currUser.getFriends();
+		int y = 0;
+		ArrayList<String> groupList = currUser.getGroupsFileNames();
 		Groups groups = new Groups(graph, currUser);
 		groups.makeGroups();
 		groups.makeUserGroups();
 
-		for(Account obj : groupList) {
-			String name = obj.getUser();
+		for(int i = 0; i < groupList.size(); i++) {
 			ArrayList<ArrayList<Account>> group1 = currUser.getGroups();
-			ArrayList<Account> allUsers = groups.getRightUsers(group1, name);
+			String[] parts = groupList.get(i).split(",");
+			String part1 = parts[0];
+
+			ArrayList<Account> allUsers = groups.getRightUsers(group1, part1);
 			allUsers.add(currUser);
-			String groupName = groups.readGroupName(name);
+			String groupName = groups.readGroupName(part1);
 			panel.add(structureGroupButton(groupName, panel, i, allUsers));
-			i = i + 60;
+			y = y + 60;
 		}
 		return panel;
 	}
