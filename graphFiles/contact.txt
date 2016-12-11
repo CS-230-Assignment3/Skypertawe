@@ -1,3 +1,4 @@
 john,katie
+katie,sam
 jez,sam
 john,sam
