@@ -1,4 +1,10 @@
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
  * @author Samuel O'Reilly (824712)
@@ -38,11 +44,34 @@ public class AccountsGraph {
     }
 
     /**
-     * Adds a new account to the list of accounts, as well as writing it to file
+     * Adds a new account to the list of accounts, as well as writing it to file. It also makes a copy of the profile pic path
+     * into the local directory profilePics
      * @param newAccount Account to be added
      */
     public void addAccount(Account newAccount) {
         String newUsername = newAccount.getUser();
+
+        /*
+         * Copy profile picture and change path to relative copy
+         */
+
+        String oldPath = newAccount.getProfilePic();
+        //Split path by "."
+        String[] oldPathArray = oldPath.split("\\.");
+        //Final element in array must be file extension
+        String fileExtension = oldPathArray[oldPathArray.length - 1];
+
+        String newPath = "profilePics\\" + newAccount.getUser() + "." + fileExtension;
+
+        Path profilePic = Paths.get(oldPath);
+        Path newFile = Paths.get(newPath);
+
+        //Move file
+        try {
+            Files.copy(profilePic, newFile, REPLACE_EXISTING);
+        } catch (IOException e) {
+            System.err.println("Failed to copy profile pic" + "\n" + e.getStackTrace());
+        }
 
         int curIndex = 0;
         boolean inserted = false;
@@ -60,6 +89,8 @@ public class AccountsGraph {
                 curIndex++;
             }
         } // end while
+
+        newAccount.setProfilePic(newPath);
 
         //Saves new account to accounts.txt
         m_accountsFile.addAccount(newAccount);
