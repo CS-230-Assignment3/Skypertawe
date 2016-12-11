@@ -4,12 +4,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 public class ChatPanel extends JFrame {
     private Account currentAccount;
     private Account otherAccount;
     private MessageHistory chatHistory;
-
+    private ArrayList<Account> otherAccounts;
+    
     public ChatPanel(Account currentAccount, Account otherAccount) {
         this.setTitle("Skypertawe - Chat");
         this.setSize(800, 600);
