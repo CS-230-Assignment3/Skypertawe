@@ -251,7 +251,7 @@ public class MessageHistory {
                 String timestamp = line.next();
                 String messageType = line.next();
 
-                //Determine which type of message current line in read is
+                //Determine which type of message current line in read is, and format accordingly
                 if (messageType.equals("messageText")) {
                     String messageText = line.next();
                     message = new MessageText(sendAccount, messageText, timestamp);
