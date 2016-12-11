@@ -19,9 +19,7 @@ public class DrawingEnv extends JFrame {
      */
     private Account m_secondAccount;
 
-    /**
-     * The width and height of the drawing window
-     */
+    /** The width and height of the drawing window*/
     public final static int FRAME_WIDTH = 550;
 
     public final static int FRAME_HEIGHT = 350;
@@ -41,9 +39,11 @@ public class DrawingEnv extends JFrame {
 
     public final static int MESSAGE_HEIGHT = 25;
 
-    public DrawingEnv(Account firstAccount, Account secondAccount) {
-        m_firstAccount = firstAccount;
-        m_secondAccount = secondAccount;
+    /**
+     * Constructor:
+     * set up GUI
+     */
+    public DrawingEnv(){
         this.setTitle("This is a drawing environment");
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
@@ -53,13 +53,17 @@ public class DrawingEnv extends JFrame {
         loadAssets();
     }
 
-    private void loadAssets() {
+    /**
+     * set up the panel for drawing
+     * adding the button for different function
+     */
+    private void loadAssets(){
         DrawingElemPanel paintPanel = new DrawingElemPanel(m_firstAccount, m_secondAccount);
         paintPanel.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         paintPanel.setLayout(null);
-
-        JLabel message = new JLabel("Draw something here");
-        /* Create two button to switch the mode */
+		/* Create a message label */
+        JLabel message = new JLabel( "Draw something here");
+		/* Create two button to switch the mode */
         JButton moveToLine = new JButton("Line Element");
         JButton moveToParticle = new JButton("Particle Effect");
 	    /* Create the colour button to switch the colour */
@@ -68,50 +72,48 @@ public class DrawingEnv extends JFrame {
         JButton redColour = new JButton();
         JButton greenColour = new JButton();
 
+	    /* Set up the button size */
         message.setBounds(FRAME_WIDTH / 55, FRAME_HEIGHT - (MESSAGE_HEIGHT * 3), MESSAGE_WIDTH, MESSAGE_HEIGHT);
         moveToLine.setBounds(FRAME_WIDTH / 11, FRAME_HEIGHT / 35, MODEBUTTON_WIDTH, MODEBUTTON_HEIGHT);
         moveToParticle.setBounds(FRAME_WIDTH / 2, FRAME_HEIGHT / 35, MODEBUTTON_WIDTH, MODEBUTTON_HEIGHT);
         blueColour.setBounds(15, FRAME_HEIGHT / 35, COLOURBUTTON_WIDTH, COLOURBUTTON_HEIGHT);
         blackColour.setBounds(15, FRAME_HEIGHT / 10, COLOURBUTTON_WIDTH, COLOURBUTTON_HEIGHT);
-        redColour.setBounds(FRAME_WIDTH - (COLOURBUTTON_WIDTH * 3), FRAME_HEIGHT / 35, COLOURBUTTON_WIDTH, COLOURBUTTON_HEIGHT);
-        greenColour.setBounds(FRAME_WIDTH - (COLOURBUTTON_WIDTH * 3), FRAME_HEIGHT / 10, COLOURBUTTON_WIDTH, COLOURBUTTON_HEIGHT);
+        redColour.setBounds(FRAME_WIDTH - (COLOURBUTTON_WIDTH*3), FRAME_HEIGHT / 35, COLOURBUTTON_WIDTH, COLOURBUTTON_HEIGHT);
+        greenColour.setBounds(FRAME_WIDTH - (COLOURBUTTON_WIDTH*3), FRAME_HEIGHT / 10, COLOURBUTTON_WIDTH, COLOURBUTTON_HEIGHT);
 
+	    /* Set up the button colour */
         blueColour.setBackground(Color.BLUE);
         blackColour.setBackground(Color.BLACK);
         redColour.setBackground(Color.RED);
         greenColour.setBackground(Color.GREEN);
 
-        moveToLine.addActionListener(new ActionListener() {
+	    /* Set up the button action */
+        moveToLine.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 paintPanel.setMode("Line");
             }
         });
-
-        moveToParticle.addActionListener(new ActionListener() {
+        moveToParticle.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 paintPanel.setMode("Trace");
             }
         });
-
-        blueColour.addActionListener(new ActionListener() {
+        blueColour.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 paintPanel.setElemColor(Color.BLUE);
             }
         });
-
-        blackColour.addActionListener(new ActionListener() {
+        blackColour.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 paintPanel.setElemColor(Color.BLACK);
             }
         });
-
-        redColour.addActionListener(new ActionListener() {
+        redColour.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 paintPanel.setElemColor(Color.RED);
             }
         });
-
-        greenColour.addActionListener(new ActionListener() {
+        greenColour.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 paintPanel.setElemColor(Color.GREEN);
             }
@@ -126,7 +128,6 @@ public class DrawingEnv extends JFrame {
         paintPanel.add(message);
         this.add(paintPanel);
         this.setVisible(true);
-
     }
 
 }

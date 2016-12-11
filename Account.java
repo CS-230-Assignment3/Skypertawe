@@ -10,14 +10,14 @@ public class Account implements Comparable<Account> {
 	private String m_password;
 	private String m_profilePicPath;
 	private String m_lastLogInTime;
-	private BigInteger m_phoneNum;
+	private String m_phoneNum;
 	private int m_newMessageNum;
 	private ArrayList<Account> friends = new ArrayList<Account>();
 	private ArrayList<ArrayList<Account>> groups = new ArrayList<ArrayList<Account>>();
 	private ArrayList<String> currUserGroupsFileNames = new ArrayList<String>();
 	private ArrayList<Account> invites = new ArrayList<Account>();
 
-	public Account(String username, String firstName, String lastName, String profilePicPath, String birthday, String city, String password, BigInteger phoneNum){
+	public Account(String username, String firstName, String lastName, String profilePicPath, String birthday, String city, String password, String phoneNum){
 		this.m_username = username;
 		this.m_firstName = firstName;
 		this.m_lastName = lastName;
@@ -56,7 +56,7 @@ public class Account implements Comparable<Account> {
 		return m_profilePicPath;
 	}
 
-	public BigInteger getPhoneNum(){
+	public String getPhoneNum(){
 		return m_phoneNum;
 	}
 
@@ -104,7 +104,7 @@ public class Account implements Comparable<Account> {
 		m_profilePicPath = newProfilePicPath;
 	}
 
-	public void setPhoneNum(BigInteger newPhoneNum){
+	public void setPhoneNum(String newPhoneNum){
 		m_phoneNum = newPhoneNum;
 	}
 

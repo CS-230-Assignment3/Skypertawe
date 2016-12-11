@@ -11,7 +11,7 @@ public abstract class DescriptionMessage extends Message {
     String m_textDescription;
 
     /**
-     * Sets the account message is sent from, account message is to be sent to, the filepath to the item being sent
+     * Sets the account message is sent from, the filepath to the item being sent
      * and a description of what is being sent. This sets the send time to current system time
      *
      * @param accountSend     account sending the message

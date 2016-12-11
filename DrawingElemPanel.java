@@ -15,9 +15,7 @@ import javax.swing.JPanel;
 
 public class DrawingElemPanel extends JPanel {
 
-    /**
-     * The width of the point of ParticleEffect
-     */
+    /** The width of the point of ParticleEffect*/
     private final int OVAL_WIDTH = 4;
 
     /** The height of the point of ParticleEffect*/
@@ -35,10 +33,8 @@ public class DrawingElemPanel extends JPanel {
     /** A String of the mode of drawing, start at drawing Line*/
     private String m_mode = "Line";
 
-    /**
-     * The start point of the Line which is drawing
-     */
-    private Point m_starting = new Point(0, 0);
+    /** The start point of the Line which is drawing*/
+    private Point m_starting = new Point(0,0);
 
     /** The end point of the Line which is drawing*/
     private Point m_stoping;
@@ -115,12 +111,12 @@ public class DrawingElemPanel extends JPanel {
      * @param point
      * @return TRUE on success
      */
-    public boolean setPoint(Point point) {
+    public boolean setPoint(Point newPoint) {
         boolean test = false;
         if (test) {
-            System.out.println("DrawingElemPanel::setPoint() - " + m_PointCount + ", " + point.toString());
+            System.out.println("DrawingElemPanel::setPoint() - " + m_PointCount + ", " + newPoint.toString());
         }
-        m_Points[getPointCount() ] = point;
+        m_Points[ getPointCount() ] = newPoint;
         return true;
     }
 
@@ -129,8 +125,8 @@ public class DrawingElemPanel extends JPanel {
      * Use to switch the mode for drawing the other element
      * call by the JButton in the JFrame
      */
-    public void setMode(String mode){
-        m_mode = mode;
+    public void setMode(String newMode){
+        m_mode = newMode;
         System.out.println("DrawingElemPanel::setMode() - " + m_mode);
         DrawingHandler handler = new DrawingHandler();
         this.addMouseListener(handler);
@@ -140,69 +136,79 @@ public class DrawingElemPanel extends JPanel {
     /**
      * @param colour reset the array of colour of the point in ParticleEffect
      */
-    public void setPointColor(Color colour){
-        m_colourpoint[getPointCount()] = colour;
+    public void setPointColor(Color newColour){
+        m_colourpoint[getPointCount()] = newColour;
     }
 
     /**
      * @param colour reset the colour of element
      */
-    public void setElemColor(Color colour){
-        m_colour = colour;
+    public void setElemColor(Color newColour){
+        m_colour = newColour;
     }
 
     /**
      * @param point reset the start point of line element
      */
-    public void setStart(Point point){
-        m_starting = point;
+    public void setStart(Point newPoint){
+        m_starting = newPoint;
     }
 
     /**
      * @param point reset the end point of line element
      */
-    public void setStop(Point point){
-        m_stoping = point;
+    public void setStop(Point newPoint){
+        m_stoping = newPoint;
     }
 
     /**
      * @param line add the new line of ArrayList of all line
      */
-    public void addLines(Line line){
-        m_Line.add(line);
+    public void addLines(Line newLine){
+        m_Line.add(newLine);
     }
 
-    public void setLines(ArrayList<Line> line) {
-        m_Line = line;
+    /**
+     * @param line update the ArrayList of all line
+     */
+    public void setLines(ArrayList<Line> newLine){
+        m_Line = newLine;
     }
 
-    public void setAllPoint(Point[] point) {
-        m_Points = point;
+    /**
+     * @param point update the array of point of all point in ParticleEffect
+     */
+    public void setAllPoint(Point[] newPoint){
+        m_Points = newPoint;
     }
 
-    public void setPointCount(int count) {
-        m_PointCount = count;
+    /**
+     * @param count update the number of point of all point in ParticleEffect
+     */
+    public void setPointCount(int newCount){
+        m_PointCount = newCount;
     }
 
-    public void setAllPointColor(Color[] colour) {
-        m_colourpoint = colour;
+    /**
+     * @param colour update the array of colour of all point in ParticleEffect
+     */
+    public void setAllPointColor(Color[] newColour){
+        m_colourpoint = newColour;
     }
 
     /**
      * Constructor:
-     * set up GUI
+     * @param firstAccount, secondAccount
+     * set up GUI and take two Accounts for two user drawing
+     * set up the filename for saving their drawing
      */
     public DrawingElemPanel(Account firstAccount, Account secondAccount){
-
-        m_firstAccount = firstAccount;
-        m_secondAccount = secondAccount;
-
         // If first account username <= second account username
         if (m_firstAccount.getUser().compareTo(m_secondAccount.getUser()) <= 0) {
             m_linefile = "drawingFiles\\line_" + (m_firstAccount.getUser() + "_" + m_secondAccount.getUser() + ".txt");
             m_particalfile = "drawingFiles\\partical_" + (m_firstAccount.getUser() + "_" + m_secondAccount.getUser() + ".txt");
         } else { // Else second account username > first account username
-            m_linefile = "drawingFiles\\line_" + m_secondAccount.getUser() + "_" + (m_firstAccount.getUser() + ".txt");
+            m_linefile = "drawingFiles\\" + m_secondAccount.getUser() + "_" + (m_firstAccount.getUser() + ".txt");
             m_particalfile = "drawingFiles\\partical_" + (m_secondAccount.getUser() + "_" + m_firstAccount.getUser() + ".txt");
         }
 
@@ -215,52 +221,27 @@ public class DrawingElemPanel extends JPanel {
         repaint();
     }
 
-    public void loadFile(String lineFile, String partFile) {
+    /**
+     * @param lineFile, partFile two file of the drawing history
+     * Use repaint the drawing panel for the past drawing
+     */
+    public void loadFile(String lineFile, String partFile){
         ArrayList<Line> allLine = new ArrayList<Line>();
         Point[] allPoint = new Point[MAX_POINTS];
         Color[] allColor = new Color[MAX_POINTS];
-
-        File inputFile = new File(lineFile);
-
-        if (!inputFile.exists()) {
-            return;
-        }
-
-        Scanner in = null;
-        try {
-            in = new Scanner(inputFile);
-        } catch (FileNotFoundException e) {
-            System.out.println("Can't open " + lineFile);
-            System.exit(0);
-        }
-        while (in.hasNextLine()) {
+        Scanner in = filereader(lineFile);
+        while(in.hasNextLine()){
             String line = in.nextLine();
             Scanner in2 = new Scanner(line);
-            String[] wholeLine = in2.nextLine().split(",");
-            int x1 = Integer.parseInt(wholeLine[0]);
-            int y1 = Integer.parseInt(wholeLine[1]);
-            int x2 = Integer.parseInt(wholeLine[2]);
-            int y2 = Integer.parseInt(wholeLine[3]);
-            int r = Integer.parseInt(wholeLine[4]);
-            int g = Integer.parseInt(wholeLine[5]);
-            int b = Integer.parseInt(wholeLine[6]);
-            Color newColuor = new Color(r, g, b);
-            Line newLine = new Line(x1, y1, x2, y2, newColuor);
+            Line newLine = makeLine(in2);
             allLine.add(newLine);
             in2.close();
         }
         in.close();
         setLines(allLine);
-        File inputFile2 = new File(partFile);
-        Scanner in3 = null;
         int counter = 0;
-        try {
-            in3 = new Scanner(inputFile2);
-        } catch (FileNotFoundException e) {
-            System.out.println("Can't open " + partFile);
-            System.exit(0);
-        }
-        while (in3.hasNextLine()) {
+        Scanner in3 = filereader(partFile);
+        while(in3.hasNextLine()){
             String line = in3.nextLine();
             Scanner in2 = new Scanner(line);
             String[] wholeLine = in2.nextLine().split(",");
@@ -269,7 +250,7 @@ public class DrawingElemPanel extends JPanel {
             int r = Integer.parseInt(wholeLine[2]);
             int g = Integer.parseInt(wholeLine[3]);
             int b = Integer.parseInt(wholeLine[4]);
-            Color newColour = new Color(r, g, b);
+            Color newColour = new Color(r,g,b);
             allPoint[counter] = new Point(x, y);
             allColor[counter] = newColour;
             counter++;
@@ -281,6 +262,39 @@ public class DrawingElemPanel extends JPanel {
         in3.close();
     }
 
+    /**
+     * @param file the file which ready to read
+     * @return the scanner which read the file successfully
+     */
+    private Scanner filereader(String file) {
+        File inputFile = new File(file);
+        Scanner in = null;
+        try{
+            in = new Scanner(inputFile);
+        } catch (FileNotFoundException e){
+            System.out.println("Can't open " + file);
+            System.exit (0);
+        }
+        return in;
+    }
+
+    /**
+     * @param in2 the scanner which save one line of the file
+     * @return the line made from the data in the line
+     */
+    private Line makeLine(Scanner in2) {
+        String[] wholeLine = in2.nextLine().split(",");
+        int x1 = Integer.parseInt(wholeLine[0]);
+        int y1 = Integer.parseInt(wholeLine[1]);
+        int x2 = Integer.parseInt(wholeLine[2]);
+        int y2 = Integer.parseInt(wholeLine[3]);
+        int r = Integer.parseInt(wholeLine[4]);
+        int g = Integer.parseInt(wholeLine[5]);
+        int b = Integer.parseInt(wholeLine[6]);
+        Color newColuor = new Color(r,g,b);
+        Line newLine = new Line(x1,y1,x2,y2,newColuor);
+        return newLine;
+    }
 
     /**
      * @param drawing add the ArrayList of all line
@@ -290,10 +304,10 @@ public class DrawingElemPanel extends JPanel {
     public void saveLine(ArrayList<Line> drawing) throws IOException {
         File inputFile = new File(m_linefile);
         FileWriter writer = new FileWriter(inputFile);
-        for (int i = 0; i < drawing.size(); i++) {
-            writer.write(drawing.get(i).getX1() + "," + drawing.get(i).getY1() + "," + drawing.get(i).getX2()
-                    + "," + drawing.get(i).getY2() + "," + drawing.get(i).getColour().getRed()
-                    + "," + drawing.get(i).getColour().getGreen() + "," + drawing.get(i).getColour().getBlue()+"\n");
+        for(int i = 0; i < drawing.size(); i++){
+            writer.write(drawing.get(i).getX1()+","+drawing.get(i).getY1()+","+drawing.get(i).getX2()
+                    +","+drawing.get(i).getY2()+","+drawing.get(i).getColour().getRed()
+                    +","+drawing.get(i).getColour().getGreen()+","+drawing.get(i).getColour().getBlue()+"\n");
         }
         writer.close();
     }
@@ -307,9 +321,9 @@ public class DrawingElemPanel extends JPanel {
     public void savePartical(Point[] drawing, Color[] drawingColour) throws IOException {
         File inputFile = new File(m_particalfile);
         FileWriter writer = new FileWriter(inputFile);
-        for (int i = 0; i < this.getPointCount(); i++) {
-            writer.write(drawing[i].x + "," + drawing[i].y + "," + drawingColour[i].getRed()
-                    + "," + drawingColour[i].getGreen() + "," + drawingColour[i].getBlue()+"\n");
+        for ( int i = 0; i < this.getPointCount(); i++ ) {
+            writer.write(drawing[i].x+","+drawing[ i ].y+","+drawingColour[i].getRed()
+                    +","+drawingColour[i].getGreen()+","+drawingColour[i].getBlue()+"\n");
         }
         writer.close();
     }
@@ -326,17 +340,17 @@ public class DrawingElemPanel extends JPanel {
         if (test) {
             System.out.println("PaintPanel::paintComponent() " + graphics.toString());
         }
-           /* clears drawing area */
+	       /* clears drawing area */
         super.paintComponent( graphics );
 	      /* draw all points in array and all line */
-        for (int i = 0; i < this.getPointCount(); i++ ) {
+        for ( int i = 0; i < this.getPointCount(); i++ ) {
             graphics.setColor(getPointColor()[i]);
-            graphics.fillOval(getPoints()[i].x, /* upper-left x coord */
-                    getPoints()[i].y, /* upper-left y coord */
+            graphics.fillOval( getPoints()[ i ].x, /* upper-left x coord */
+                    getPoints()[ i ].y, /* upper-left y coord */
                     OVAL_WIDTH , OVAL_HEIGHT);
         }
 
-        for (int i = 0; i < m_Line.size(); i++){
+        for(int i = 0; i < m_Line.size(); i++){
             Line drawing = m_Line.get(i);
             graphics.setColor(m_Line.get(i).getColour());
             graphics.drawLine(drawing.getX1(), drawing.getY1(),
@@ -362,9 +376,9 @@ public class DrawingElemPanel extends JPanel {
             if (test) {
                 System.out.println("DrawingHandler::mouseDragged() " + event.toString());
             }
-            if (m_mode.equals("Trace")) {
-                if (getPointCount() < getPoints().length ) {
-                    /* find and store point */
+            if (m_mode.equals("Trace")){
+                if ( getPointCount() < getPoints().length ) {
+	        		/* find and store point */
                     setPoint(event.getPoint());
 	        		/* find and store the colour of the point */
                     setPointColor(getElemColor());
@@ -437,7 +451,7 @@ public class DrawingElemPanel extends JPanel {
                 System.out.println("DrawingHandler::mouseReleased() " + event.toString());
             }
             if(m_mode.equals("Line")){
-                 /*When user released the mouse, save the end point*/
+	        	 /*When user released the mouse, save the end point*/
                 setStop(event.getPoint());
 	        	 /*Make the line between start point and end point*/
                 Line newLine = new Line(m_starting.x, m_starting.y,
