@@ -78,7 +78,6 @@ public class ContactPanel extends JFrame {
 			
 			String[] parts = a.get(i).split(",");
 			String part1 = parts[0];
-			System.out.print(parts[0]);
 			
 			ArrayList<Account> allUser = s.getRightUsers(a1, part1);
 			allUser.add(m_CurrUser);
