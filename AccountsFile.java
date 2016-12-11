@@ -13,7 +13,6 @@ import java.util.Scanner;
  * Read and writes Account objects to file, as well as building the ArrayList of all Account objects
  */
 public class AccountsFile {
-
     private final String ACCOUNTS_FILEPATH = "graphFiles\\accounts.txt"; //file path of accounts file
     private final String ACCOUNTS_TEMP_FILEPATH = "graphFiles\\accountsTemp.txt"; //file path of temp accounts file
     private final String FILE_NOT_FOUND_MESSAGE = "File not found";
@@ -23,7 +22,6 @@ public class AccountsFile {
      */
     public AccountsFile() {
     }
-
 
     /**
      * Reads all Account objects from file and adds them to an ArrayList
