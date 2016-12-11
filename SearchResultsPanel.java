@@ -32,16 +32,22 @@ public class SearchResultsPanel extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					String content = searchBox.getText();
 					Account newAccount = searchResults.findAccount(content);
-					String newLine = newAccount.getUser() + "," + newAccount.getFirst() + "," + newAccount.getLastName();
-					JButton ResultLinkButton = new JButton(newLine);
-					ResultLinkButton.setBounds(0, 150, 250, 50);
-					contentPane.add(ResultLinkButton);
-					ResultLinkButton.addActionListener(new ActionListener() {
+					System.out.println(newAccount);
+					if(newAccount != null){	
+						String newLine = newAccount.getUser() + "," + newAccount.getFirst() + "," + newAccount.getLastName();
+						JButton ResultLinkButton = new JButton(newLine);
+						ResultLinkButton.setBounds(0, 150, 250, 50);
+						contentPane.add(ResultLinkButton);
+						ResultLinkButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
 								System.out.print("it works, kinda. Needs to vaildate input at graph!");						
 							}
 						});
+					}else{
+						JOptionPane.showMessageDialog(buildPanel(),"No reults Found, Please try again"); 
+					}
 				}
+					
 			});
          
         submitButton.setBounds(100, 70, 130, 20);
