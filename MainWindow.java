@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class MainWindow extends JFrame {
-	private AccountsGraph graph;
+	private AccountsGraph m_graph;
 	private Account m_currUser;
 	
     public MainWindow(AccountsGraph graph, Account currUser) {
@@ -17,7 +17,7 @@ public class MainWindow extends JFrame {
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setVisible(true);
-		this.graph = graph;
+		this.m_graph = graph;
         //loadAssets();
 		loadContacts();
 	}
@@ -28,7 +28,7 @@ public class MainWindow extends JFrame {
     }
 
     private void loadContacts(){
-    	ContactPanel panel = new ContactPanel(m_currUser);
+    	ContactPanel panel = new ContactPanel(m_graph,m_currUser);
     	JPanel panel1 = panel.buildPanel();
     	panel1.setBounds(100, 50, 500,400);
     	this.setContentPane(panel1);
