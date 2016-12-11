@@ -51,7 +51,7 @@ public class AccountsFile {
             String username = accountInfo.next();
             String firstName = accountInfo.next();
             String lastName = accountInfo.next();
-            BigInteger phoneNum = BigInteger.valueOf(Integer.parseInt(accountInfo.next()));
+            String phoneNum = accountInfo.next();
             String password = accountInfo.next();
             String lastLoginTime = accountInfo.next();
             boolean isBirthday = Boolean.parseBoolean(accountInfo.next());

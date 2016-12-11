@@ -216,11 +216,11 @@ public class RegisterPanel extends JFrame {
         newAccount = new Account(m_username,
                 m_firstname,
                 m_lastname,
+                "", //Add profile pic path here
                 m_dob,
                 m_city,
                 m_password,
-                "",
-                BigInteger.valueOf(Integer.parseInt(m_phoneNumber)));
+                m_phoneNumber);
         graph.addAccount(newAccount);
     }
 
