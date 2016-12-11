@@ -89,7 +89,8 @@ public class LoginPanel extends JFrame {
     }
 
     private void submitForm() {
-        new MainWindow(graph);
+        Account curruser = graph.findAccount(m_username);
+        new MainWindow(graph, curruser);
     }
 
     private void cancelForm() {
