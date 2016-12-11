@@ -1,5 +1,17 @@
+/**
+ * @file LoginPanel.java
+ * @author Luke Harvey
+ * @date 11th dec 2016
+ *
+ * This is the panel that loads when the user selects the
+ * login button from the front page. It contains validation and
+ * actions on the login.
+ */
+
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,6 +20,11 @@ public class LoginPanel extends JFrame {
     private String m_password;
     private AccountsGraph graph;
 
+    /**
+     * This constructor sets the JFrame values
+     * and loads the assets on to the JFrame
+     * @param graph
+     */
     public LoginPanel(AccountsGraph graph) {
         this.setTitle("Skypertawe - Login");
         this.setSize(600, 400);
@@ -19,7 +36,11 @@ public class LoginPanel extends JFrame {
         loadAssets();
     }
 
-    public void loadAssets() {
+    /**
+     * This loads all the components on to the
+     * JFrame and sets actions on the button
+     */
+    private void loadAssets() {
         JPanel panel = new JPanel();
         panel.setSize(this.getWidth(), this.getHeight());
         panel.setLayout(null);
@@ -66,7 +87,7 @@ public class LoginPanel extends JFrame {
                     submitForm();
                 }
                 else {
-                    JOptionPane.showMessageDialog(panel, "Account credentials unknown.");
+                    JOptionPane.showMessageDialog(panel, "Account credentials unknown.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -88,11 +109,21 @@ public class LoginPanel extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * This method is executed when the
+     * submit button is pressed which
+     * loads the main window
+     */
     private void submitForm() {
-        Account curruser = graph.findAccount(m_username);
-        new MainWindow(graph, curruser);
+        Account user = graph.findAccount(m_username);
+        new MainWindow(graph, user);
+        this.dispose();
     }
 
+    /**
+     * This method is executed when the
+     * cancel button is pressed
+     */
     private void cancelForm() {
         new WelcomePanel(graph);
         this.dispose();

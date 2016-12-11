@@ -1,12 +1,28 @@
-import java.awt.*;
+/**
+ * @file WelcomePanel.java
+ * @author Luke Harvey
+ * @date 11th dec 2016
+ *
+ * This class is the first GUI interface that the
+ * user sees and has two buttons which will either
+ * take the user to the login screen or the register screen
+ */
+
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 public class WelcomePanel extends JFrame {
 	private AccountsGraph graph;
 
+	/**
+	 * This constructor sets the values for the JFrame
+	 * and loads the assets on to the panel
+	 * @param graph The accounts
+	 */
 	public WelcomePanel(AccountsGraph graph) {
 		this.setTitle("Skypertawe");
 		this.setSize(1000, 700);
@@ -18,6 +34,10 @@ public class WelcomePanel extends JFrame {
 		loadAssets();
 	}
 
+	/**
+	 * Loads all JComponents on to the panel and
+	 * sets actions for the buttons
+	 */
 	private void loadAssets() {
 		JPanel panel = new JPanel();
 		panel.setSize(this.getWidth(), this.getHeight());
@@ -65,11 +85,19 @@ public class WelcomePanel extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * This is a method executed when
+	 * the user presses the login button
+	 */
 	private void loadLogin() {
 		new LoginPanel(graph);
 		this.dispose();
 	}
 
+	/**
+	 * This is a method executed when
+	 * the user presses the register button
+	 */
 	private void loadRegister() {
 		new RegisterPanel(graph);
 		this.dispose();

@@ -1,39 +1,70 @@
+/**
+ * @file MainWindow.java
+ * @author Luke Harvey, Jamie Hutton
+ * @date 11th dec 2016
+ *
+ * This class is the main window that will contain
+ * the contacts list so that when the user clicks on
+ * a friend, it will open a chat dialog with them.
+ */
+
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 public class MainWindow extends JFrame {
-	private AccountsGraph m_graph;
-	private Account m_currUser;
-	
+	private AccountsGraph graph;
+	private Account currUser;
+
+	/**
+	 * This constructor sets teh values for the
+	 * JFrame, loads the contact panel and loads
+	 * the components on to the panel
+	 * @param graph The accounts to pass through
+	 * @param currUser The current user
+	 */
     public MainWindow(AccountsGraph graph, Account currUser) {
-    	
-    	m_currUser = currUser;
-		this.setTitle("Skypertawe - Welcome ###username here ??");
+		this.currUser = currUser;
+		this.setTitle("Skypertawe - " + "Hello, " + currUser.getUser());
 		this.setSize(1000, 700);
-		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(exitProgram());
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setVisible(true);
-		this.m_graph = graph;
-        //loadAssets();
+		this.graph = graph;
 		loadContacts();
+		loadAssets();
 	}
 
-	private void loadAssets() {
-        //Use this method to add general JPanels, JLabels ect
-		//That have no context
-    }
-
+	/**
+	 * Loads the contact panel on the left
+	 */
     private void loadContacts(){
-    	ContactPanel panel = new ContactPanel(m_graph,m_currUser);
+    	ContactPanel panel = new ContactPanel(graph, currUser);
     	JPanel panel1 = panel.buildPanel();
     	panel1.setBounds(100, 50, 500,400);
     	this.setContentPane(panel1);
-  
 	}
 
-}
+	/**
+	 * Loads some components on the right
+	 */
+	private void loadAssets() {
+		//Use this method to add general JPanels, JLabels ect
+		//That have no context
+	}
 
+	/**
+	 * A simple method to check if the user
+	 * actually wants to exit the program
+	 * @return The exit code that's given
+	 */
+	private int exitProgram() {
+    	int exitCode = DO_NOTHING_ON_CLOSE;
+    	JOptionPane pane;
+    	pane = new JOptionPane("Are you sure you want to exit?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
+
+    	if(pane.YES_NO_OPTION == pane.YES_OPTION) {
+			exitCode = EXIT_ON_CLOSE;
+		}
+		return exitCode;
+	}
+}

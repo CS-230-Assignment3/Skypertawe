@@ -30,7 +30,6 @@ public class ContactPanel extends JFrame {
 	}
 
 	public JPanel buildPanel() {
-
 		JScrollPane scrollPane = groupPanel();
 		JScrollPane scrollPane1 = contactPanel();
 

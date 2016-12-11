@@ -1,10 +1,16 @@
+/**
+ * @file RegisterPanel.java
+ * @author Luke Harvey
+ * @date 11th dec 2016
+ */
+
+
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class RegisterPanel extends JFrame {
@@ -18,6 +24,12 @@ public class RegisterPanel extends JFrame {
     private String m_city;
     private AccountsGraph graph;
 
+    /**
+     * This constructor is used to set the values of the JFrame
+     * and then loadAssets which creates the JPanel and JComponents
+     * that are going to be displayed on the screen
+     * @param graph
+     */
     public RegisterPanel(AccountsGraph graph) {
         this.setTitle("Skypertawe - Register");
         this.setSize(600, 400);
@@ -29,6 +41,11 @@ public class RegisterPanel extends JFrame {
         loadAssets();
     }
 
+    /**
+     * This loads all the JComponents on the screen
+     * and positions them as well as defining actions
+     * on buttons.
+     */
     private void loadAssets() {
         JPanel panel = new JPanel(null);
         panel.setSize(this.getWidth(), this.getHeight());
@@ -137,38 +154,43 @@ public class RegisterPanel extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * This is a basic form of front-line validation which checks
+     * the most basic type of errors such as empty fields.
+     * @return True if the form is valid, false otherwise
+     */
     private boolean checkFormValidation() {
         boolean m_isValid = false;
         if(m_username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(m_firstname.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(m_lastname.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(m_phoneNumber.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(m_password.toString().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else if(m_confirm.toString().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.");
+            JOptionPane.showMessageDialog(this, "Please fill in all fields with an * by it.", "Error", JOptionPane.ERROR_MESSAGE);
         }
         else {
             if(m_username.length() <= 5) {
-                JOptionPane.showMessageDialog(this, "Username must be longer then 5 characters.");
+                JOptionPane.showMessageDialog(this, "Username must be longer then 5 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else if(m_phoneNumber.length() != 11) {
-                JOptionPane.showMessageDialog(this, "Please enter a valid UK phone number.");
+                JOptionPane.showMessageDialog(this, "Please enter a valid UK phone number.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else if(m_password.toString().length() < 6) {
-                JOptionPane.showMessageDialog(this, "Password must be longer then 5 characters.");
+                JOptionPane.showMessageDialog(this, "Password must be longer then 5 characters.", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else if(!m_password.equals(m_confirm)) {
-                JOptionPane.showMessageDialog(this, m_password.toString() + " : " + m_confirm.toString());
+                JOptionPane.showMessageDialog(this, "Passwords do not match", "Error", JOptionPane.ERROR_MESSAGE);
             }
             else {
                 m_isValid = true;
@@ -177,6 +199,10 @@ public class RegisterPanel extends JFrame {
         return m_isValid;
     }
 
+    /**
+     * This method is used to submit the form
+     * after the basic validation has returned true
+     */
     private void submitForm() {
         Account newAccount;
         newAccount = new Account(m_username,
@@ -190,6 +216,9 @@ public class RegisterPanel extends JFrame {
         graph.addAccount(newAccount);
     }
 
+    /**
+     * This method is called once the cancel button is pressed
+     */
     private void cancelForm() {
         new WelcomePanel(graph);
         this.dispose();
