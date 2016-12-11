@@ -17,7 +17,7 @@ public class UnreadMessages {
     private File m_messagesFile;
     private ArrayList<Account> m_otherAccountList;
     private ArrayList<String> m_messages;
-
+    
     /**
      * Constructor takes two account objects, it compares unread messages from the second account to the first account
      *
@@ -37,11 +37,12 @@ public class UnreadMessages {
             m_messagesFile = new File("messages\\" + m_otherAccount.getUser() + "_"
                     + m_currentAccount.getUser() + ".txt");
         }
+        m_messages = getMessages(m_messagesFile);
     }
-	
+    
     public UnreadMessages(Account currentAccount, ArrayList<Account> otherAccountList) {
-      m_currentAccount = currentAccount;
-      m_otherAccountList = otherAccountList;
+        m_currentAccount = currentAccount;
+        m_otherAccountList = otherAccountList;
 
         String userFileName = "";
 		Collections.sort(otherAccountList);
@@ -53,7 +54,8 @@ public class UnreadMessages {
 		m_messages = getMessages(m_messagesFile);
 		m_messages.remove(0);
 	}
-
+    
+    
     /**
      * Determines if there have been messages sent to current account since last login time by second account
      * @return true if there are unread message, otherwise false
@@ -206,7 +208,7 @@ public class UnreadMessages {
         }
     }
     
-		public String getTimeofLastSentMessage() {
+	public String getTimeofLastSentMessage() {
 		
 		String dtOlMS = null;
 		for (int i = 0; i < m_messages.size(); i++) {
@@ -277,6 +279,8 @@ public class UnreadMessages {
 	        return unreadMessageCount;
 	    }
 
+	
+	
 	
     /**
      * Determines if date and time in first array if later than second array
