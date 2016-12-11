@@ -59,8 +59,8 @@ public class LoginPanel extends JFrame {
         JButton loginBtn = new JButton("Login");
         JButton cancelBtn = new JButton("Cancel");
 
-        usernameText.setBounds(this.getWidth() / 5 + 20, this.getHeight() / 5, 120, 25);
-        passwordText.setBounds(usernameText.getX(), usernameText.getY() + 30, 110, 25);
+        usernameText.setBounds(this.getWidth() / 5 + 20, this.getHeight() / 5, 90, 25);
+        passwordText.setBounds(usernameText.getX(), usernameText.getY() + 30, 90, 25);
         username.setBounds(usernameText.getX() + 100, usernameText.getY(), 150, 25);
         password.setBounds(passwordText.getX() + 100, passwordText.getY(), 150, 25);
         loginBtn.setBounds(passwordText.getX(), passwordText.getY() + 30, 150, 50);
@@ -107,6 +107,13 @@ public class LoginPanel extends JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
+                m_username = username.getText();
+                char[] passwordArray = password.getPassword();
+                m_password = "";
+                for (char c : passwordArray) {
+                    m_password += c;
+                }
+
                 if(e.getKeyCode() == KeyEvent.VK_ENTER) {
                     tryLogin();
                 }
