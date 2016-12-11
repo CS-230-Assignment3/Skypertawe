@@ -243,7 +243,7 @@ public class MessageHistory {
 
             while (read.hasNext()) {
                 Message message = null;
-                Scanner line = new Scanner(read.next());
+                Scanner line = new Scanner(read.nextLine());
                 line.useDelimiter(",");
 
                 String sendUsername = line.next();

@@ -128,7 +128,7 @@ public class ChatPanel extends JFrame {
 
             }
         });
-
+        loadMessages(textArea);
         panel.add(sendBtn);
         panel.add(chatField);
         panel.add(chatPane);
@@ -163,6 +163,9 @@ public class ChatPanel extends JFrame {
             pictureDescription.setEnabled(false);
             pictureDescription.setBounds(50 * count, 52, 50, 15);
             pictureDescription.setText(account.getUser());
+            pictureDescription.setBackground(new Color(255,255,255,0));
+            pictureDescription.setFont(new Font("Arial", Font.PLAIN, 15));
+
             descriptionList.add(pictureDescription);
 
             count++;
@@ -172,6 +175,22 @@ public class ChatPanel extends JFrame {
             panel.add(pictureList.get(i));
             panel.add(descriptionList.get(i));
         }
+    }
+
+    private void loadMessages(JTextArea text) {
+        MessageHistory messageHistory;
+        if (groupChat) {
+            messageHistory = new MessageHistory(currentAccount, otherAccounts, accountsGraph);
+        } else {
+            messageHistory = new MessageHistory(currentAccount, otherAccount, accountsGraph);
+        }
+
+        ArrayList<Message> messages = messageHistory.readFromFile();
+
+        for (Message currentMessage:messages) {
+            text.append(currentMessage.display() + "\n");
+        }
+
     }
 
     /**
