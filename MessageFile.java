@@ -4,12 +4,12 @@ import java.util.Scanner;
 
 public class MessageFile extends DescriptionMessage {
 
-    public MessageFile(Account accountSend, Account accountRecieve, String path, String textDescription) {
-        super(accountSend, accountRecieve, path, textDescription);
+    public MessageFile(Account accountSend, String path, String textDescription) {
+        super(accountSend, path, textDescription);
     }
 
-    public MessageFile(Account accountSend, ArrayList<Account> accountRecieve, String path, String textDescription) {
-        super(accountSend, accountRecieve, path, textDescription);
+    public MessageFile(Account accountSend, String path, String textDescription, String timestamp) {
+        super(accountSend, path, textDescription, timestamp);
     }
 
     public String fileReader() {
@@ -31,6 +31,6 @@ public class MessageFile extends DescriptionMessage {
     }
 
     public String display() {
-        return m_accountSend + ": \n" + fileReader() + m_textDescription;
+        return m_accountSend.getUser() + ": \n" + fileReader() + m_textDescription;
     }
 }
