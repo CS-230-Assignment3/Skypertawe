@@ -20,18 +20,18 @@ public class ContactPanel extends JFrame {
 	 */
 	private ArrayList<Account> contactList;
 	private ArrayList<String> groupList = new ArrayList<String>();
-	private Account m_currUser;
+	private Account m_CurrUser;
 	private AccountsGraph m_Graph;
 
 	public ContactPanel(AccountsGraph graph, Account currUser) {
-		m_currUser = currUser;
+		m_CurrUser = currUser;
 		m_Graph = graph;
 
 	}
 
 	public JPanel buildPanel() {
 
-		// JScrollPane scrollPane = groupPanel();
+		JScrollPane scrollPane = groupPanel();
 		JScrollPane scrollPane1 = contactPanel();
 
 		JLabel contactLbl = new JLabel("Contacts");
@@ -47,7 +47,7 @@ public class ContactPanel extends JFrame {
 
 		JPanel contentPane = new JPanel(null);
 		contentPane.setPreferredSize(new Dimension(500, 400));
-		// contentPane.add(scrollPane);
+		contentPane.add(scrollPane);
 		contentPane.add(scrollPane1);
 		contentPane.add(contactTitle);
 		contentPane.add(groupTitle);
@@ -61,31 +61,69 @@ public class ContactPanel extends JFrame {
 
 	}
 
-	/*
-	 * public JScrollPane groupPanel() { JPanel displayGroups = new JPanel();
-	 * ArrayList<String> l = m_currUser.getGroups(); for (int i = 0; i <
-	 * l.size(); i++) { String[] parts = l.get(i).split(","); String part1 =
-	 * parts[0]; String part2 = parts[1]; String part3 = parts[2]; JButton Ai =
-	 * new JButton(part1); displayGroups.add(Ai); JLabel Bi = new JLabel(part2);
-	 * displayGroups.add(Bi); if(!part2.replaceAll("\\s+","").equals("0")){
-	 * Bi.setBackground(Color.CYAN); Bi.setOpaque(true); } JLabel Ci = new
-	 * JLabel(part3); displayGroups.add(Ci); Ai.setBackground(Color.BLACK);
-	 * Ai.addActionListener(new ActionListener() { public void
-	 * actionPerformed(ActionEvent e) { //new ChatPanel(); } }); }
-	 * displayGroups.setLayout(new GridLayout(0, 1, 0, 0)); JScrollPane
-	 * scrollPane1 = new JScrollPane(displayGroups); scrollPane1.setBounds(250,
-	 * 70, 250, 330);
-	 * 
-	 * return scrollPane1;
-	 * 
-	 * }
-	 */
+	
+	public JScrollPane groupPanel() {
+
+		ArrayList<String> a = m_CurrUser.getGroupsFileNames();
+		JPanel displayContact = new JPanel();
+		Groups s = new Groups(m_Graph,m_CurrUser);
+	    s.makeGroups();
+	    s.makeUserGroups();
+	    
+		for (int i = 0; i < a.size(); i++) {
+		
+			
+		    ArrayList<ArrayList<Account>> a1 = m_CurrUser.getGroups();
+			
+			
+			String[] parts = a.get(i).split(",");
+			String part1 = parts[0];
+			System.out.print(parts[0]);
+			
+			ArrayList<Account> allUser = s.getRightUsers(a1, part1);
+			allUser.add(m_CurrUser);
+			JButton Ai = new JButton(part1);
+			displayContact.add(Ai);
+			
+			
+			
+			/*UnreadMessages unreadInfo = new UnreadMessages(m_CurrUser, a.get(i));
+			int numOfUnreadMessages = unreadInfo.unreadMessageCount();
+			JLabel Bi = new JLabel("New Messages:" + String.valueOf(numOfUnreadMessages));
+			displayContact.add(Bi);
+
+			if (numOfUnreadMessages != 0) {
+				Bi.setBackground(Color.CYAN);
+				Bi.setOpaque(true);
+			}*/
+			/*
+			if (unreadInfo.getTimeofLastSentMessage() != null) {
+				JLabel Ci = new JLabel("Time of last message:" + unreadInfo.getTimeofLastSentMessage());
+				displayContact.add(Ci);
+			}
+*/
+			
+			Ai.setBackground(Color.BLACK);
+			Ai.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					new ChatPanel(m_CurrUser, allUser);
+				}
+			});
+		}
+		displayContact.setLayout(new GridLayout(0, 1, 0, 0));
+		JScrollPane scrollPane = new JScrollPane(displayContact);
+		scrollPane.setBounds(250,200, 250, 330);
+
+		return scrollPane;
+
+	}
+
 
 	public JScrollPane contactPanel() {
 
 		JPanel displayContact = new JPanel();
 
-		ArrayList<Account> a = m_currUser.getFriends();
+		ArrayList<Account> a = m_CurrUser.getFriends();
 
 		for (int i = 0; i < a.size(); i++) {
 			String[] parts = a.get(i).getUser().split(",");
@@ -95,7 +133,7 @@ public class ContactPanel extends JFrame {
 			JButton Ai = new JButton(part1);
 			displayContact.add(Ai);
 
-			UnreadMessages unreadInfo = new UnreadMessages(m_currUser, a.get(i));
+			UnreadMessages unreadInfo = new UnreadMessages(m_CurrUser, a.get(i));
 			int numOfUnreadMessages = unreadInfo.unreadMessageCount();
 			JLabel Bi = new JLabel("New Messages:" + String.valueOf(numOfUnreadMessages));
 			displayContact.add(Bi);
@@ -113,7 +151,7 @@ public class ContactPanel extends JFrame {
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ChatPanel(m_currUser, g);
+					new ChatPanel(m_CurrUser, g);
 				}
 			});
 		}
