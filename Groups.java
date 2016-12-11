@@ -1,9 +1,11 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Scanner;
 
 public class Groups {
 	private static Account m_CurrUser;
@@ -41,7 +43,7 @@ public class Groups {
 		String[] temp = null;
 
 		for (int i = 0; i < allGroups.size(); i++) {
-			parts.add(allGroups.get(i).replace(".txt", " "));
+			parts.add(allGroups.get(i).replace(".txt", ""));
 
 		}
 
@@ -98,7 +100,24 @@ public class Groups {
 
 		return currentLis4t;
 	}
+	
+	public String readGroupName(String groupName){
+		
+		File chatFile = new File("GroupFiles\\"+groupName+".txt");
+		Scanner read = null;
+		String groupNameReturn = null;
+		try {
+			read = new Scanner(chatFile);
+			groupNameReturn = read.next();
+			read.close();
+		} catch (FileNotFoundException e) {
+			System.err.println(groupName + " not found " + e.getStackTrace());
+		}
 
+		return groupNameReturn;
+	}
+
+	
 	public void createGroupFile(String groupName, ArrayList<Account> otherAccounts) {
 
 		m_NewGroup.add(m_CurrUser);
