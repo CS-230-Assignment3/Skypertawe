@@ -4,7 +4,6 @@
  * @date 11th dec 2016
  */
 
-
 import javax.swing.*;
 import java.awt.Font;
 import java.awt.Color;

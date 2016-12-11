@@ -14,6 +14,8 @@ import java.awt.Font;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class LoginPanel extends JFrame {
     private String m_username;
@@ -81,14 +83,26 @@ public class LoginPanel extends JFrame {
                 for (char c : passwordArray) {
                     m_password += c;
                 }
+                tryLogin();
+            }
+        });
 
-                AccountValidation account = new AccountValidation(m_username, m_password);
-                if(account.checkLogin()) {
-                    submitForm();
+        password.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    tryLogin();
                 }
-                else {
-                    JOptionPane.showMessageDialog(panel, "Account credentials unknown.", "Error", JOptionPane.ERROR_MESSAGE);
-                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
             }
         });
 
@@ -107,6 +121,20 @@ public class LoginPanel extends JFrame {
         panel.add(cancelBtn);
         this.add(panel);
         this.setVisible(true);
+    }
+
+    /**
+     * This method is used to check account validation
+     * and execute certain actions based on the results
+     */
+    private void tryLogin() {
+        AccountValidation account = new AccountValidation(m_username, m_password);
+        if(account.checkLogin()) {
+            submitForm();
+        }
+        else {
+            JOptionPane.showMessageDialog(this, "Account credentials unknown.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     /**

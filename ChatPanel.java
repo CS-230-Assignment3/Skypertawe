@@ -1,5 +1,16 @@
+/**
+ * @file ChatPanel.java
+ * @author Luke Harvey
+ * @date 11th dec 2016
+ *
+ * This class loads up the chat panel when
+ * the user clicks on one of their contacts
+ */
+
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -11,9 +22,15 @@ public class ChatPanel extends JFrame {
     private Account otherAccount;
     private MessageHistory chatHistory;
     private ArrayList<Account> otherAccounts;
-    
+
+    /**
+     * This constructor is used to set values for a
+     * single peer-to-peer chat
+     * @param currentAccount The person sending the message
+     * @param otherAccount The person receiving the message
+     */
     public ChatPanel(Account currentAccount, Account otherAccount) {
-        this.setTitle("Skypertawe - Chat");
+        this.setTitle("Skypertawe Chat - " + otherAccount.getUser());
         this.setSize(800, 600);
         this.setLayout(null);
         this.setResizable(false);
@@ -23,10 +40,16 @@ public class ChatPanel extends JFrame {
         chatHistory = new MessageHistory(currentAccount, otherAccount);
         loadAssets();
     }
+
+    /**
+     * This constructor is used to ser values for a
+     * group chat
+     * @param currentAccount The person sending the message
+     * @param otherAccounts The people receiving the message
+     */
     public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts) {
-        this.setTitle("Skypertawe - Chat");
+        this.setTitle("Skypertawe Chat - " + otherAccounts);
         this.setSize(800, 600);
-       
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -36,6 +59,10 @@ public class ChatPanel extends JFrame {
         loadAssets();
     }
 
+    /**
+     * This is used to load components on to the
+     * panel and set actions for the buttons
+     */
     private void loadAssets() {
         JPanel panel = new JPanel(null);
         panel.setSize(this.getWidth(), this.getHeight());
@@ -90,6 +117,12 @@ public class ChatPanel extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * This method is used to structure how the messages
+     * are sent into the chat.
+     * @param text The area that will display the message
+     * @param message The message that the user has typed into the field
+     */
     private void sendMessage(JTextArea text, JTextField message) {
         text.append(currentAccount.getUser() + ": " + message.getText() + "\n");
         chatHistory.writeToFile(message.getText());
