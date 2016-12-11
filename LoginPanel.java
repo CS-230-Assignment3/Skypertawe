@@ -59,8 +59,8 @@ public class LoginPanel extends JFrame {
         JButton loginBtn = new JButton("Login");
         JButton cancelBtn = new JButton("Cancel");
 
-        usernameText.setBounds(this.getWidth() / 5 + 20, this.getHeight() / 5, 150, 25);
-        passwordText.setBounds(usernameText.getX(), usernameText.getY() + 30, 150, 25);
+        usernameText.setBounds(this.getWidth() / 5 + 20, this.getHeight() / 5, 120, 25);
+        passwordText.setBounds(usernameText.getX(), usernameText.getY() + 30, 110, 25);
         username.setBounds(usernameText.getX() + 100, usernameText.getY(), 150, 25);
         password.setBounds(passwordText.getX() + 100, passwordText.getY(), 150, 25);
         loginBtn.setBounds(passwordText.getX(), passwordText.getY() + 30, 150, 50);
@@ -72,10 +72,12 @@ public class LoginPanel extends JFrame {
         loginBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 20));
         loginBtn.setForeground(Color.black);
         loginBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        loginBtn.setFocusPainted(false);
 
-        cancelBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 20));
+        cancelBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 15));
         cancelBtn.setForeground(Color.black);
         cancelBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cancelBtn.setFocusPainted(false);
 
         loginBtn.addActionListener(new ActionListener() {
             @Override
@@ -87,6 +89,13 @@ public class LoginPanel extends JFrame {
                     m_password += c;
                 }
                 tryLogin();
+            }
+        });
+
+        cancelBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                cancelForm();
             }
         });
 
@@ -106,13 +115,6 @@ public class LoginPanel extends JFrame {
             @Override
             public void keyReleased(KeyEvent e) {
 
-            }
-        });
-
-        cancelBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                cancelForm();
             }
         });
 

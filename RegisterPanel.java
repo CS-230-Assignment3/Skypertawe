@@ -103,10 +103,12 @@ public class RegisterPanel extends JFrame {
         submitBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 20));
         submitBtn.setForeground(Color.black);
         submitBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        submitBtn.setFocusPainted(false);
 
         cancelBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 15));
         cancelBtn.setForeground(Color.black);
         cancelBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        cancelBtn.setFocusPainted(false);
 
         submitBtn.addActionListener(new ActionListener() {
             @Override
