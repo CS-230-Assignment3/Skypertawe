@@ -5,22 +5,19 @@ import java.util.Date;
 public abstract class Message {
 	protected String m_timeSent;
 	protected Account m_accountSend;
-	protected ArrayList<Account> m_accountRecieve;
-	
-	public Message(Account accountSend, Account accountRecieve) {
-		m_accountSend = accountSend;
-		m_accountRecieve = new ArrayList<Account>();
-		m_accountRecieve.add(accountRecieve);
+    protected boolean setSendTime = false;
+
+    public Message(Account accountSend) {
+        m_accountSend = accountSend;
 		setSendTime();
 	}
-	
-	public Message(Account accountSend, ArrayList<Account> accountRecieve) {
-		m_accountSend = accountSend;
-		m_accountRecieve = accountRecieve;
-		setSendTime();
-	}
-	
-	public String getSendTime() {
+
+    public Message(Account accountSend, String timestamp) {
+        m_accountSend = accountSend;
+        m_timeSent = timestamp;
+    }
+
+    public String getSendTime() {
 		return m_timeSent;
 	}
 	
