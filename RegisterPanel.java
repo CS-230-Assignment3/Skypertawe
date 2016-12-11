@@ -1,7 +1,15 @@
 /**
  * @file RegisterPanel.java
- * @author Luke Harvey
+ * @author Luke Harvey (869608)
  * @date 11th dec 2016
+ * @see AccountValidation.java
+ * @see AccountsGraph.java
+ * @see Account.java
+ *
+ * This class is used to create a register form for
+ * the user to create an account for the program which
+ * will then be used to login from.
+ *
  */
 
 import javax.swing.*;
@@ -10,6 +18,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.math.BigInteger;
 import java.util.Arrays;
 
 public class RegisterPanel extends JFrame {
@@ -211,7 +220,7 @@ public class RegisterPanel extends JFrame {
                 m_city,
                 m_password,
                 "",
-                Integer.parseInt(m_phoneNumber));
+                BigInteger.valueOf(Integer.parseInt(m_phoneNumber)));
         graph.addAccount(newAccount);
     }
 

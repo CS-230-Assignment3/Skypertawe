@@ -1,7 +1,11 @@
 /**
  * @file ChatPanel.java
- * @author Luke Harvey
+ * @author Luke Harvey (869608)
  * @date 11th dec 2016
+ * @see MainWindow.java
+ * @see AccountValidation.java
+ * @see Account.java
+ * @see AccountsGraph.java
  *
  * This class loads up the chat panel when
  * the user clicks on one of their contacts
@@ -22,7 +26,7 @@ public class ChatPanel extends JFrame {
     private Account otherAccount;
     private MessageHistory chatHistory;
     private ArrayList<Account> otherAccounts;
-    private AccountsGraph m_accountsGraph;
+    private AccountsGraph accountsGraph;
 
     /**
      * This constructor is used to set values for a
@@ -39,7 +43,7 @@ public class ChatPanel extends JFrame {
         this.setLocationRelativeTo(null);
         this.currentAccount = currentAccount;
         this.otherAccount = otherAccount;
-        m_accountsGraph = accountsGraph;
+        this.accountsGraph = accountsGraph;
         chatHistory = new MessageHistory(currentAccount, otherAccount, accountsGraph);
         loadAssets();
     }
@@ -59,7 +63,7 @@ public class ChatPanel extends JFrame {
         this.setLocationRelativeTo(null);
         this.currentAccount = currentAccount;
         this.otherAccounts = otherAccounts;
-        m_accountsGraph = accountsGraph;
+        this.accountsGraph = accountsGraph;
         chatHistory = new MessageHistory(currentAccount, otherAccounts, accountsGraph);
         loadAssets();
     }

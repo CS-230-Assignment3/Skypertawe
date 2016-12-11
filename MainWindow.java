@@ -1,7 +1,11 @@
 /**
  * @file MainWindow.java
- * @author Luke Harvey, Jamie Hutton
+ * @author Luke Harvey (869608), Jamie Hutton (837949)
  * @date 11th dec 2016
+ * @see ChatPanel.java
+ * @see Account.java
+ * @see AccountsGraph.java
+ * @see ContactPanel.java
  *
  * This class is the main window that will contain
  * the contacts list so that when the user clicks on

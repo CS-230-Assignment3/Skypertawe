@@ -1,7 +1,9 @@
 /**
  * @file WelcomePanel.java
- * @author Luke Harvey
+ * @author Luke Harvey (869608)
  * @date 11th dec 2016
+ * @see AccountsGraph.java
+ * @see Main.java Where the file is loaded from
  *
  * This class is the first GUI interface that the
  * user sees and has two buttons which will either

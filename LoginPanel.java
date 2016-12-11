@@ -1,7 +1,10 @@
 /**
  * @file LoginPanel.java
- * @author Luke Harvey
+ * @author Luke Harvey (869608)
  * @date 11th dec 2016
+ * @see MainWindow.java
+ * @see AccountValidation.java
+ * @see Account.java
  *
  * This is the panel that loads when the user selects the
  * login button from the front page. It contains validation and
