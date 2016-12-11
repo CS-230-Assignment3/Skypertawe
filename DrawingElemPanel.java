@@ -193,12 +193,16 @@ public class DrawingElemPanel extends JPanel {
      * set up GUI
      */
     public DrawingElemPanel(Account firstAccount, Account secondAccount){
+
+        m_firstAccount = firstAccount;
+        m_secondAccount = secondAccount;
+
         // If first account username <= second account username
         if (m_firstAccount.getUser().compareTo(m_secondAccount.getUser()) <= 0) {
             m_linefile = "drawingFiles\\line_" + (m_firstAccount.getUser() + "_" + m_secondAccount.getUser() + ".txt");
             m_particalfile = "drawingFiles\\partical_" + (m_firstAccount.getUser() + "_" + m_secondAccount.getUser() + ".txt");
         } else { // Else second account username > first account username
-            m_linefile = "drawingFiles\\" + m_secondAccount.getUser() + "_" + (m_firstAccount.getUser() + ".txt");
+            m_linefile = "drawingFiles\\line_" + m_secondAccount.getUser() + "_" + (m_firstAccount.getUser() + ".txt");
             m_particalfile = "drawingFiles\\partical_" + (m_secondAccount.getUser() + "_" + m_firstAccount.getUser() + ".txt");
         }
 
@@ -217,6 +221,11 @@ public class DrawingElemPanel extends JPanel {
         Color[] allColor = new Color[MAX_POINTS];
 
         File inputFile = new File(lineFile);
+
+        if (!inputFile.exists()) {
+            return;
+        }
+
         Scanner in = null;
         try {
             in = new Scanner(inputFile);
@@ -271,6 +280,7 @@ public class DrawingElemPanel extends JPanel {
         setPointCount(counter);
         in3.close();
     }
+
 
     /**
      * @param drawing add the ArrayList of all line

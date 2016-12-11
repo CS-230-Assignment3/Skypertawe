@@ -41,7 +41,9 @@ public class DrawingEnv extends JFrame {
 
     public final static int MESSAGE_HEIGHT = 25;
 
-    public DrawingEnv(){
+    public DrawingEnv(Account firstAccount, Account secondAccount) {
+        m_firstAccount = firstAccount;
+        m_secondAccount = secondAccount;
         this.setTitle("This is a drawing environment");
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
