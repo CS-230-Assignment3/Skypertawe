@@ -92,7 +92,7 @@ public class ContactPanel extends JFrame {
 			
 		
 			UnreadMessages unreadInfo = new UnreadMessages(m_CurrUser, allUser);
-			int numOfUnreadMessages = unreadInfo.unreadMessageCountGroup();
+			int numOfUnreadMessages = unreadInfo.unreadMessageCount();
 			
 			JLabel Bi = new JLabel("New Messages:" + String.valueOf(numOfUnreadMessages));
 			displayContact.add(Bi);

@@ -231,27 +231,17 @@ public class UnreadMessages {
             return null;
         }
     }
-    
-	public String getTimeofLastSentMessage() {
-		
-		String dtOlMS = null;
-		for (int i = 0; i < m_messages.size(); i++) {
-			String[] parts = m_messages.get(i).split(",");
-			for (int j = i + 1; j < m_messages.size(); j++) {
-				String[] parts1 = m_messages.get(j).split(",");
-				
-				if (parts1[1].compareTo(parts[1]) > 0) {
-					dtOlMS = parts[1];
-				} else if (parts1[1].compareTo(parts[1]) < 0) {
-					dtOlMS = parts1[1];
-				} else {
-					dtOlMS = parts[1];
-				}
 
-			}
-		}
-		
-		return dtOlMS;
+    /**
+     * Finds the last message sent and returns the time it was sent
+     * @return Time last message was sent
+     */
+	public String getTimeofLastSentMessage() {
+
+		String lastLine =  m_messages.get(m_messages.size()-1);
+		String[] lastLineArray = lastLine.split(",");
+
+		return lastLineArray[1];
 	}
 
 
