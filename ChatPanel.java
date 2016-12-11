@@ -21,6 +21,18 @@ public class ChatPanel extends JFrame {
         chatHistory = new MessageHistory(currentAccount, otherAccount);
         loadAssets();
     }
+    public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts) {
+        this.setTitle("Skypertawe - Chat");
+        this.setSize(800, 600);
+       
+        this.setLayout(null);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.currentAccount = currentAccount;
+        this.otherAccounts = otherAccounts;
+        chatHistory = new MessageHistory(currentAccount, otherAccounts);
+        loadAssets();
+    }
 
     private void loadAssets() {
         JPanel panel = new JPanel(null);
