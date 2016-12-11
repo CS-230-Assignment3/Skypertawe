@@ -3,9 +3,9 @@ public class Main {
         AccountsGraph graph = new AccountsGraph();
         //new WelcomePanel(graph);
 
-        //Account myAccount = new Account("Luke", "Luke", "Harvey", "", "16/11/94", "Bristol", "password", 74279);
-        //Account otherAccount = new Account("John", "Cena", "test", "", "16/11/94", "Bristol", "password", 74279);
+        Account myAccount = new Account("Luke", "Luke", "Harvey", "", "16/11/94", "Bristol", "password", 74279);
+        Account otherAccount = new Account("John", "Cena", "test", "", "16/11/94", "Bristol", "password", 74279);
 
-        new ChatPanel(myAccount, otherAccount);
+        new ChatPanel(myAccount, otherAccount, graph);
     }
 }
