@@ -168,6 +168,10 @@ public class MessageHistory {
 		}
 	}
 
+    /**
+     * This writes a MessageText to file with the collective date
+     * @param message
+     */
 	public void writeToFile(MessageText message) {
 		File chatFile = new File(m_fileName);
 		try {
@@ -184,6 +188,10 @@ public class MessageHistory {
 		}
 	}
 
+    /**
+     * This writes a MessageURL to file with the collective date
+     * @param message The message to write
+     */
 	public void writeToFile(MessageURL message) {
 		File chatFile = new File(m_fileName);
 		try {
@@ -200,6 +208,10 @@ public class MessageHistory {
 		}
 	}
 
+    /**
+     * This writes a MessageFile to file with the collective date
+     * @param message The message to write
+     */
 	public void writeToFile(MessageFile message) {
 		File chatFile = new File(m_fileName);
 		try {
@@ -216,6 +228,11 @@ public class MessageHistory {
 		}
 	}
 
+    /**
+     * This reads all messages from file with collective chat data and outputs each message type
+     * as an ArrayList of Message references
+     * @return ArrayList of all messages in chat file
+     */
     public ArrayList<Message> readFromFile() {
 
         File chatFile = new File(m_fileName);
@@ -234,7 +251,7 @@ public class MessageHistory {
                 String timestamp = line.next();
                 String messageType = line.next();
 
-                //If message is MessageText
+                //Determine which type of message current line in read is
                 if (messageType.equals("messageText")) {
                     String messageText = line.next();
                     message = new MessageText(sendAccount, messageText, timestamp);
