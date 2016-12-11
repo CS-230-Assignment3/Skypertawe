@@ -32,24 +32,19 @@ public class MessageHistory {
             m_fileName = "messages\\" + accountRecieve.getUser() + "_" + accountSend.getUser() + ".txt";
         }
 	}
-
 	public MessageHistory(Account accountSend, ArrayList<Account> accountRecieve) {
 		m_accountSend = accountSend;
 		m_accountsRecieve = accountRecieve;
-
-		m_accountsRecieve.add(m_accountSend);
-		m_accountsRecieve.addAll(accountRecieve);
-		Collections.sort(m_accountsRecieve);
-
+		
 		String userFileName = "";
-
-		for (Account s : m_accountsRecieve) {
+		Collections.sort(accountRecieve);
+		for (Account s : accountRecieve) {
 			userFileName += s.getUser() + "_";
 		}
-
+		
 		m_fileName = "GroupFiles\\" + userFileName + ".txt";
+	
 	}
-
 	public void writeToFile(String message) {
 		File chatFile = new File(m_fileName);
 		try {
