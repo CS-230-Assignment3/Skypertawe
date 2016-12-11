@@ -1,4 +1,5 @@
 import java.io.*;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -52,7 +53,7 @@ public class AccountsFile {
             String username = accountInfo.next();
             String firstName = accountInfo.next();
             String lastName = accountInfo.next();
-            int phoneNum = Integer.parseInt(accountInfo.next());
+            BigInteger phoneNum = BigInteger.valueOf(Integer.parseInt(accountInfo.next()));
             String password = accountInfo.next();
             String lastLoginTime = accountInfo.next();
             boolean isBirthday = Boolean.parseBoolean(accountInfo.next());
