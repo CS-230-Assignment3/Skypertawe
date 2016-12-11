@@ -1,1 +1,3 @@
-katie,12/12,12pm,djkasl
+group1
+katie,2016/12/11 05:58:42,asdfsad
+katie,2016/12/11 05:58:43,sadfsadf

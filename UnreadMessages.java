@@ -16,6 +16,7 @@ public class UnreadMessages {
     private Account m_otherAccount;
     private File m_messagesFile;
     private ArrayList<Account> m_otherAccountList;
+    private ArrayList<String> m_messages;
 
     /**
      * Constructor takes two account objects, it compares unread messages from the second account to the first account
@@ -49,7 +50,8 @@ public class UnreadMessages {
 		}
 		
 		m_messagesFile = new File("GroupFiles\\" + userFileName + ".txt");
-		System.out.println(m_messagesFile);
+		m_messages = getMessages(m_messagesFile);
+		m_messages.remove(0);
 	}
 
     /**
@@ -204,27 +206,78 @@ public class UnreadMessages {
         }
     }
     
-	public String getTimeofLastSentMessage() {
-		ArrayList<String> messages = getMessages(m_messagesFile);
+		public String getTimeofLastSentMessage() {
+		
 		String dtOlMS = null;
-		for (int i = 0; i < messages.size(); i++) {
-			String[] parts = messages.get(i).split(",");
-			for (int j = i + 1; j < messages.size(); j++) {
-				String[] parts1 = messages.get(j).split(",");
-
+		for (int i = 0; i < m_messages.size(); i++) {
+			String[] parts = m_messages.get(i).split(",");
+			for (int j = i + 1; j < m_messages.size(); j++) {
+				String[] parts1 = m_messages.get(j).split(",");
+				
 				if (parts1[1].compareTo(parts[1]) > 0) {
 					dtOlMS = parts[1];
 				} else if (parts1[1].compareTo(parts[1]) < 0) {
 					dtOlMS = parts1[1];
 				} else {
-					dtOlMS = parts1[1];
+					dtOlMS = parts[1];
 				}
 
 			}
 		}
+		
 		return dtOlMS;
 	}
-		
+	
+	 public int unreadMessageCountGroup() {
+	        //ArrayList of all messages in chat between current account and other account
+	        ArrayList<String> lines = getMessages(m_messagesFile);
+	        
+	        lines.remove(0);
+	       
+	        /* array of ints representing the timestamp of the last login time
+	         * format is [year,month,day,hour,minute,second]
+	         */
+	        int[] lastLoginArray = splitTimeStamp(m_currentAccount.getLastLogInTime());
+	       
+	        int unreadMessageCount = 0;
+	        int curIndex = lines.size() - 1;
+	        /* boolean of whether the last message checked is later than last login, when true all unread messages
+	         * must have been read, so loop can exit
+	         */
+	        boolean laterThanLastLogIn = false;
+
+	        do {
+	            //Scanner to parse each line of messages from ArrayList lines
+	            Scanner lineReader = new Scanner(lines.get(curIndex));
+	            lineReader.useDelimiter(",");
+
+	            //Account sending the message
+	            String sendAccount = lineReader.next();
+
+	            for(int i = 0; m_otherAccountList.size() > i; i++){
+	            	 if (sendAccount.equals(m_otherAccountList.get(i).getUser())) {
+	            		 //Get the timestamp
+	 	                String timestamp = lineReader.next();
+	 	               //Put timestamp into array
+		                int[] fileDateTimeArray = splitTimeStamp(timestamp);
+		                if (isMessageUnread(fileDateTimeArray, lastLoginArray)) {
+		                    unreadMessageCount++;
+		                    //Else all unread messages have been found
+		                } else {
+		                    laterThanLastLogIn = true;
+		                }
+	            	 }
+	            	 
+	            	 curIndex--;
+	            }
+	            lineReader.close();
+	      
+	        } while (!laterThanLastLogIn && curIndex >= 0);
+	        
+	        return unreadMessageCount;
+	    }
+
+	
     /**
      * Determines if date and time in first array if later than second array
      *

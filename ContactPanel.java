@@ -77,29 +77,36 @@ public class ContactPanel extends JFrame {
 			
 			String[] parts = a.get(i).split(",");
 			String part1 = parts[0];
+			//System.out.print(parts[0]);
 			
 			ArrayList<Account> allUser = s.getRightUsers(a1, part1);
 			allUser.add(m_CurrUser);
-			JButton Ai = new JButton(part1);
+			
+			String groupName = s.readGroupName(part1);
+			
+			
+			JButton Ai = new JButton(groupName);
+			
 			displayContact.add(Ai);
 			
 			
+		
+			UnreadMessages unreadInfo = new UnreadMessages(m_CurrUser, allUser);
+			int numOfUnreadMessages = unreadInfo.unreadMessageCountGroup();
 			
-			/*UnreadMessages unreadInfo = new UnreadMessages(m_CurrUser, a.get(i));
-			int numOfUnreadMessages = unreadInfo.unreadMessageCount();
 			JLabel Bi = new JLabel("New Messages:" + String.valueOf(numOfUnreadMessages));
 			displayContact.add(Bi);
 
 			if (numOfUnreadMessages != 0) {
 				Bi.setBackground(Color.CYAN);
 				Bi.setOpaque(true);
-			}*/
-			/*
+			}
+			
 			if (unreadInfo.getTimeofLastSentMessage() != null) {
 				JLabel Ci = new JLabel("Time of last message:" + unreadInfo.getTimeofLastSentMessage());
 				displayContact.add(Ci);
 			}
-*/
+
 			
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
@@ -115,6 +122,7 @@ public class ContactPanel extends JFrame {
 		return scrollPane;
 
 	}
+
 
 
 	public JScrollPane contactPanel() {
