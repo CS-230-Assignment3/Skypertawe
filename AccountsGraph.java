@@ -106,7 +106,7 @@ public class AccountsGraph {
         Account account = null;
         boolean found = false;
         int curIndex = 0;
-        while (!found || m_accounts.size() < curIndex) {
+        while (!found && curIndex < m_accounts.size()) {
             Account curAccount = m_accounts.get(curIndex);
             if (curAccount.getUser().equals(username)) {
                 account = curAccount;
