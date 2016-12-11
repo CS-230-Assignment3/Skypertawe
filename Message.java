@@ -29,6 +29,6 @@ public abstract class Message {
 		SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		m_timeSent = ft.format(date).toString();
 	}
-	
-	public abstract void Display();
+
+	public abstract String display();
 }

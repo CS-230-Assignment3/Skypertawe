@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * @file DescriptionMessage.java
  * @author Samuel O'Reilly (824712)
@@ -5,7 +7,7 @@
  * @see Message.java
  */
 public abstract class DescriptionMessage extends Message {
-    String m_filePath;
+    String m_path;
     String m_textDescription;
 
     /**
@@ -14,15 +16,33 @@ public abstract class DescriptionMessage extends Message {
      *
      * @param accountSend     account sending the message
      * @param accountRecieve  account receiving the message
-     * @param filePath        path to file being sent
+     * @param path        path to item being sent
      * @param textDescription short description of file being sent
      * @see Message.java
      */
-    DescriptionMessage(Account accountSend, Account accountRecieve, String filePath, String textDescription) {
+    DescriptionMessage(Account accountSend, Account accountRecieve, String path, String textDescription) {
         //Pass parameter to superclass
         super(accountSend, accountRecieve);
         //Assign member variables
-        m_filePath = filePath;
+        m_path = path;
+        m_textDescription = textDescription;
+    }
+
+    /**
+     * Sets the account message is sent from, and the ArrayList of Accounts the message is being sent to, the path to the
+     * item being sent and a description of what is being sent
+     *
+     * @param accountSend     account sending the message
+     * @param accountRecieve  ArrayList of accounts receiving the message
+     * @param path            path to item being sent
+     * @param textDescription short description of file being sent
+     * @see Message.java
+     */
+    DescriptionMessage(Account accountSend, ArrayList<Account> accountRecieve, String path, String textDescription) {
+        //Pass parameter to superclass
+        super(accountSend, accountRecieve);
+        //Assign member variables
+        m_path = path;
         m_textDescription = textDescription;
     }
 
@@ -30,16 +50,16 @@ public abstract class DescriptionMessage extends Message {
      * Sets the filepath of file being sent
      * @param filePath new filepath
      */
-    public void setFilePath(String filePath) {
-        m_filePath = filePath;
+    public void setPath(String path) {
+        m_path = path;
     }
 
     /**
      * Returns the filepath of file being sent
      * @return String containing filepath being sent
      */
-    public String getFilePath() {
-        return m_filePath;
+    public String getPath() {
+        return m_path;
     }
 
     /**
