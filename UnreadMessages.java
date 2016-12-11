@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 /**
@@ -14,6 +15,7 @@ public class UnreadMessages {
     private Account m_currentAccount;
     private Account m_otherAccount;
     private File m_messagesFile;
+    private ArrayList<Account> m_otherAccountList;
 
     /**
      * Constructor takes two account objects, it compares unread messages from the second account to the first account
@@ -225,26 +227,7 @@ public class UnreadMessages {
 		}
 		return dtOlMS;
 	}
-	
-	public String getTimeofLastSentMessage() {
-		ArrayList<String> messages = getMessages(m_messagesFile);
-		String dtOlMS = null;
-		for (int i = 0; i < messages.size(); i++) {
-			String[] parts = messages.get(i).split(",");
-			for (int j = i + 1; j < messages.size(); j++) {
-				String[] parts1 = messages.get(j).split(",");
-				
-				if (parts1[1].compareTo(parts[1]) > 0) {
-					dtOlMS = parts[1];
-				} else if (parts1[1].compareTo(parts[1]) < 0) {
-					dtOlMS = parts1[1];
-				} else {
-					dtOlMS = parts[1];
-				}
-
-			}
-		}
-	
+		
     /**
      * Determines if date and time in first array if later than second array
      *
