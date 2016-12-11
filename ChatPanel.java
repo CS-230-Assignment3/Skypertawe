@@ -11,8 +11,8 @@ public class ChatPanel extends JFrame {
     private Account otherAccount;
     private MessageHistory chatHistory;
     private ArrayList<Account> otherAccounts;
-    
-    public ChatPanel(Account currentAccount, Account otherAccount) {
+
+    public ChatPanel(Account currentAccount, Account otherAccount, AccountsGraph accountsGraph) {
         this.setTitle("Skypertawe - Chat");
         this.setSize(800, 600);
         this.setLayout(null);
@@ -20,7 +20,7 @@ public class ChatPanel extends JFrame {
         this.setLocationRelativeTo(null);
         this.currentAccount = currentAccount;
         this.otherAccount = otherAccount;
-        chatHistory = new MessageHistory(currentAccount, otherAccount);
+        chatHistory = new MessageHistory(currentAccount, otherAccount, accountsGraph);
         loadAssets();
     }
     public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts) {
@@ -91,8 +91,9 @@ public class ChatPanel extends JFrame {
     }
 
     private void sendMessage(JTextArea text, JTextField message) {
-        text.append(currentAccount.getUser() + ": " + message.getText() + "\n");
-        chatHistory.writeToFile(message.getText());
+        MessageText messageText = new MessageText(currentAccount, message.getText());
+        text.append(messageText.display());
+        chatHistory.writeToFile(messageText);
         message.setText("");
     }
 }
