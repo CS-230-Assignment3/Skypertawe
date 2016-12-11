@@ -39,21 +39,18 @@ public class UnreadMessages {
     }
 	
     public UnreadMessages(Account currentAccount, ArrayList<Account> otherAccountList) {
-        m_currentAccount = currentAccount;
-        m_otherAccountList = otherAccountList;
+      m_currentAccount = currentAccount;
+      m_otherAccountList = otherAccountList;
 
-        m_otherAccountList.add(currentAccount);
-        m_otherAccountList.addAll(otherAccountList);
-		Collections.sort(m_otherAccountList);
-
-		String userFileName = "";
-
-		for (Account s : m_otherAccountList) {
+        String userFileName = "";
+		Collections.sort(otherAccountList);
+		for (Account s : otherAccountList) {
 			userFileName += s.getUser() + "_";
 		}
-
+		
 		m_messagesFile = new File("GroupFiles\\" + userFileName + ".txt");
-    }
+		System.out.println(m_messagesFile);
+	}
 
     /**
      * Determines if there have been messages sent to current account since last login time by second account
