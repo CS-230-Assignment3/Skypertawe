@@ -70,7 +70,7 @@ public class SearchResultsPanel extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							int dialogButton = JOptionPane.YES_NO_OPTION;
 							int dialogResult = JOptionPane.showConfirmDialog(null,
-									"Would You Like to Save your Previous Note First?", "Warning", dialogButton);
+							"Sure you want to add person?", "Warning", dialogButton);		
 							if (dialogResult == 0) {
 								m_Graph.addContact(m_CurrUser, newAccount);
 							}
@@ -90,7 +90,7 @@ public class SearchResultsPanel extends JFrame {
 						public void actionPerformed(ActionEvent e) {
 							int dialogButton = JOptionPane.YES_NO_OPTION;
 							int dialogResult = JOptionPane.showConfirmDialog(null,
-									"Would You Like to Save your Previous Note First?", "Warning", dialogButton);
+									"Sure you want to remove person?", "Warning", dialogButton);
 							if (dialogResult == 0) {
 								m_Graph.removeContact(m_CurrUser, newAccount);
 							}
