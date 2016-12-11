@@ -21,12 +21,14 @@ public class MessageHistory {
 	private Account m_accountSend;
 	private Account m_accountRecieve;
 	private ArrayList<Account> m_accountsRecieve;
+    private AccountsGraph m_accountsGraph;
 
-	public MessageHistory(Account accountSend, Account accountRecieve) {
-		m_accountSend = accountSend;
-		m_accountRecieve = accountRecieve;
-		// If accountSend username <= accountRecieve username
-		if (accountSend.getUser().compareTo(accountRecieve.getUser()) <= 0) {
+    public MessageHistory(Account accountSend, Account accountRecieve, AccountsGraph accountsGraph) {
+        m_accountSend = accountSend;
+        m_accountRecieve = accountRecieve;
+        m_accountsGraph = accountsGraph;
+        // If accountSend username <= accountRecieve username
+        if (accountSend.getUser().compareTo(accountRecieve.getUser()) <= 0) {
 			m_fileName = "messages\\" + accountSend.getUser() + "_" + accountRecieve.getUser() + ".txt";
 		} else { // Else firstAccount username > secondAccount username
             m_fileName = "messages\\" + accountRecieve.getUser() + "_" + accountSend.getUser() + ".txt";
@@ -61,6 +63,54 @@ public class MessageHistory {
 		}
 	}
 
+    public void writeToFile(MessageText message) {
+        File chatFile = new File(m_fileName);
+        try {
+            FileWriter writer = new FileWriter(m_fileName, true);
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String timestamp = ft.format(date).toString();
+            String line = m_accountSend.getUser() + "," + timestamp + ",messageText," + message.getText() + "\n";
+            writer.write(line);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFile(MessageURL message) {
+        File chatFile = new File(m_fileName);
+        try {
+            FileWriter writer = new FileWriter(m_fileName, true);
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String timestamp = ft.format(date).toString();
+            String line = m_accountSend.getUser() + "," + timestamp + ",messageURL," + message.getPath() + "," + message.getTextDescription() + "\n";
+            writer.write(line);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeToFile(MessageFile message) {
+        File chatFile = new File(m_fileName);
+        try {
+            FileWriter writer = new FileWriter(m_fileName, true);
+            Date date = new Date();
+            SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String timestamp = ft.format(date).toString();
+            String line = m_accountSend.getUser() + "," + timestamp + ",messageFile," + message.getPath() + "," + message.getTextDescription() + "\n";
+            writer.write(line);
+            writer.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 	/**
 	 * Makes an ArrayList of each line in a chat file. The array list contains a
 	 * String[], where index 0 is the username of the sending account, index 1
@@ -69,23 +119,41 @@ public class MessageHistory {
 	 * @return String[] where 0 is the username, 1 is the timestamp, 2 is the
 	 *         message
 	 */
-	public ArrayList<String[]> readFromFile() {
+    public ArrayList<Message> readFromFile() {
 
 		File chatFile = new File(m_fileName);
 		Scanner read = null;
-		ArrayList<String[]> chat = new ArrayList<>();
-		try {
-			read = new Scanner(chatFile);
+        ArrayList<Message> chat = new ArrayList<>();
+        try {
+            read = new Scanner(chatFile);
 
 			while (read.hasNext()) {
-				Scanner line = new Scanner(read.next());
-				String[] lineArray = new String[3];
-				lineArray[0] = line.next();
-				lineArray[1] = line.next();
-				lineArray[2] = line.next();
-				chat.add(lineArray);
-				line.close();
-			}
+                Message message = null;
+                Scanner line = new Scanner(read.next());
+                line.useDelimiter(",");
+
+                String sendUsername = line.next();
+                Account sendAccount = m_accountsGraph.findAccount(sendUsername);
+                String timestamp = line.next();
+                String messageType = line.next();
+
+                //If message is MessageText
+                if (messageType.equals("messageText")) {
+                    String messageText = line.next();
+                    message = new MessageText(sendAccount, messageText, timestamp);
+                } else if (messageType.equals("messageURL")) {
+                    String path = line.next();
+                    String description = line.next();
+                    message = new MessageURL(sendAccount, path, description, timestamp);
+                } else if (messageType.equals("messageFile")) {
+                    String path = line.next();
+                    String description = line.next();
+                    message = new MessageFile(sendAccount, path, description, timestamp);
+                }
+
+                chat.add(message);
+                line.close();
+            }
 
 			read.close();
 
