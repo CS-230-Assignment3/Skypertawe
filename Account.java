@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class Account implements Comparable<Account> {
@@ -9,22 +10,22 @@ public class Account implements Comparable<Account> {
 	private String m_password;
 	private String m_profilePicPath;
 	private String m_lastLogInTime;
-	private int m_phoneNum;
+	private BigInteger m_phoneNum;
 	private int m_newMessageNum;
 	private ArrayList<Account> friends = new ArrayList<Account>();
-	ArrayList<ArrayList<Account>> m_Groups = new ArrayList<ArrayList<Account>>();
-	ArrayList<String> m_CurrUserGroupsFileNames = new ArrayList<String>();
+	private ArrayList<ArrayList<Account>> groups = new ArrayList<ArrayList<Account>>();
+	private ArrayList<String> currUserGroupsFileNames = new ArrayList<String>();
 	private ArrayList<Account> invites = new ArrayList<Account>();
 
-	public Account(String username, String firstName, String lastName, String profilePicPath, String birthday, String city, String password, int phoneNum){
+	public Account(String username, String firstName, String lastName, String profilePicPath, String birthday, String city, String password, BigInteger phoneNum){
 		this.m_username = username;
 		this.m_firstName = firstName;
 		this.m_lastName = lastName;
-		this.m_password = password;
-		this.m_phoneNum = phoneNum;
+		this.m_profilePicPath = profilePicPath;
 		this.m_birthday = birthday;
 		this.m_city = city;
-		this.m_profilePicPath = profilePicPath;
+		this.m_password = password;
+		this.m_phoneNum = phoneNum;
 	}
 	
 	public String getUser(){
@@ -55,7 +56,7 @@ public class Account implements Comparable<Account> {
 		return m_profilePicPath;
 	}
 
-	public int getPhoneNum(){
+	public BigInteger getPhoneNum(){
 		return m_phoneNum;
 	}
 
@@ -72,10 +73,11 @@ public class Account implements Comparable<Account> {
 	}
 	
 	public ArrayList<ArrayList<Account>> getGroups() {
-		return m_Groups;
+		return groups;
 	}
+
 	public ArrayList<String> getGroupsFileNames() {
-		return m_CurrUserGroupsFileNames;
+		return currUserGroupsFileNames;
 	}
 	
 	public void setFirstName(String newFirst){
@@ -102,7 +104,7 @@ public class Account implements Comparable<Account> {
 		m_profilePicPath = newProfilePicPath;
 	}
 
-	public void setPhoneNum(int newPhoneNum){
+	public void setPhoneNum(BigInteger newPhoneNum){
 		m_phoneNum = newPhoneNum;
 	}
 
@@ -119,18 +121,16 @@ public class Account implements Comparable<Account> {
 	}
 	
 	public void setGroups(ArrayList<ArrayList<Account>> m_CurrUserGroups) {
-		m_Groups = m_CurrUserGroups;
+		groups = m_CurrUserGroups;
 	}
 	
 	public void setGroupsFileNames(ArrayList<String> CurrUserGroupsFileNames) {
-		
-		m_CurrUserGroupsFileNames.addAll(CurrUserGroupsFileNames);
+		currUserGroupsFileNames.addAll(CurrUserGroupsFileNames);
 	}
+
 	public void addFriend(Account account) {
 		friends.add(account);
 	}
-	
-	
 
 	public void removeFriend(Account account) {
 		String accountName = account.getUser();
@@ -150,6 +150,4 @@ public class Account implements Comparable<Account> {
 	public int compareTo(Account user) {
 		return m_username.compareTo(user.getUser());
 	}
-
-	
 }
