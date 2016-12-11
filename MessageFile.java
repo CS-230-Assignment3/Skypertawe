@@ -1,17 +1,36 @@
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
-import java.io.BufferedReader;
+import java.util.Scanner;
 
-public class MessageFile {
-	public static ArrayList<String> messageReader () throws Exception {
-		FileReader fr = new FileReader("Message.txt");
-		BufferedReader br = new BufferedReader(fr);
-		String s;
-		ArrayList<String> list = new ArrayList<String>();
-		while((s = br.readLine()) != null) {
-			list.add(s);
+public class MessageFile extends DescriptionMessage {
+
+	public MessageFile(Account accountSend, String path, String textDescription) {
+		super(accountSend, path, textDescription);
+	}
+
+	public MessageFile(Account accountSend, String path, String textDescription, String timestamp) {
+		super(accountSend, path, textDescription, timestamp);
+	}
+
+	public String fileReader() {
+		String fileContent = "Contents of file " + m_path + " :\n";
+		File file = new File(m_path);
+		Scanner in = null;
+		try {
+			in = new Scanner(file);
+			while (in.hasNext()) {
+				fileContent += in.nextLine() + "\n";
+			}
+		} catch (FileNotFoundException fileNotFound) {
+			System.err.println(m_path + " not found\n" + fileNotFound.getStackTrace());
+		} finally {
+			in.close();
 		}
-		fr.close();
-		return list;
-		} 
+
+		return fileContent;
+	}
+
+	public String display() {
+		return m_accountSend.getUser() + ": \n" + fileReader() + m_textDescription;
+	}
 }

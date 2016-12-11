@@ -1,18 +1,21 @@
-public class MessageText {
-	private String m_msgText;
-	private Account m_accountSend;
-	private Account m_accountRecieve;
-	
-	public MessageText(String msgText, Account accountSend, Account accountRecieve) {
-		m_msgText = msgText;
-		m_accountSend = accountSend;
-		m_accountRecieve = accountRecieve;
+public class MessageText extends Message {
+	private String m_text;
+
+	public MessageText(Account accountSend, String msgText) {
+		super(accountSend);
+		m_text = msgText;
 	}
-	
-	public void send() {
+
+	public MessageText(Account accountSend, String msgText, String timestamp) {
+		super(accountSend, timestamp);
+		m_text = msgText;
 	}
-	
+
+	public String getText() {
+		return m_text;
+	}
+
 	public String display() {
-		return "Test";
+		return m_accountSend.getUser() + ": " + m_text;
 	}
 }

@@ -22,14 +22,16 @@ public class ChatPanel extends JFrame {
     private Account otherAccount;
     private MessageHistory chatHistory;
     private ArrayList<Account> otherAccounts;
+    private AccountsGraph m_accountsGraph;
 
     /**
      * This constructor is used to set values for a
      * single peer-to-peer chat
      * @param currentAccount The person sending the message
      * @param otherAccount The person receiving the message
+     * @param accountsGraph The graph of all accounts in system
      */
-    public ChatPanel(Account currentAccount, Account otherAccount) {
+    public ChatPanel(Account currentAccount, Account otherAccount, AccountsGraph accountsGraph) {
         this.setTitle("Skypertawe Chat - " + otherAccount.getUser());
         this.setSize(800, 600);
         this.setLayout(null);
@@ -37,7 +39,8 @@ public class ChatPanel extends JFrame {
         this.setLocationRelativeTo(null);
         this.currentAccount = currentAccount;
         this.otherAccount = otherAccount;
-        chatHistory = new MessageHistory(currentAccount, otherAccount);
+        m_accountsGraph = accountsGraph;
+        chatHistory = new MessageHistory(currentAccount, otherAccount, accountsGraph);
         loadAssets();
     }
 
@@ -46,8 +49,9 @@ public class ChatPanel extends JFrame {
      * group chat
      * @param currentAccount The person sending the message
      * @param otherAccounts The people receiving the message
+     * @param accountsGraph The graph of all accounts in system
      */
-    public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts) {
+    public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts, AccountsGraph accountsGraph) {
         this.setTitle("Skypertawe Chat - " + otherAccounts);
         this.setSize(800, 600);
         this.setLayout(null);
@@ -55,7 +59,8 @@ public class ChatPanel extends JFrame {
         this.setLocationRelativeTo(null);
         this.currentAccount = currentAccount;
         this.otherAccounts = otherAccounts;
-        chatHistory = new MessageHistory(currentAccount, otherAccounts);
+        m_accountsGraph = accountsGraph;
+        chatHistory = new MessageHistory(currentAccount, otherAccounts, accountsGraph);
         loadAssets();
     }
 
@@ -124,8 +129,9 @@ public class ChatPanel extends JFrame {
      * @param message The message that the user has typed into the field
      */
     private void sendMessage(JTextArea text, JTextField message) {
-        text.append(currentAccount.getUser() + ": " + message.getText() + "\n");
-        chatHistory.writeToFile(message.getText());
+        MessageText messageText = new MessageText(currentAccount, message.getText());
+        text.append(messageText.display() + "\n");
+        chatHistory.writeToFile(messageText);
         message.setText("");
     }
 }

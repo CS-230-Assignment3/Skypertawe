@@ -111,7 +111,7 @@ public class ContactPanel extends JFrame {
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ChatPanel(m_CurrUser, allUser);
+					new ChatPanel(m_CurrUser, allUser, m_Graph);
 				}
 			});
 		}
@@ -157,7 +157,7 @@ public class ContactPanel extends JFrame {
 			Ai.setBackground(Color.BLACK);
 			Ai.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					new ChatPanel(m_CurrUser, g);
+					new ChatPanel(m_CurrUser, g, m_Graph);
 				}
 			});
 		}

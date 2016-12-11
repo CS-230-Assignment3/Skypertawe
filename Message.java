@@ -14,29 +14,24 @@ import java.util.Date;
 public abstract class Message {
 	protected String m_timeSent;
 	protected Account m_accountSend;
-	protected ArrayList<Account> m_accountRecieve;
 
 	/**
-	 * A constructor used for a single account
+	 * A constructor used for making a new message
 	 * @param accountSend The account sending the message
-	 * @param accountRecieve The account receiving the message
 	 */
-	public Message(Account accountSend, Account accountRecieve) {
+	public Message(Account accountSend) {
 		m_accountSend = accountSend;
-		m_accountRecieve = new ArrayList<Account>();
-		m_accountRecieve.add(accountRecieve);
 		formatTime();
 	}
 
 	/**
-	 * A constructor used for multiple accounts
+	 * A constructor used for loading an exisiting message
 	 * @param accountSend The account sending the message
-	 * @param accountRecieve The account to receive the messages
+	 * @param timestamp time message was sent
 	 */
-	public Message(Account accountSend, ArrayList<Account> accountRecieve) {
+	public Message(Account accountSend, String timestamp) {
 		m_accountSend = accountSend;
-		m_accountRecieve = accountRecieve;
-		formatTime();
+		m_timeSent = timestamp;
 	}
 
 	/**
@@ -59,5 +54,5 @@ public abstract class Message {
 	/**
 	 * An abstract method used for displaying the messages
 	 */
-	public abstract void Display();
+	public abstract String display();
 }
