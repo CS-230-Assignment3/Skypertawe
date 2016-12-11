@@ -35,6 +35,23 @@ public class UnreadMessages {
                     + m_currentAccount.getUser() + ".txt");
         }
     }
+	
+    public UnreadMessages(Account currentAccount, ArrayList<Account> otherAccountList) {
+        m_currentAccount = currentAccount;
+        m_otherAccountList = otherAccountList;
+
+        m_otherAccountList.add(currentAccount);
+        m_otherAccountList.addAll(otherAccountList);
+		Collections.sort(m_otherAccountList);
+
+		String userFileName = "";
+
+		for (Account s : m_otherAccountList) {
+			userFileName += s.getUser() + "_";
+		}
+
+		m_messagesFile = new File("GroupFiles\\" + userFileName + ".txt");
+    }
 
     /**
      * Determines if there have been messages sent to current account since last login time by second account
@@ -208,6 +225,25 @@ public class UnreadMessages {
 		}
 		return dtOlMS;
 	}
+	
+	public String getTimeofLastSentMessage() {
+		ArrayList<String> messages = getMessages(m_messagesFile);
+		String dtOlMS = null;
+		for (int i = 0; i < messages.size(); i++) {
+			String[] parts = messages.get(i).split(",");
+			for (int j = i + 1; j < messages.size(); j++) {
+				String[] parts1 = messages.get(j).split(",");
+				
+				if (parts1[1].compareTo(parts[1]) > 0) {
+					dtOlMS = parts[1];
+				} else if (parts1[1].compareTo(parts[1]) < 0) {
+					dtOlMS = parts1[1];
+				} else {
+					dtOlMS = parts[1];
+				}
+
+			}
+		}
 	
     /**
      * Determines if date and time in first array if later than second array
