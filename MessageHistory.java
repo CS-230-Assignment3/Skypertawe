@@ -238,6 +238,9 @@ public class MessageHistory {
         File chatFile = new File(m_fileName);
         Scanner read = null;
         ArrayList<Message> chat = new ArrayList<>();
+        if (!chatFile.exists()) {
+            return chat;
+        }
         try {
             read = new Scanner(chatFile);
 
