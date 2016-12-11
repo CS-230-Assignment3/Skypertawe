@@ -12,7 +12,8 @@ public class Account implements Comparable<Account> {
 	private int m_phoneNum;
 	private int m_newMessageNum;
 	private ArrayList<Account> friends = new ArrayList<Account>();
-	private ArrayList<String> groups = new ArrayList<String>();
+	ArrayList<ArrayList<Account>> m_Groups = new ArrayList<ArrayList<Account>>();
+	ArrayList<String> m_CurrUserGroupsFileNames = new ArrayList<String>();
 	private ArrayList<Account> invites = new ArrayList<Account>();
 
 	public Account(String username, String firstName, String lastName, String profilePicPath, String birthday, String city, String password, int phoneNum){
@@ -70,8 +71,11 @@ public class Account implements Comparable<Account> {
 		return friends;
 	}
 	
-	public ArrayList<String> getGroups() {
-		return groups;
+	public ArrayList<ArrayList<Account>> getGroups() {
+		return m_Groups;
+	}
+	public ArrayList<String> getGroupsFileNames() {
+		return m_CurrUserGroupsFileNames;
 	}
 	
 	public void setFirstName(String newFirst){
@@ -114,10 +118,14 @@ public class Account implements Comparable<Account> {
 		friends = updateFriends;
 	}
 	
-	public void setGroups(ArrayList<String> groups) {
-		this.groups = groups;
+	public void setGroups(ArrayList<ArrayList<Account>> m_CurrUserGroups) {
+		m_Groups = m_CurrUserGroups;
 	}
 	
+	public void setGroupsFileNames(ArrayList<String> CurrUserGroupsFileNames) {
+		
+		m_CurrUserGroupsFileNames.addAll(CurrUserGroupsFileNames);
+	}
 	public void addFriend(Account account) {
 		friends.add(account);
 	}
@@ -142,4 +150,6 @@ public class Account implements Comparable<Account> {
 	public int compareTo(Account user) {
 		return m_username.compareTo(user.getUser());
 	}
+
+	
 }
