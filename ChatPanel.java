@@ -12,9 +12,7 @@
  */
 
 import javax.swing.*;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Dimension;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,6 +25,7 @@ public class ChatPanel extends JFrame {
     private MessageHistory chatHistory;
     private ArrayList<Account> otherAccounts;
     private AccountsGraph accountsGraph;
+    private boolean groupChat;
 
     /**
      * This constructor is used to set values for a
@@ -45,6 +44,7 @@ public class ChatPanel extends JFrame {
         this.otherAccount = otherAccount;
         this.accountsGraph = accountsGraph;
         chatHistory = new MessageHistory(currentAccount, otherAccount, accountsGraph);
+        groupChat = false;
         loadAssets();
     }
 
@@ -65,6 +65,7 @@ public class ChatPanel extends JFrame {
         this.otherAccounts = otherAccounts;
         this.accountsGraph = accountsGraph;
         chatHistory = new MessageHistory(currentAccount, otherAccounts, accountsGraph);
+        groupChat = true;
         loadAssets();
     }
 
@@ -76,6 +77,8 @@ public class ChatPanel extends JFrame {
         JPanel panel = new JPanel(null);
         panel.setSize(this.getWidth(), this.getHeight());
 
+        loadProfilePics(panel);
+
         JTextArea textArea = new JTextArea();
         JScrollPane chatPane = new JScrollPane(textArea);
         JTextField chatField = new JTextField();
@@ -86,9 +89,11 @@ public class ChatPanel extends JFrame {
         textArea.setFont(new Font("Arial", Font.BOLD, 15));
 
         chatPane.setSize(new Dimension(this.getWidth(), this.getHeight() - 150));
+        /*Added/changed this next line to your code, set y = 70*/
+        chatPane.setBounds(0,70,this.getWidth(),this.getHeight()-150);
         chatPane.setBackground(new Color(255,255,255,255));
-
-        chatField.setBounds(0, chatPane.getHeight(), this.getWidth() - 150, 40);
+        //Added y + 70
+        chatField.setBounds(0, chatPane.getHeight() + 70, this.getWidth() - 150, 40);
         chatField.setFont(new Font("Arial", Font.PLAIN, 15));
 
         sendBtn.setBounds(chatField.getWidth(), chatField.getY(), 150, 40);
@@ -124,6 +129,44 @@ public class ChatPanel extends JFrame {
         panel.add(chatPane);
         this.add(panel);
         this.setVisible(true);
+    }
+
+    private void loadProfilePics(JPanel panel) {
+        ArrayList<Account> allAccounts = new ArrayList<>();
+        allAccounts.add(currentAccount);
+        if (groupChat) {
+            allAccounts.addAll(otherAccounts);
+        } else {
+            allAccounts.add(otherAccount);
+        }
+
+        ArrayList<JLabel> pictureList = new ArrayList<>();
+        ArrayList<JTextArea> descriptionList = new ArrayList<>();
+
+        int count = 0;
+        for (Account account : allAccounts) {
+            ImageIcon unscaledImage = new ImageIcon(account.getProfilePic());
+            ImageIcon scaledImage = new ImageIcon(unscaledImage.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+
+            JLabel pictureLabel = new JLabel(scaledImage);
+            pictureLabel.setEnabled(true);
+            pictureLabel.setSize(new Dimension(50, 50));
+            pictureLabel.setBounds(50 * count, 0, 50, 50);
+            pictureList.add(pictureLabel);
+
+            JTextArea pictureDescription = new JTextArea();
+            pictureDescription.setEnabled(false);
+            pictureDescription.setBounds(50 * count, 52, 50, 15);
+            pictureDescription.setText(account.getUser());
+            descriptionList.add(pictureDescription);
+
+            count++;
+        }
+
+        for (int i = 0;i<pictureList.size();i++) {
+            panel.add(pictureList.get(i));
+            panel.add(descriptionList.get(i));
+        }
     }
 
     /**
