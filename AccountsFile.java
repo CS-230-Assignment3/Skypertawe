@@ -156,7 +156,7 @@ public class AccountsFile {
             writer = new FileWriter(accounts, true);
             //Construct new line to write to file
             String newLine = newAccount.getUser().toLowerCase() + "," + newAccount.getFirst() + "," + newAccount.getLastName()
-                    + "," + newAccount.getPhoneNum() + "," + newAccount.getPassword() + "," + newAccount.getLastLogInTime();
+                    + "," + newAccount.getPassword() + "," + newAccount.getPhoneNum() + "," + newAccount.getLastLogInTime();
 
             //Add birthday and/or city if given
             newLine += accountDetermineBirthdayCity(newAccount);
