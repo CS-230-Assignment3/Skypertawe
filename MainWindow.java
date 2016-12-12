@@ -16,6 +16,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class MainWindow extends JFrame {
@@ -23,6 +24,8 @@ public class MainWindow extends JFrame {
 	private Account currUser;
 	private ArrayList<Account> contactList;
 	private ArrayList<String> groupList = new ArrayList<String>();
+	private LocalDateTime m_lastMessageLocalDateTime;
+	private String m_lastMessageDataTime;
 
 	/**
 	 * This constructor sets teh values for the
@@ -152,41 +155,46 @@ public class MainWindow extends JFrame {
 
 	private JComponent insertFriends(JComponent panel, JComponent seconaryPanel) {
 		int i = 0;
+		int unreadMessages = 0;
 		ArrayList<Account> friendList = currUser.getFriends();
 
 		for(Account obj : friendList) {
 			String name = obj.getUser();
 			panel.add(structureFriendButton(obj, name, i, panel));
-			insertUnreadChat(seconaryPanel, obj);
+			unreadMessages += insertUnreadChat(seconaryPanel, obj, unreadMessages);
 			i = i + 60;
 		}
+
+		JLabel timeOfLastMsg = new JLabel();
+		timeOfLastMsg.setFont(new Font("Arial", Font.PLAIN, 17));
+		timeOfLastMsg.setBounds(10, 180, this.getWidth() / 2, 100);
+		timeOfLastMsg.setText("Time of last message: " + m_lastMessageDataTime);
+		seconaryPanel.add(timeOfLastMsg);
 		return panel;
 	}
 
 
-	private void insertUnreadChat(JComponent panel, Account obj) {
+	private int insertUnreadChat(JComponent panel, Account obj, int unreadMessages) {
 		UnreadMessages unread = new UnreadMessages(currUser, obj);
 		int numOfUnread = unread.unreadMessageCount();
 
 		JLabel newMessages = new JLabel();
 		JLabel noNewMessages = new JLabel();
-		JLabel timeOfLastMsg = new JLabel();
 
 		newMessages.setFont(new Font("Arial", Font.PLAIN, 17));
 		noNewMessages.setFont(new Font("Arial", Font.PLAIN, 17));
-		timeOfLastMsg.setFont(new Font("Arial", Font.PLAIN, 17));
+
 
 		newMessages.setBounds(50, 110, 200, 100);
 		noNewMessages.setBounds(50, 110, 200, 100);
-		timeOfLastMsg.setBounds(10, 180, this.getWidth() / 2, 100);
 
 		if(numOfUnread > 0) {
-			newMessages.setText("You have " + String.valueOf(numOfUnread) + " new messages!");
+			unreadMessages += numOfUnread;
+			newMessages.setText("You have " +  unreadMessages + " new messages!");
 			newMessages.setForeground(new Color(107, 178, 40,255));
 			panel.add(newMessages);
 			noNewMessages = null;
-		}
-		else {
+		} else if (unreadMessages == 0) {
 			noNewMessages.setText("You have no new messages.");
 			noNewMessages.setForeground(new Color(0,0,0,255));
 			panel.add(noNewMessages);
@@ -194,9 +202,58 @@ public class MainWindow extends JFrame {
 		}
 
 		if(unread.getTimeofLastSentMessage() != null) {
-			timeOfLastMsg.setText("Time of last message: " + unread.getTimeofLastSentMessage());
-			panel.add(timeOfLastMsg);
+
+			if (m_lastMessageLocalDateTime == null) {
+			    m_lastMessageDataTime = unread.getTimeofLastSentMessage();
+				String[] unreadDateTime = m_lastMessageDataTime.split(" ");
+				String[] unreadDate = unreadDateTime[0].split("/");
+				String[] unreadTime = unreadDateTime[1].split(":");
+				int[] intArray = new int[unreadDate.length + unreadTime.length];
+
+				int i = 0;
+				for (String s : unreadDate) {
+					intArray[i] = Integer.parseInt(s);
+					i++;
+				}
+				for (String s : unreadTime) {
+					intArray[i] = Integer.parseInt(s);
+					i++;
+				}
+
+				m_lastMessageLocalDateTime = LocalDateTime.of(intArray[0], intArray[1], intArray[2],
+						intArray[3], intArray[4], intArray[5]);
+
+			} else {
+			    String newUnreadDateTime = unread.getTimeofLastSentMessage();
+				String[] unreadDateTime = newUnreadDateTime.split(" ");
+				String[] unreadDate = unreadDateTime[0].split("/");
+				String[] unreadTime = unreadDateTime[1].split(":");
+				int[] intArray = new int[unreadDate.length + unreadTime.length];
+
+				int i = 0;
+				for (String s : unreadDate) {
+					intArray[i] = Integer.parseInt(s);
+					i++;
+				}
+				for (String s : unreadTime) {
+					intArray[i] = Integer.parseInt(s);
+					i++;
+				}
+
+				LocalDateTime newLastMessageTime = LocalDateTime.of(intArray[0], intArray[1], intArray[2],
+						intArray[3], intArray[4], intArray[5]);
+
+				if (newLastMessageTime.isAfter(m_lastMessageLocalDateTime)) {
+					m_lastMessageLocalDateTime = newLastMessageTime;
+					m_lastMessageDataTime = newUnreadDateTime;
+				}
+
+			}
+
+
 		}
+
+		return unreadMessages;
 	}
 
 	private JComponent structureFriendButton(Account obj, String username, int y, JComponent panel) {
