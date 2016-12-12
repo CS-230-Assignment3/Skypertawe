@@ -62,6 +62,6 @@ public class MessageFile extends DescriptionMessage {
 	 * @see fileReader()
 	 */
 	public String display() {
-		return m_accountSend.getUser() + ": \n" + fileReader() + m_textDescription;
+		return m_accountSend.getUser() + ": \n" + "Description: " + m_textDescription + "\n" + fileReader();
 	}
 }

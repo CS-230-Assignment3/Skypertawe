@@ -36,7 +36,7 @@ public class MessageURL extends DescriptionMessage {
      */
     public String display() {
         String line = "";
-        line = m_accountSend.getUser() + ": " + m_path + " Description:\n " + m_textDescription;
+        line = m_accountSend.getUser() + ": \n" + "Description: " + m_textDescription + "\n" + m_path;
         return line;
     }
 }
