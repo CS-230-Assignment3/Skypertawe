@@ -109,7 +109,7 @@ public class ContactsListFile {
                 } // end while
 
                 //Add each account to the friends list of the other
-                firstAccount.addInvite(secondAccount);
+                secondAccount.addInvite(firstAccount);
                 contactsScanner.close();
             } // end while
 

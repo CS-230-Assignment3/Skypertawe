@@ -178,6 +178,11 @@ public class AccountsGraph {
         m_contactsListFile.removeContactFromFile(firstAccount, secondAccount);
     }
 
+    /**
+     * Takes an account and a timestamp and sets this accounts lastLogIn to the given timestamp
+     * @param account account to change
+     * @param timestamp timestamp to change to
+     */
     public void setLastLogin(Account account, String timestamp) {
         account.setLastLogInTime(timestamp);
         m_accountsFile.setLastLoginTime(account, timestamp);
