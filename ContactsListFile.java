@@ -78,13 +78,13 @@ public class ContactsListFile {
      */
     public void formInvitesList(ArrayList<Account> accounts) {
         File contactsList = new File(INVITES_FILEPATH);
-        //Scanner used to read each line of contacts file
+        //Scanner used to read each line of invite file
         Scanner in;
         try {
             in = new Scanner(contactsList);
-            //Loop while there is an unread line in contacts file
+            //Loop while there is an unread line in invite file
             while (in.hasNext()) {
-                //Scanner used to parse through the current line in contacts file, and get two usernames(these two are friends)
+                //Scanner used to parse through the current line in contacts file, and get two usernames
                 Scanner contactsScanner = new Scanner(in.nextLine());
                 contactsScanner.useDelimiter(",");
                 String firstUsername = contactsScanner.next();
