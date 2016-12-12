@@ -96,7 +96,7 @@ public class MainWindow extends JFrame {
 		groupHeader.setBounds(groupsPanel.getWidth() / 3, 0, contactsPanel.getWidth(), 50);
 		unreadHeader.setBounds(rightPanel.getWidth() / 3, 90, rightPanel.getWidth(), 50);
 
-		JButton searchBar = new JButton("Search");
+		JButton searchBar = new JButton("Add or Remove Friend");
 		searchBar.setBounds(0,0, 495, 80);
 		searchBar.setFocusPainted(false);
 		searchBar.setBackground(new Color(33, 33, 33,255));
