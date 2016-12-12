@@ -207,7 +207,7 @@ public class MainWindow extends JFrame {
 		UnreadMessages unread = new UnreadMessages(currUser, obj);
 		int numOfUnread = unread.unreadMessageCount();
 
-		JLabel messageToDisplay = null;
+		JLabel messageToDisplay = new JLabel();
 
 		messageToDisplay.setFont(new Font("Arial", Font.PLAIN, 17));
 		messageToDisplay.setBounds(panel.getWidth() / 3 - 20, 110, 250, 100);
@@ -215,11 +215,8 @@ public class MainWindow extends JFrame {
 
 		if(numOfUnread > 0) {
 			unreadMessages += numOfUnread;
-			messageToDisplay = new JLabel("You have" + unreadMessages + " new messages!");
-		} else if (unreadMessages == 0) {
-			messageToDisplay = new JLabel("You have no new messages!");
+			messageToDisplay.setText("You have " + unreadMessages + " new messages!");
 		}
-
 		panel.add(messageToDisplay);
 
 		if(unread.getTimeofLastSentMessage() != null) {
