@@ -169,7 +169,14 @@ public class ChatPanel extends JFrame {
                 sendBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //Add action shit here
+                        sendFileMessage(textArea,filePath.getText(), desc.getText());
+                    }
+                });
+
+                cancelBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
                     }
                 });
 
@@ -321,7 +328,7 @@ public class ChatPanel extends JFrame {
     }
 
     /**
-     * This method is used to structure how the messages
+     * This method is used to structure how text messages
      * are sent into the chat.
      * @param text The area that will display the message
      * @param message The message that the user has typed into the field
@@ -333,5 +340,12 @@ public class ChatPanel extends JFrame {
             chatHistory.writeToFile(messageText);
             message.setText("");
         }
+    }
+
+    private void sendFileMessage(JTextArea text, String filePath, String description) {
+        MessageFile messageFile = new MessageFile(currentAccount, filePath, description);
+        text.append(messageFile.display() + "\n");
+        chatHistory.writeToFile(messageFile);
+
     }
 }
