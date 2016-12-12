@@ -168,4 +168,9 @@ public class AccountsGraph {
         //Removes contacts from contacts.txt
         m_contactsListFile.removeContactFromFile(firstAccount, secondAccount);
     }
+
+    public void setLastLogin(Account account, String timestamp) {
+        account.setLastLogInTime(timestamp);
+        m_accountsFile.setLastLoginTime(account, timestamp);
+    }
 }

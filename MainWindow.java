@@ -16,8 +16,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainWindow extends JFrame {
 	private AccountsGraph graph;
@@ -26,6 +28,7 @@ public class MainWindow extends JFrame {
 	private ArrayList<String> groupList = new ArrayList<String>();
 	private LocalDateTime m_lastMessageLocalDateTime;
 	private String m_lastMessageDataTime;
+	private boolean noMessagesDisplayed;
 
 	/**
 	 * This constructor sets teh values for the
@@ -43,7 +46,11 @@ public class MainWindow extends JFrame {
 		this.setResizable(false);
 		this.setVisible(true);
 		this.graph = graph;
+        noMessagesDisplayed = false;
 		loadAssets();
+        Date date = new Date();
+        SimpleDateFormat ft = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        graph.setLastLogin(currUser ,ft.format(date).toString());
 	}
 
 	/**
@@ -186,7 +193,7 @@ public class MainWindow extends JFrame {
 
 
 		newMessages.setBounds(50, 110, 200, 100);
-		noNewMessages.setBounds(50, 110, 200, 100);
+		noNewMessages.setBounds(50, 110, 250, 100);
 
 		if(numOfUnread > 0) {
 			unreadMessages += numOfUnread;
@@ -194,11 +201,12 @@ public class MainWindow extends JFrame {
 			newMessages.setForeground(new Color(107, 178, 40,255));
 			panel.add(newMessages);
 			noNewMessages = null;
-		} else if (unreadMessages == 0) {
+		} else if (unreadMessages == 0 && !noMessagesDisplayed) {
 			noNewMessages.setText("You have no new messages.");
 			noNewMessages.setForeground(new Color(0,0,0,255));
 			panel.add(noNewMessages);
 			newMessages = null;
+			noMessagesDisplayed = true;
 		}
 
 		if(unread.getTimeofLastSentMessage() != null) {
