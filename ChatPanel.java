@@ -136,6 +136,10 @@ public class ChatPanel extends JFrame {
         this.setVisible(true);
     }
 
+    /**
+     * Loads all profile pictures from the current Accounts in the chat ands adds them to a JPanel
+     * @param panel Panel to add profile pictures too
+     */
     private void loadProfilePics(JPanel panel) {
         ArrayList<Account> allAccounts = new ArrayList<>();
         allAccounts.add(currentAccount);
@@ -177,6 +181,10 @@ public class ChatPanel extends JFrame {
         }
     }
 
+    /**
+     * Loads messages from MessageHistory and append them to JTextArea
+     * @param text JTextArea to append Messages to
+     */
     private void loadMessages(JTextArea text) {
         MessageHistory messageHistory;
         if (groupChat) {
