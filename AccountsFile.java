@@ -149,6 +149,7 @@ public class AccountsFile {
      */
     public void addAccount(Account newAccount) {
         File accounts = new File(ACCOUNTS_FILEPATH);
+        newAccount.setLastLogInTime("1900/01/01 00:00:00");
         //FileWriter used to write new account to file
         FileWriter writer = null;
         try {

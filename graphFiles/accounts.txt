@@ -1,5 +1,5 @@
-katie,katie,rees,999,katie111,2016/12/06 18:17:17,false,true,Swansea
-sam,samuel,oreilly,1234,sam123,2016/12/12 03:34:50,false,false
+katie,katie,rees,999,katie111,2016/12/12 04:27:47,false,true,Swansea
+sam,samuel,oreilly,1234,sam123,2016/12/12 04:27:34,false,false
 john,john,smith,54321,john1289,2016/12/06 14:10:22,true,true,1995/12/06,Cardiff
 yam,yam,roger,595,passletmein,2017/05/05 18:08:08,true,true,24/12/1989,Cardiff
-jez,Jer,Corb,74,PASS,null,true,true,BIRTH,CITY
+jez,Jer,Corb,74,PASS,2016/12/12 05:07:55,true,true,BIRTH,CITY
