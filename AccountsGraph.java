@@ -32,6 +32,7 @@ public class AccountsGraph {
         m_accounts = m_accountsFile.makeAccounts();
         //This takes the list of accounts and gives them the friends specified from the contact.txt file
         m_contactsListFile.formContactsList(m_accounts);
+        m_contactsListFile.formInvitesList(m_accounts);
     }
 
     /**

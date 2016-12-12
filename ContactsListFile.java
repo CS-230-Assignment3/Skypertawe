@@ -71,6 +71,51 @@ public class ContactsListFile {
         }
     }
 
+    public void formInvitesList(ArrayList<Account> accounts) {
+        File contactsList = new File(INVITES_FILEPATH);
+        //Scanner used to read each line of contacts file
+        Scanner in;
+        try {
+            in = new Scanner(contactsList);
+            //Loop while there is an unread line in contacts file
+            while (in.hasNext()) {
+                //Scanner used to parse through the current line in contacts file, and get two usernames(these two are friends)
+                Scanner contactsScanner = new Scanner(in.nextLine());
+                contactsScanner.useDelimiter(",");
+                String firstUsername = contactsScanner.next();
+                String secondUsername = contactsScanner.next();
+                Account firstAccount = null;
+                Account secondAccount = null;
+
+                boolean found = false;
+                int curIndex = 0;
+                //Loop through accounts until both accounts are found, or end of list is reached
+                while (!found || curIndex < accounts.size()) {
+                    //If first username in contacts file equals current account username
+                    if (firstUsername.equals(accounts.get(curIndex).getUser())) {
+                        firstAccount = accounts.get(curIndex);
+                        //If second username in contacts file equals current account username
+                    } else if (secondUsername.equals(accounts.get(curIndex).getUser())) {
+                        secondAccount = accounts.get(curIndex);
+                    }
+                    curIndex++;
+                    //Set found to true when both first and second accounts are found
+                    found = firstAccount != null && secondAccount != null;
+                } // end while
+
+                //Add each account to the friends list of the other
+                firstAccount.addInvite(secondAccount);
+                contactsScanner.close();
+            } // end while
+
+            in.close();
+
+        } catch (FileNotFoundException fileNotFoundEx) {
+            System.err.println("Cannot find file " + CONTACTS_LIST_FILEPATH +
+                    " " + fileNotFoundEx.getStackTrace());
+        }
+    }
+
     /**
      * Adds the contact relationship between two accounts to the contacts file. Does not add
      * contacts to each others friends list. This is handled in AccountsGraph.
