@@ -13,11 +13,23 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+/**
+ * @file Groups.java
+ * @author Jamie Hutton
+ * @date 11th dec 2016
+ *
+ * Creates a GUI that allows the user to create a group.
+ */
 public class CreateGroup extends JFrame {
 	private Account m_CurrUser;
 	private AccountsGraph m_Graph;
 	private ArrayList<Account> selectedFriends = new ArrayList<Account>();
-
+	/**
+     * Allow for group file manipulation group users to be added. 
+     *
+     * @param CurrUser The current user logged in. 
+     * @param graph Passes the current graph built.
+     */
 	public CreateGroup(Account CurrUser, AccountsGraph graph) {
 		m_CurrUser = CurrUser;
 		m_Graph = graph;
@@ -31,8 +43,9 @@ public class CreateGroup extends JFrame {
 	}
 
 	/**
-	 * Finds a user account , if in graph, and asks if you want to add it or
-	 * not.
+	 * Opens a JFrame in order to select the members that the user wish to be in a 
+	 * group. It gets the user's currents friends, displays them and the allows them 
+	 * to add them to agroup. 
 	 * 
 	 * @return Content panel contain search results
 	 */
