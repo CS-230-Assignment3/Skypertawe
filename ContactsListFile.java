@@ -221,7 +221,7 @@ public class ContactsListFile {
         try {
             //Writer appends to contacts file
             writer = new FileWriter(invites, true);
-            writer.write(fromAccount.getUser() + "," + toAccount.getUser());
+            writer.write(fromAccount.getUser() + "," + toAccount.getUser() + "\n");
             writer.close();
         } catch (Exception e) {
             e.printStackTrace();

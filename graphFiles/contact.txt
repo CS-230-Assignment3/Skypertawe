@@ -2,3 +2,5 @@ john,katie
 katie,sam
 jez,sam
 john,sam
+jez,sam
+sam,yam
