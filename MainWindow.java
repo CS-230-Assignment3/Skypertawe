@@ -120,7 +120,7 @@ public class MainWindow extends JFrame {
 		createGroups.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new  CreateGroup(currUser, graph);
+				new CreateGroup(currUser, graph);
 			}
 		});
 		
@@ -202,13 +202,44 @@ public class MainWindow extends JFrame {
 		if(!currUser.getInvites().isEmpty()) {
 			JButton hasInvites = new JButton("You have pending invites!");
 			hasInvites.setBounds(0, panel.getHeight() / 2, this.getWidth() / 2 - 5, 50);
+			hasInvites.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+			hasInvites.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					JFrame popup = new JFrame("Accept Invite");
+					popup.setSize(400,700);
+					JPanel innerPanel = new JPanel(null);
+					innerPanel.setSize(popup.getWidth(), popup.getHeight());
+
+					int i = 0;
+					for(Account obj : currUser.getInvites()) {
+						JButton inviteBtn = new JButton("Invite from " + obj.getUser());
+						inviteBtn.setBounds(0, i, popup.getWidth(), 50);
+						inviteBtn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+						inviteBtn.addActionListener(new ActionListener() {
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								graph.acceptInvite(currUser, obj);
+								inviteBtn.setVisible(false);
+							}
+						});
+
+						innerPanel.add(inviteBtn);
+						i = i + 60;
+					}
+					popup.add(innerPanel);
+					popup.setVisible(true);
+				}
+			});
+
 			seconaryPanel.add(hasInvites);
 		}
 
 		seconaryPanel.add(timeOfLastMsg);
 		return panel;
 	}
-
 
 	private int insertUnreadChat(JComponent panel, Account obj, int unreadMessages) {
 		UnreadMessages unread = new UnreadMessages(currUser, obj);

@@ -19,7 +19,6 @@ public class CreateGroup extends JFrame {
 	private ArrayList<Account> selectedFriends = new ArrayList<Account>();
 
 	public CreateGroup(Account CurrUser, AccountsGraph graph) {
-
 		m_CurrUser = CurrUser;
 		m_Graph = graph;
 		this.setTitle("Create Group");
@@ -29,7 +28,6 @@ public class CreateGroup extends JFrame {
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
-
 	}
 
 	/**
@@ -82,10 +80,9 @@ public class CreateGroup extends JFrame {
 					JCheckBox cb = (JCheckBox) components[i];
 					if (cb.isSelected()) {
 						selectedFriends.add(m_Graph.findAccount(cb.getText()));
-
 					}
-
 				}
+
 				Groups newGroup = new Groups(m_Graph, m_CurrUser);
 				if(!selectedFriends.isEmpty()){
 					newGroup.createGroupFile(groupname, selectedFriends);
@@ -107,7 +104,6 @@ public class CreateGroup extends JFrame {
 		contentPane.add(submitButton);
 
 		return contentPane;
-
 	}
 
 }

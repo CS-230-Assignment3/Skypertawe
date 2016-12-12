@@ -1,4 +1,3 @@
-import java.math.BigInteger;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +8,6 @@ import java.util.ArrayList;
  * A object of account, all data of account will be saved
  */
 public class Account implements Comparable<Account> {
-	
 	/** The user name of a account*/
 	private String m_username;
 	/** The first name of a account user*/
@@ -39,8 +37,6 @@ public class Account implements Comparable<Account> {
 	/** The ArrayList of account who request of add friends to this account*/
 	private ArrayList<Account> invites = new ArrayList<Account>();
 
-	
-	
 	/**
 	 * Constructor:
      * Creates a Account.

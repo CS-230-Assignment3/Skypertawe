@@ -182,13 +182,6 @@ public class ChatPanel extends JFrame {
                     }
                 });
 
-                cancelBtn.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        popup.dispose();
-                    }
-                });
-
                 innerPanel.add(filePathTxt);
                 innerPanel.add(descTxt);
                 innerPanel.add(filePath);
@@ -321,7 +314,6 @@ public class ChatPanel extends JFrame {
         for (Message currentMessage:messages) {
             text.append(currentMessage.display() + "\n");
         }
-
     }
 
     /**
