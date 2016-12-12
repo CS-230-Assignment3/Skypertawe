@@ -140,6 +140,9 @@ public class RegisterPanel extends JFrame {
                     AccountValidation account = new AccountValidation(m_username);
                     if(account.checkRegister()) {
                         submitForm();
+                        new MainWindow(graph,graph.findAccount(m_username));
+                        dispose();
+                        JOptionPane.showMessageDialog(panel, "Account Created!");
                     }
                     else {
                         JOptionPane.showMessageDialog(panel, "That account is already taken!");
