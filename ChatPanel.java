@@ -36,7 +36,7 @@ public class ChatPanel extends JFrame {
      */
     public ChatPanel(Account currentAccount, Account otherAccount, AccountsGraph accountsGraph) {
         this.setTitle("Skypertawe Chat - " + otherAccount.getUser());
-        this.setSize(800, 600);
+        this.setSize(800, 800);
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -57,7 +57,7 @@ public class ChatPanel extends JFrame {
      */
     public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts, AccountsGraph accountsGraph, String groupName) {
         this.setTitle("Skypertawe Chat - " + groupName);
-        this.setSize(800, 600);
+        this.setSize(800, 800);
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -79,6 +79,7 @@ public class ChatPanel extends JFrame {
 
         loadProfilePics(panel);
 
+        //Load drawing env if it is not a group chat
         JButton collabDrawButton = new JButton();
         if (!groupChat) {
             collabDrawButton.setText("Drawing");
@@ -97,6 +98,8 @@ public class ChatPanel extends JFrame {
         JScrollPane chatPane = new JScrollPane(textArea);
         JTextField chatField = new JTextField();
         JButton sendBtn = new JButton("Send");
+        JButton fileBtn = new JButton("Send File");
+        JButton urlBtn = new JButton("Send URL");
 
         textArea.setEnabled(false);
         textArea.setDisabledTextColor(new Color(0, 0, 0,255));
@@ -104,11 +107,15 @@ public class ChatPanel extends JFrame {
 
         chatPane.setSize(new Dimension(this.getWidth(), this.getHeight() - 150));
         /*Added/changed this next line to your code, set y = 70*/
-        chatPane.setBounds(0,70,this.getWidth(),this.getHeight()-150);
+        chatPane.setBounds(0,70,this.getWidth(),this.getHeight()-185);
         chatPane.setBackground(new Color(255,255,255,255));
         //Added y + 70
         chatField.setBounds(0, chatPane.getHeight() + 70, this.getWidth() - 150, 40);
         chatField.setFont(new Font("Arial", Font.PLAIN, 15));
+
+        fileBtn.setBounds(chatField.getWidth() / 3, chatField.getY() + 40, 150, 40);
+        urlBtn.setBounds(fileBtn.getWidth() + (chatField.getWidth()/3), chatField.getY() + 40, 150, 40);
+
 
         sendBtn.setBounds(chatField.getWidth(), chatField.getY(), 150, 40);
 
@@ -141,6 +148,8 @@ public class ChatPanel extends JFrame {
         panel.add(sendBtn);
         panel.add(chatField);
         panel.add(chatPane);
+        panel.add(fileBtn);
+        panel.add(urlBtn);
         this.add(panel);
         this.setVisible(true);
     }
@@ -210,6 +219,9 @@ public class ChatPanel extends JFrame {
 
     }
 
+    /**
+     * Makes a new instance of DrawingEnv between accounts in the chat
+     */
     private void loadCollabDrawing() {
         DrawingEnv drawingEnv = new DrawingEnv(currentAccount, otherAccount);
     }
