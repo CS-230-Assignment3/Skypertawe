@@ -104,7 +104,7 @@ public class SearchResultsPanel extends JFrame {
 
 						}
 					});
-				SwingUtilities.updateComponentTreeUI(contentPane);
+					
 				} else {
 					JOptionPane.showMessageDialog(buildPanel(), "No reults Found, Please try again");
 					
