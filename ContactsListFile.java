@@ -71,6 +71,11 @@ public class ContactsListFile {
         }
     }
 
+    /**
+     * Search INVITES_FILEPATH for an account that has requested to be a a contact of another, and add the fromAccount to
+     * the invite list of the targetAccount
+     * @param accounts
+     */
     public void formInvitesList(ArrayList<Account> accounts) {
         File contactsList = new File(INVITES_FILEPATH);
         //Scanner used to read each line of contacts file
@@ -111,7 +116,7 @@ public class ContactsListFile {
             in.close();
 
         } catch (FileNotFoundException fileNotFoundEx) {
-            System.err.println("Cannot find file " + CONTACTS_LIST_FILEPATH +
+            System.err.println("Cannot find file " + INVITES_FILEPATH +
                     " " + fileNotFoundEx.getStackTrace());
         }
     }
