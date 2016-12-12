@@ -26,6 +26,7 @@ public class RegisterPanel extends JFrame {
     private String m_firstname;
     private String m_lastname;
     private String m_phoneNumber;
+    private String m_picturePath;
     private String m_password;
     private String m_confirm;
     private String m_dob;
@@ -40,7 +41,7 @@ public class RegisterPanel extends JFrame {
      */
     public RegisterPanel(AccountsGraph graph) {
         this.setTitle("Skypertawe - Register");
-        this.setSize(600, 400);
+        this.setSize(600, 450);
         this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -66,6 +67,7 @@ public class RegisterPanel extends JFrame {
         JPasswordField confirm = new JPasswordField();
         JTextField dob = new JTextField();
         JTextField city = new JTextField();
+        JTextField picturePath = new JTextField();
 
         JButton submitBtn = new JButton("Submit");
         JButton cancelBtn = new JButton("Cancel");
@@ -76,28 +78,33 @@ public class RegisterPanel extends JFrame {
         JLabel textPhoneNumber = new JLabel("*Phone Number: ");
         JLabel textPassword = new JLabel("*Password ");
         JLabel textConfirm= new JLabel("*Confirm: ");
-        JLabel textDOB = new JLabel("City: ");
-        JLabel textCity = new JLabel("Birthday:");
+        JLabel textCity = new JLabel("City:");
+        JLabel textDOB = new JLabel("Birthday: ");
+        JLabel textProfilePic = new JLabel("*Picture filepath: ");
 
         username.setBounds(textUsername.getX() + 110, 10, 200, 25);
         firstname.setBounds(textFirstName.getX() + 110, 40, 200, 25);
         lastname.setBounds(textLastname.getX() + 110, 70, 200, 25);
         phoneNumber.setBounds(textPhoneNumber.getX() + 110, 100, 200, 25);
-        password.setBounds(textPassword.getX() + 110, 130, 200, 25);
-        confirm.setBounds(textConfirm.getX() + 110, 160, 200, 25);
-        dob.setBounds(textDOB.getX() + 110, 210, 200, 25);
+        //Added this
+        picturePath.setBounds(textProfilePic.getX() + 110, 130, 200, 25);
+        password.setBounds(textPassword.getX() + 110, 160, 200, 25);
+        confirm.setBounds(textConfirm.getX() + 110, 190, 200, 25);
         city.setBounds(textCity.getX() + 110, 240, 200, 25);
+        dob.setBounds(textDOB.getX() + 110, 280, 200, 25);
 
         textUsername.setBounds(10, username.getY(), 200, 25);
         textFirstName.setBounds(10, firstname.getY(), 200, 25);
         textLastname.setBounds(10, lastname.getY(), 200, 25);
         textPhoneNumber.setBounds(10, phoneNumber.getY(), 200, 25);
+        //Adde this
+        textProfilePic.setBounds(10, picturePath.getY(), 200, 25);
         textPassword.setBounds(10, password.getY(), 200, 25);
         textConfirm.setBounds(10, confirm.getY(), 200, 25);
-        textDOB.setBounds(10, dob.getY(), 200, 25);
         textCity.setBounds(10, city.getY(), 200, 25);
+        textDOB.setBounds(10, dob.getY(), 200, 25);
 
-        submitBtn.setBounds(this.getWidth() / 5, textCity.getY() + 50, 150, 50);
+        submitBtn.setBounds(this.getWidth() / 5, textDOB.getY() + 50, 150, 50);
         cancelBtn.setBounds(this.getWidth() / 5 + 160, submitBtn.getY(), 150, 50);
 
         submitBtn.setFont(new Font("Eras Light IT", Font.PLAIN, 20));
@@ -117,10 +124,17 @@ public class RegisterPanel extends JFrame {
                 m_firstname = firstname.getText();
                 m_lastname = lastname.getText();
                 m_phoneNumber = phoneNumber.getText();
-                m_password = Arrays.toString(password.getPassword());
-                m_confirm = Arrays.toString(confirm.getPassword());
+                m_picturePath = picturePath.getText();
+                m_password = new String(password.getPassword());
+                m_confirm = new String(confirm.getPassword());
                 m_city = city.getText();
+                if (m_city.equals("")) {
+                    m_city = null;
+                }
                 m_dob = dob.getText();
+                if (m_dob.equals("")) {
+                    m_dob = null;
+                }
 
                 if(checkFormValidation()) {
                     AccountValidation account = new AccountValidation(m_username);
@@ -147,16 +161,18 @@ public class RegisterPanel extends JFrame {
         panel.add(firstname);
         panel.add(lastname);
         panel.add(phoneNumber);
+        panel.add(picturePath);
         panel.add(dob);
         panel.add(city);
         panel.add(textUsername);
         panel.add(textFirstName);
         panel.add(textLastname);
         panel.add(textPhoneNumber);
+        panel.add(textProfilePic);
         panel.add(textPassword);
         panel.add(textConfirm);
-        panel.add(textDOB);
         panel.add(textCity);
+        panel.add(textDOB);
         panel.add(submitBtn);
         panel.add(cancelBtn);
 
@@ -218,7 +234,7 @@ public class RegisterPanel extends JFrame {
         newAccount = new Account(m_username,
                 m_firstname,
                 m_lastname,
-                "", //Add profile pic path here
+                m_picturePath,
                 m_dob,
                 m_city,
                 m_password,
