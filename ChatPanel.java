@@ -79,6 +79,20 @@ public class ChatPanel extends JFrame {
 
         loadProfilePics(panel);
 
+        JButton collabDrawButton = new JButton();
+        if (!groupChat) {
+            collabDrawButton.setText("Drawing");
+            collabDrawButton.setEnabled(true);
+            collabDrawButton.setBounds(650, 5, 100, 30);
+            panel.add(collabDrawButton);
+            collabDrawButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    loadCollabDrawing();
+                }
+            });
+        }
+
         JTextArea textArea = new JTextArea();
         JScrollPane chatPane = new JScrollPane(textArea);
         JTextField chatField = new JTextField();
@@ -194,6 +208,10 @@ public class ChatPanel extends JFrame {
             text.append(currentMessage.display() + "\n");
         }
 
+    }
+
+    private void loadCollabDrawing() {
+        DrawingEnv drawingEnv = new DrawingEnv(currentAccount, otherAccount);
     }
 
     /**

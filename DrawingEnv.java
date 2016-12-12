@@ -46,7 +46,7 @@ public class DrawingEnv extends JFrame {
     public DrawingEnv(Account firstAccount, Account secondAccount){
         this.setTitle("This is a drawing environment");
         this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
-        this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JInternalFrame.DISPOSE_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
