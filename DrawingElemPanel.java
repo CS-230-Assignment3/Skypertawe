@@ -13,6 +13,15 @@ import java.io.IOException;
 import javax.swing.JPanel;
 
 
+/**
+ * @file DrawingElemPanel.java
+ * @author On Yiu (689480)
+ * @date 11 Dec 2016
+ *
+ * A panel for drawing line and ParticleEffect
+ * It allow to change the colour of the drawing element
+ * Saving the drawing and reload the past drawing
+ */
 public class DrawingElemPanel extends JPanel {
 
     /** The width of the point of ParticleEffect*/
