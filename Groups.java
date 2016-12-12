@@ -6,22 +6,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Scanner;
-
+/**
+ * @file Groups.java
+ * @author Jamie Hutton
+ * @date 11th dec 2016
+ *
+ * Used to create groups and create a list of all groups.
+ */
 public class Groups {
 	private static Account m_CurrUser;
 	private ArrayList<String> m_CurrUserGroupsFileNames = new ArrayList<String>();
 	private ArrayList<ArrayList<Account>> m_CurrUserGroups = new ArrayList<ArrayList<Account>>();
 	private ArrayList<Account> m_NewGroup = new ArrayList<Account>();
 	private ArrayList<String> allGroups = new ArrayList<String>();
-
 	private AccountsGraph m_graph;
-
+	
+	/**
+     * Allow for group file manipulation group users to be added. 
+     *
+     * @param accountSend     account sending the message
+     * @param currUser The current user logged in. 
+     * @param graph Passes the current graph built.
+     */
 	public Groups(AccountsGraph graph, Account currUser) {
 		m_graph = graph;
 		m_CurrUser = currUser;
 
 	}
-
+	
+	/**
+     * Creates a list of groups that are contained with in "GroupsFiles\\" folder. 
+     * 
+     *@return allGroups Returns a list of the groups that are stored in the system. 
+     */
 	public ArrayList<String> makeGroups() {
 
 		File[] files = new File("GroupFiles\\").listFiles();
@@ -36,6 +53,14 @@ public class Groups {
 
 	}
 
+	/**
+     * This add the group files names and the user's that belong to the group 
+     * to the current users account. It does this by get allGroup and splitting it
+     * then so that only the names are left. The finds the users account in the graph and 
+     * ands it to the current person logged in account. 
+     * 
+     * 
+     */
 	public void makeUserGroups() {
 
 		ArrayList<String> parts = new ArrayList<String>();
@@ -69,7 +94,16 @@ public class Groups {
 		m_CurrUser.setGroups(m_CurrUserGroups);
 		m_CurrUser.setGroupsFileNames(m_CurrUserGroupsFileNames);
 	}
-
+	
+	/**
+     * This method is used to find a tuple with in a 2D array list. It first makes the 
+     * target accounts by taking the file name and converting the names in to accounts.
+     * Then it searched the 2D array list for the targeted tuple.
+     * Then return an array list of accounts of the desired names from the file name.
+     * 
+     * @return finalList Returns a list of users taken from a 2D array list 
+     * 
+     */
 	public ArrayList<Account> getRightUsers(ArrayList<ArrayList<Account>> g, String g1) {
 		String[] temp = g1.replace(".txt", "").split("_");
 		Arrays.sort(temp);
@@ -86,21 +120,29 @@ public class Groups {
 			Collections.sort(account);
 		}
 
-		ArrayList<Account> currentLis4t = new ArrayList<Account>();
+		ArrayList<Account> finalList = new ArrayList<Account>();
 		for (int i = 0; g.size() > i; i++) {
 
 			ArrayList<Account> currentList = g.get(i);
 
 			Collections.sort(currentList);
 			if (account.equals(currentList)) {
-				currentLis4t = currentList;
+				finalList = currentList;
 			}
 
 		}
 
-		return currentLis4t;
+		return finalList;
 	}
 	
+	/**
+     * This method reads the group names from the first line in the file
+     * 
+     * 
+     * @param  groupName The group name.
+     * @return groupNameReturn Returns a group name. 
+     * 
+     */
 	public String readGroupName(String groupName){
 		
 		File chatFile = new File("GroupFiles\\"+groupName+".txt");
@@ -116,8 +158,15 @@ public class Groups {
 
 		return groupNameReturn;
 	}
-
 	
+	
+	/**
+     * This method creates the group file in the correct naming convention. 
+     * 
+     * @param  groupName The group name.
+     * @param otherAccounts List of account to be added to the group. 
+     * 
+     */
 	public void createGroupFile(String groupName, ArrayList<Account> otherAccounts) {
 
 		m_NewGroup.add(m_CurrUser);
