@@ -207,33 +207,20 @@ public class MainWindow extends JFrame {
 		UnreadMessages unread = new UnreadMessages(currUser, obj);
 		int numOfUnread = unread.unreadMessageCount();
 
-		JLabel newMessages = new JLabel();
-		JLabel noNewMessages = new JLabel();
+		JLabel messageToDisplay = null;
 
-		newMessages.setFont(new Font("Arial", Font.PLAIN, 17));
-		noNewMessages.setFont(new Font("Arial", Font.PLAIN, 17));
-
-
-		newMessages.setBounds(panel.getWidth() / 3 - 20, 110, 250, 100);
-		noNewMessages.setBounds(panel.getWidth() / 3 - 20, 110, 250, 100);
-
-		JLabel panelToAdd = new JLabel();
+		messageToDisplay.setFont(new Font("Arial", Font.PLAIN, 17));
+		messageToDisplay.setBounds(panel.getWidth() / 3 - 20, 110, 250, 100);
+		messageToDisplay.setForeground(new Color(107, 178, 40,255));
 
 		if(numOfUnread > 0) {
 			unreadMessages += numOfUnread;
-			newMessages.setText("You have " +  unreadMessages + " new messages!");
-			newMessages.setForeground(new Color(107, 178, 40,255));
-			panelToAdd = newMessages;
-			noNewMessages = null;
-		} else if (unreadMessages == 0 && !noMessagesDisplayed) {
-			noNewMessages.setText("You have no new messages.");
-			noNewMessages.setForeground(new Color(0,0,0,255));
-			panelToAdd = noNewMessages;
-			newMessages = null;
-			noMessagesDisplayed = true;
+			messageToDisplay = new JLabel("You have" + unreadMessages + " new messages!");
+		} else if (unreadMessages == 0) {
+			messageToDisplay = new JLabel("You have no new messages!");
 		}
 
-		panel.add(panelToAdd);
+		panel.add(messageToDisplay);
 
 		if(unread.getTimeofLastSentMessage() != null) {
 			if (m_lastMessageLocalDateTime == null) {
