@@ -137,6 +137,11 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);
 	}
 
+	/**
+	 * This inserts group buttons into the GUI
+	 * @param panel The main right panel
+	 * @return The panel with all the elements on it
+	 */
 	private JComponent insertGroups(JComponent panel) {
 		int i = 0;
 		ArrayList<String> groupList = currUser.getGroupsFileNames();
@@ -157,6 +162,14 @@ public class MainWindow extends JFrame {
 		return panel;
 	}
 
+	/**
+	 * This adds group buttons on the gui
+	 * @param groupName The group name
+	 * @param panel The left main panel
+	 * @param y The height of the button
+	 * @param allUsers The account arraylist
+	 * @return The buttons
+	 */
 	private JComponent structureGroupButton(String groupName, JComponent panel, int y, ArrayList<Account> allUsers) {
 		JButton groupBtn = new JButton(groupName);
 		groupBtn.setBounds(0, 50 + y, panel.getWidth(), 50);
@@ -174,6 +187,13 @@ public class MainWindow extends JFrame {
 		return groupBtn;
 	}
 
+
+	/**
+	 * This insertsFriends into the gui
+	 * @param panel The left panel
+	 * @param seconaryPanel The right panel
+	 * @return The finalised Jpanel containing all elements
+	 */
 	private JComponent insertFriends(JComponent panel, JComponent seconaryPanel) {
 		int i = 0;
 		int unreadMessages = 0;
@@ -241,6 +261,14 @@ public class MainWindow extends JFrame {
 		return panel;
 	}
 
+	/**
+	 *This inserts messages informing the user
+	 * of any unread messages
+	 * @param panel The main right panel
+	 * @param obj The account object
+	 * @param unreadMessages How many unread messages
+	 * @return The amount of unreadmessages
+	 */
 	private int insertUnreadChat(JComponent panel, Account obj, int unreadMessages) {
 		UnreadMessages unread = new UnreadMessages(currUser, obj);
 		int numOfUnread = unread.unreadMessageCount();
@@ -307,6 +335,14 @@ public class MainWindow extends JFrame {
 		return unreadMessages;
 	}
 
+	/**
+	 * This adds buttons on the gui for friends
+	 * @param obj The account object
+	 * @param username The friend username
+	 * @param y The height of the button
+	 * @param panel The main panel
+	 * @return The JPanel containing all the elements
+	 */
 	private JComponent structureFriendButton(Account obj, String username, int y, JComponent panel) {
 		JButton friendBtn = new JButton(username);
 		friendBtn.setBounds(0, 50 + y, panel.getWidth(), 50);
