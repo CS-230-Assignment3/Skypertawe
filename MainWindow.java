@@ -109,12 +109,27 @@ public class MainWindow extends JFrame {
 				new SearchResultsPanel(currUser, graph);
 			}
 		});
+		
+		JButton createGroups = new JButton("Create Group");
+		createGroups.setBounds(0,600, 495, 80);
+		createGroups.setFocusPainted(false);
+		createGroups.setBackground(new Color(33, 33, 33,255));
+		createGroups.setForeground(new Color(255,255,255,255));
+		createGroups.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
+		createGroups.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new  CreateGroup(currUser, graph);
+			}
+		});
+		
 		contactsPanel.add(contactHeader);
 		groupsPanel.add(groupHeader);
 		rightPanel.add(searchBar);
 		rightPanel.add(unreadHeader);
-
+		rightPanel.add(createGroups);
+		
 		leftContainer.add(insertFriends(contactsPanel, rightPanel));
 		leftContainer.add(insertGroups(groupsPanel));
 		rightContainer.add(rightPanel);
