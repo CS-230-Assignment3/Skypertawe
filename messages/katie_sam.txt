@@ -7,3 +7,6 @@ sam,2016/12/11 23:03:46,messageText,ieiiqwe
 katie,2016/12/12 02:11:21,messageText,Hey sam!
 katie,2016/12/12 02:24:52,messageText,hey sam
 sam,2016/12/12 05:05:12,messageText,Hello Katie
+sam,2016/12/12 05:17:26,messageText,Hi!
+sam,2016/12/12 05:18:07,messageText,Hello again
+katie,2016/12/12 05:19:32,messageText,Hey sam!
