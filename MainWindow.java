@@ -169,28 +169,34 @@ public class MainWindow extends JFrame {
 		int numOfUnread = unread.unreadMessageCount();
 
 		JLabel newMessages = new JLabel();
+		JLabel noNewMessages = new JLabel();
 		JLabel timeOfLastMsg = new JLabel();
 
 		newMessages.setFont(new Font("Arial", Font.PLAIN, 17));
+		noNewMessages.setFont(new Font("Arial", Font.PLAIN, 17));
 		timeOfLastMsg.setFont(new Font("Arial", Font.PLAIN, 17));
 
 		newMessages.setBounds(50, 110, 200, 100);
+		noNewMessages.setBounds(50, 110, 200, 100);
 		timeOfLastMsg.setBounds(10, 180, this.getWidth() / 2, 100);
 
 		if(numOfUnread > 0) {
 			newMessages.setText("You have " + String.valueOf(numOfUnread) + " new messages!");
 			newMessages.setForeground(new Color(107, 178, 40,255));
+			panel.add(newMessages);
+			noNewMessages = null;
 		}
 		else {
-			newMessages.setText("You have no new messages.");
-			newMessages.setForeground(new Color(0,0,0,255));
+			noNewMessages.setText("You have no new messages.");
+			noNewMessages.setForeground(new Color(0,0,0,255));
+			panel.add(noNewMessages);
+			newMessages = null;
 		}
 
 		if(unread.getTimeofLastSentMessage() != null) {
 			timeOfLastMsg.setText("Time of last message: " + unread.getTimeofLastSentMessage());
+			panel.add(timeOfLastMsg);
 		}
-		panel.add(newMessages);
-		panel.add(timeOfLastMsg);
 	}
 
 	private JComponent structureFriendButton(Account obj, String username, int y, JComponent panel) {
