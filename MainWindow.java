@@ -198,6 +198,13 @@ public class MainWindow extends JFrame {
 		timeOfLastMsg.setFont(new Font("Arial", Font.PLAIN, 17));
 		timeOfLastMsg.setBounds(panel.getWidth() / 3, 150, this.getWidth() / 2, 100);
 		timeOfLastMsg.setText("Time of last message: " + m_lastMessageDataTime);
+
+		if(!currUser.getInvites().isEmpty()) {
+			JButton hasInvites = new JButton("You have pending invites!");
+			hasInvites.setBounds(0, panel.getHeight() / 2, this.getWidth() / 2 - 5, 50);
+			seconaryPanel.add(hasInvites);
+		}
+
 		seconaryPanel.add(timeOfLastMsg);
 		return panel;
 	}

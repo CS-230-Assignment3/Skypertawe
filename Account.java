@@ -63,7 +63,14 @@ public class Account implements Comparable<Account> {
 		this.m_password = password;
 		this.m_phoneNum = phoneNum;
 	}
-	
+
+	/**
+	 * @return the invite list
+	 */
+	public ArrayList<Account> getInvites() {
+		return invites;
+	}
+
 	/**
 	 * @return the user name
 	 */
