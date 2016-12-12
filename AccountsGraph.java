@@ -135,11 +135,22 @@ public class AccountsGraph {
 
     /**
      * Adds an invite to the second account to become a contact of the first
-     * @param fromAccount who the invite if from
+     * @param fromAccount who the invite is if from
      * @param targetAccount who the invite is directed to
      */
     public void inviteContact(Account fromAccount, Account targetAccount) {
         targetAccount.addInvite(fromAccount);
+        m_contactsListFile.writeInviteContact(fromAccount, targetAccount);
+    }
+
+    /**
+     * Accepts an invite to the sendAccount from receiveAccount, and adds them as contacts
+     * @param receiveAccount who the invite was from
+     * @param sendAccount who the invite was to
+     */
+    public void acceptInvite(Account receiveAccount, Account sendAccount) {
+        m_contactsListFile.acceptInvite(receiveAccount, sendAccount);
+        addContact(receiveAccount, sendAccount);
     }
 
     /**

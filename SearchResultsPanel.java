@@ -77,7 +77,7 @@ public class SearchResultsPanel extends JFrame {
 							int dialogResult = JOptionPane.showConfirmDialog(null,
 							"Sure you want to add person?", "Warning", dialogButton);		
 							if (dialogResult == 0) {
-								m_Graph.addContact(m_CurrUser, newAccount);
+								m_Graph.inviteContact(m_CurrUser, newAccount);
 								dispose();
 							}
 							

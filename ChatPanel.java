@@ -144,6 +144,7 @@ public class ChatPanel extends JFrame {
             }
         });
 
+        //Added popup for sending a file
         fileBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -166,6 +167,7 @@ public class ChatPanel extends JFrame {
                 sendBtn.setBounds(desc.getX(),descTxt.getY() + 50,150,50);
                 cancelBtn.setBounds(desc.getX() + 150,descTxt.getY() + 50, 150, 50);
 
+                //If clicked, send message
                 sendBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -198,6 +200,7 @@ public class ChatPanel extends JFrame {
             }
         });
 
+        //Added popup for sending a URL
         urlBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -220,6 +223,7 @@ public class ChatPanel extends JFrame {
                 sendBtn.setBounds(desc.getX(),descTxt.getY() + 50,150,50);
                 cancelBtn.setBounds(desc.getX() + 150,descTxt.getY() + 50, 150, 50);
 
+                //If clicked, send URL
                 sendBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -270,7 +274,7 @@ public class ChatPanel extends JFrame {
 
         ArrayList<JLabel> pictureList = new ArrayList<>();
         ArrayList<JTextArea> descriptionList = new ArrayList<>();
-
+        //Makes and resize each profile picture
         int count = 0;
         for (Account account : allAccounts) {
             ImageIcon unscaledImage = new ImageIcon(account.getProfilePic());
@@ -342,6 +346,12 @@ public class ChatPanel extends JFrame {
         }
     }
 
+    /**
+     * Appends the contents of the filePath and description to the text are. It also writes the message to file
+     * @param text JTextArea to append the message to
+     * @param filePath Location of .txt file to display
+     * @param description Short description about the file
+     */
     private void sendFileMessage(JTextArea text, String filePath, String description) {
         MessageFile messageFile = new MessageFile(currentAccount, filePath, description);
         text.append(messageFile.display() + "\n");
@@ -349,8 +359,14 @@ public class ChatPanel extends JFrame {
 
     }
 
-    private void sendURLMessage(JTextArea text, String filePath, String description) {
-        MessageURL messageFile = new MessageURL(currentAccount, filePath, description);
+    /**
+     * Appends the URL and description to the text are. It also writes the message to file
+     * @param text JTextArea to append the message to
+     * @param url URL to display
+     * @param description Short description about the URL
+     */
+    private void sendURLMessage(JTextArea text, String url, String description) {
+        MessageURL messageFile = new MessageURL(currentAccount, url, description);
         text.append(messageFile.display() + "\n");
         chatHistory.writeToFile(messageFile);
     }

@@ -11,6 +11,8 @@ import java.util.Scanner;
 public class ContactsListFile {
     private final String CONTACTS_LIST_FILEPATH = "graphFiles\\contact.txt";
     private final String TEMP_CONTACTS_LIST_FILEPATH = "graphFiles\\contactsTemp.txt";
+    private final String INVITES_FILEPATH = "graphFiles\\pendingContacts.txt";
+    private final String TEMP_INVITES_FILEPATH = "graphFiles\\pendingContactsTemp.txt";
 
     /**
      * Default constructor
@@ -99,7 +101,8 @@ public class ContactsListFile {
 
     /**
      * Removes contact relationship between two accounts from the contacts file
-     * @param firstAccount account to remove from second account
+     *
+     * @param firstAccount  account to remove from second account
      * @param secondAccount account to remove from first account
      */
     public void removeContactFromFile(Account firstAccount, Account secondAccount) {
@@ -155,5 +158,76 @@ public class ContactsListFile {
         originalFile.delete();
         tempFile.renameTo(originalFile);
 
+    }
+
+    /**
+     * Writes the invite to file, in form fromAccount,toAccount
+     * @param fromAccount who the invite was from
+     * @param toAccount who the invite was to
+     */
+    public void writeInviteContact(Account fromAccount, Account toAccount) {
+        File invites = new File(INVITES_FILEPATH);
+        FileWriter writer = null;
+        try {
+            //Writer appends to contacts file
+            writer = new FileWriter(invites, true);
+            writer.write(fromAccount.getUser() + "," + toAccount.getUser());
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Accepts the invite and removes the correct line from pendingFile
+     * @param receiveAccount ho the invite was to
+     * @param sendAccount who the invite was from
+     */
+    public void acceptInvite(Account receiveAccount, Account sendAccount) {
+        File originalFile = new File(INVITES_FILEPATH);
+        File tempFile = new File(TEMP_INVITES_FILEPATH);
+        try {
+            tempFile.createNewFile();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return;
+        }
+        //Scanner used to read each line of accounts file
+        Scanner reader = null;
+        //Writer used to write each line of accounts file
+        PrintWriter writer = null;
+        try {
+            reader = new Scanner(originalFile);
+            writer = new PrintWriter(tempFile);
+        } catch (FileNotFoundException notFound) {
+            System.err.println(CONTACTS_LIST_FILEPATH + " or " + TEMP_CONTACTS_LIST_FILEPATH
+                    + " " + notFound.getMessage());
+            return;
+        }
+        //Loop while there is an unread line in accounts file
+        while (reader.hasNext()) {
+            //Scanner used to parse each account
+            Scanner contacts = new Scanner(reader.nextLine());
+            contacts.useDelimiter(",");
+            String firstUsername = contacts.next();
+            String secondUsername = contacts.next();
+            //Determines if line should not be written to file
+            boolean skipLine = false;
+
+            if (firstUsername.equals(sendAccount.getUser()) &&
+                    secondUsername.equals(receiveAccount.getUser())) {
+                skipLine = true;
+            }
+            contacts.close();
+            //If line should not be skipped, write it
+            if (!skipLine) {
+                writer.println(firstUsername + "," + secondUsername);
+            }
+        }
+        reader.close();
+        writer.close();
+        //Delete original accounts file and rename temporary to original file name
+        originalFile.delete();
+        tempFile.renameTo(originalFile);
     }
 }
