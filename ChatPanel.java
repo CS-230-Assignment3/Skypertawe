@@ -223,7 +223,7 @@ public class ChatPanel extends JFrame {
                 sendBtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        //Add action shit here
+                        sendURLMessage(textArea, filePath.getText(), desc.getText());
                     }
                 });
 
@@ -347,5 +347,11 @@ public class ChatPanel extends JFrame {
         text.append(messageFile.display() + "\n");
         chatHistory.writeToFile(messageFile);
 
+    }
+
+    private void sendURLMessage(JTextArea text, String filePath, String description) {
+        MessageURL messageFile = new MessageURL(currentAccount, filePath, description);
+        text.append(messageFile.display() + "\n");
+        chatHistory.writeToFile(messageFile);
     }
 }
