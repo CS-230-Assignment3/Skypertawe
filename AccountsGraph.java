@@ -56,12 +56,9 @@ public class AccountsGraph {
          */
 
         String oldPath = newAccount.getProfilePic();
-        //Split path by "."
-        String[] oldPathArray = oldPath.split("\\.");
-        //Final element in array must be file extension
-        String fileExtension = oldPathArray[oldPathArray.length - 1];
 
-        String newPath = "profilePics\\" + newAccount.getUser() + "." + fileExtension;
+
+        String newPath = "profilePics\\" + newAccount.getUser() + ".png";
 
         Path profilePic = Paths.get(oldPath);
         Path newFile = Paths.get(newPath);
