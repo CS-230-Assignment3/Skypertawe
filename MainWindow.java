@@ -182,7 +182,7 @@ public class MainWindow extends JFrame {
 		if(friendList.isEmpty()) {
 			JLabel noFriends = new JLabel("You don't have any friends yet.");
 			noFriends.setFont(new Font("Arial", Font.PLAIN, 17));
-			noFriends.setBounds(panel.getWidth() / 3, 150, this.getWidth() / 2, 100);
+			noFriends.setBounds(10, 150, this.getWidth() / 2, 100);
 			panel.add(noFriends);
 		}
 		else {
