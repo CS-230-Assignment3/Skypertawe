@@ -125,7 +125,7 @@ public class Groups {
 		String userFileName;
 		userFileName = "";
 		for (Account s : m_NewGroup) {
-			userFileName += "_" + s.getUser();
+			userFileName += s.getUser() + "_";
 		}
 
 		String filePath = "GroupFiles\\" + userFileName + ".txt";
