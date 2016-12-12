@@ -135,13 +135,10 @@ public class Groups {
 			File file = new File(filePath);
 
 			if (file.createNewFile()) {
-				System.out.println("File is created!");
 				FileWriter f0 = new FileWriter(filePath, true);
 				f0.write(groupName + "\n");
 				f0.close();
-			} else {
-				System.out.print("File exists already!");
-			}
+			} 
 
 		} catch (IOException e) {
 			e.printStackTrace();
