@@ -44,22 +44,28 @@ public class SearchResultsPanel extends JFrame {
 		searchBox.setBounds(100, 30, 130, 20);
 
 		JButton submitButton = new JButton("Submit");
-		
+		submitButton.setBounds(100, 70, 130, 20);
 		/*
 		 * Listens for submit button and response to the user input. 
 		 */
 		submitButton.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent e) {
 				String content = searchBox.getText();
 				Account newAccount = m_Graph.findAccount(content);
+				 contentPane.validate();
+			     contentPane.repaint();
+				
 				if (newAccount != null) {
-					contentPane.repaint();
-
+					contentPane.remove(searchLabel);
+					contentPane.remove(searchBox);
+					contentPane.remove(submitButton);
+					
+					//new SearchResultsPanel(m_CurrUser, m_Graph) ;
 					String addFriendString = "Add " + newAccount.getUser() + " to Contacts?";
 					JButton addFriend = new JButton(addFriendString);
 					addFriend.setBounds(0, 150, 250, 50);
 					contentPane.add(addFriend);
-					
 
 					/*
 					 * Listens for if the user wants to add the account to contacts their
@@ -72,8 +78,9 @@ public class SearchResultsPanel extends JFrame {
 							"Sure you want to add person?", "Warning", dialogButton);		
 							if (dialogResult == 0) {
 								m_Graph.addContact(m_CurrUser, newAccount);
+								dispose();
 							}
-
+							
 						}
 					});
 					String removeFriendString = "Remove " + newAccount.getUser() + ", From Contacts?";
@@ -92,22 +99,36 @@ public class SearchResultsPanel extends JFrame {
 									"Sure you want to remove person?", "Warning", dialogButton);
 							if (dialogResult == 0) {
 								m_Graph.removeContact(m_CurrUser, newAccount);
+								dispose();
 							}
 
 						}
 					});
+				SwingUtilities.updateComponentTreeUI(contentPane);
 				} else {
 					JOptionPane.showMessageDialog(buildPanel(), "No reults Found, Please try again");
+					
 				}
+				
+				JButton searchAgain = new JButton("Search Again?");
+				searchAgain.setBounds(100, 70, 130, 20);
+				
+				contentPane.add(searchAgain);
+				searchAgain.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						dispose();
+						new SearchResultsPanel(m_CurrUser,  m_Graph);
+					}
+				});
 			}
-
+			
 		});
-		
+		 
+	
 		
 		/*
 		 * Builds the content panel read for display.
 		 */
-		submitButton.setBounds(100, 70, 130, 20);
 
 		JLabel displayLabel = new JLabel("Results");
 		displayLabel.setBounds(30, 100, 50, 20);
