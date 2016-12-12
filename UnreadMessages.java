@@ -229,6 +229,9 @@ public class UnreadMessages {
      * @return Time last message was sent
      */
 	public String getTimeofLastSentMessage() {
+	    if (m_messages == null) {
+	        return null;
+        }
 
 		String lastLine =  m_messages.get(m_messages.size()-1);
 		String[] lastLineArray = lastLine.split(",");
