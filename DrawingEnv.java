@@ -6,7 +6,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
+/**
+ * @file DrawingEnv.java
+ * @author On Yiu (689480)
+ * @date 11 Dec 2016
+ * @see DrawingElemPanel.java for the panel for drawing
+ * 
+ * A Frame for drawing panel and the option button
+ */
 public class DrawingEnv extends JFrame {
 
     /**
