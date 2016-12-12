@@ -41,7 +41,7 @@ public class MainWindow extends JFrame {
 		this.currUser = currUser;
 		this.setTitle("Skypertawe - " + "Hello, " + currUser.getUser());
 		this.setSize(1000, 700);
-		this.setDefaultCloseOperation(exitProgram());
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setVisible(true);
@@ -129,7 +129,6 @@ public class MainWindow extends JFrame {
 		rightPanel.add(searchBar);
 		rightPanel.add(unreadHeader);
 		rightPanel.add(createGroups);
-		
 		leftContainer.add(insertFriends(contactsPanel, rightPanel));
 		leftContainer.add(insertGroups(groupsPanel));
 		rightContainer.add(rightPanel);
@@ -180,16 +179,24 @@ public class MainWindow extends JFrame {
 		int unreadMessages = 0;
 		ArrayList<Account> friendList = currUser.getFriends();
 
-		for(Account obj : friendList) {
-			String name = obj.getUser();
-			panel.add(structureFriendButton(obj, name, i, panel));
-			unreadMessages += insertUnreadChat(seconaryPanel, obj, unreadMessages);
-			i = i + 60;
+		if(friendList.isEmpty()) {
+			JLabel noFriends = new JLabel("You don't have any friends yet.");
+			noFriends.setFont(new Font("Arial", Font.PLAIN, 17));
+			noFriends.setBounds(panel.getWidth() / 3, 150, this.getWidth() / 2, 100);
+			panel.add(noFriends);
+		}
+		else {
+			for(Account obj : friendList) {
+				String name = obj.getUser();
+				panel.add(structureFriendButton(obj, name, i, panel));
+				unreadMessages += insertUnreadChat(seconaryPanel, obj, unreadMessages);
+				i = i + 60;
+			}
 		}
 
 		JLabel timeOfLastMsg = new JLabel();
 		timeOfLastMsg.setFont(new Font("Arial", Font.PLAIN, 17));
-		timeOfLastMsg.setBounds(10, 180, this.getWidth() / 2, 100);
+		timeOfLastMsg.setBounds(panel.getWidth() / 3, 150, this.getWidth() / 2, 100);
 		timeOfLastMsg.setText("Time of last message: " + m_lastMessageDataTime);
 		seconaryPanel.add(timeOfLastMsg);
 		return panel;
@@ -207,25 +214,28 @@ public class MainWindow extends JFrame {
 		noNewMessages.setFont(new Font("Arial", Font.PLAIN, 17));
 
 
-		newMessages.setBounds(50, 110, 200, 100);
-		noNewMessages.setBounds(50, 110, 250, 100);
+		newMessages.setBounds(panel.getWidth() / 3 - 20, 110, 250, 100);
+		noNewMessages.setBounds(panel.getWidth() / 3 - 20, 110, 250, 100);
+
+		JLabel panelToAdd = new JLabel();
 
 		if(numOfUnread > 0) {
 			unreadMessages += numOfUnread;
 			newMessages.setText("You have " +  unreadMessages + " new messages!");
 			newMessages.setForeground(new Color(107, 178, 40,255));
-			panel.add(newMessages);
+			panelToAdd = newMessages;
 			noNewMessages = null;
 		} else if (unreadMessages == 0 && !noMessagesDisplayed) {
 			noNewMessages.setText("You have no new messages.");
 			noNewMessages.setForeground(new Color(0,0,0,255));
-			panel.add(noNewMessages);
+			panelToAdd = noNewMessages;
 			newMessages = null;
 			noMessagesDisplayed = true;
 		}
 
-		if(unread.getTimeofLastSentMessage() != null) {
+		panel.add(panelToAdd);
 
+		if(unread.getTimeofLastSentMessage() != null) {
 			if (m_lastMessageLocalDateTime == null) {
 			    m_lastMessageDataTime = unread.getTimeofLastSentMessage();
 				String[] unreadDateTime = m_lastMessageDataTime.split(" ");
@@ -270,12 +280,8 @@ public class MainWindow extends JFrame {
 					m_lastMessageLocalDateTime = newLastMessageTime;
 					m_lastMessageDataTime = newUnreadDateTime;
 				}
-
 			}
-
-
 		}
-
 		return unreadMessages;
 	}
 
@@ -294,22 +300,5 @@ public class MainWindow extends JFrame {
 			}
 		});
 		return friendBtn;
-	}
-
-	/**
-	 * A simple method to check if the user
-	 * actually wants to exit the program
-	 * @return The exit code that's given
-	 */
-	private int exitProgram() {
-    	int exitCode = DO_NOTHING_ON_CLOSE;
-    	JOptionPane pane;
-    	pane = new JOptionPane("Are you sure you want to exit?", JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION);
-    	pane.setVisible(true);
-
-    	if(pane.YES_NO_OPTION == pane.YES_OPTION) {
-			exitCode = EXIT_ON_CLOSE;
-		}
-		return exitCode;
 	}
 }

@@ -116,12 +116,13 @@ public class ChatPanel extends JFrame {
         fileBtn.setBounds(chatField.getWidth() / 3, chatField.getY() + 40, 150, 40);
         urlBtn.setBounds(fileBtn.getWidth() + (chatField.getWidth()/3), chatField.getY() + 40, 150, 40);
 
-
         sendBtn.setBounds(chatField.getWidth(), chatField.getY(), 150, 40);
 
         sendBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+
                 sendMessage(textArea, chatField);
             }
         });
@@ -144,6 +145,28 @@ public class ChatPanel extends JFrame {
 
             }
         });
+
+        fileBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame popup = new JFrame("Title here");
+                JPanel quickPanel = new JPanel();
+                quickPanel.setSize(popup.getWidth(), popup.getHeight());
+
+                JButton popBtn1 = new JButton("Text here");
+                JButton popBtn2 = new JButton("Text here");
+
+                popup.setSize(450, 300);
+                popBtn1.setBounds(10,10,50,50);
+                popBtn2.setBounds(100, 100, 50, 50);
+
+                quickPanel.add(popBtn1);
+                quickPanel.add(popBtn2);
+                popup.add(quickPanel);
+                popup.setVisible(true);
+            }
+        });
+
         loadMessages(textArea);
         panel.add(sendBtn);
         panel.add(chatField);
@@ -233,9 +256,11 @@ public class ChatPanel extends JFrame {
      * @param message The message that the user has typed into the field
      */
     private void sendMessage(JTextArea text, JTextField message) {
-        MessageText messageText = new MessageText(currentAccount, message.getText());
-        text.append(messageText.display() + "\n");
-        chatHistory.writeToFile(messageText);
-        message.setText("");
+        if(!message.getText().isEmpty()) {
+            MessageText messageText = new MessageText(currentAccount, message.getText());
+            text.append(messageText.display() + "\n");
+            chatHistory.writeToFile(messageText);
+            message.setText("");
+        }
     }
 }
