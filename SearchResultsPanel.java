@@ -23,7 +23,6 @@ public class SearchResultsPanel extends JFrame {
 		this.setTitle("Search");
 		this.setContentPane(buildPanel());
 		this.setSize(250, 400);
-		this.setDefaultCloseOperation(JInternalFrame.EXIT_ON_CLOSE);
 		this.setLayout(null);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);

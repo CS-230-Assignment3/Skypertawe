@@ -55,13 +55,8 @@ public class ChatPanel extends JFrame {
      * @param otherAccounts The people receiving the message
      * @param accountsGraph The graph of all accounts in system
      */
-    public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts, AccountsGraph accountsGraph) {
-        String title = "";
-        for(Account obj : otherAccounts) {
-            title = obj.getUser();
-        }
-
-        this.setTitle("Skypertawe Chat - " + title);
+    public ChatPanel(Account currentAccount,  ArrayList<Account> otherAccounts, AccountsGraph accountsGraph, String groupName) {
+        this.setTitle("Skypertawe Chat - " + groupName);
         this.setSize(800, 600);
         this.setLayout(null);
         this.setResizable(false);

@@ -47,77 +47,95 @@ public class MainWindow extends JFrame {
 	 * Loads components on to the panel and inserts data
 	 */
 	private void loadAssets() {
-		JPanel leftContainer = new JPanel();
-		leftContainer.setSize(new Dimension(this.getWidth() / 2, this.getHeight()));
-		leftContainer.setLayout(null);
+		JPanel leftContainer = new JPanel(null);
+		leftContainer.setBounds(0, 0, this.getWidth() / 2, this.getHeight());
 
-		JPanel rightContainer = new JPanel();
-		rightContainer.setBounds(leftContainer.getWidth(), 0, leftContainer.getWidth(), leftContainer.getHeight());
-		rightContainer.setLayout(null);
+		JPanel rightContainer = new JPanel(null);
+		rightContainer.setBounds(500, 0, 500, this.getHeight());
 
-		JPanel contactsPanel = new JPanel();
-		contactsPanel.setLayout(null);
+		JPanel contactsPanel = new JPanel(null);
 		JScrollPane contactsPane = new JScrollPane(contactsPanel);
 
-		JPanel groupsPanel = new JPanel();
-		contactsPanel.setLayout(null);
+		JPanel groupsPanel = new JPanel(null);
 		JScrollPane groupsPane = new JScrollPane(groupsPanel);
+
+		JPanel rightPanel = new JPanel(null);
+		JScrollPane rightPane = new JScrollPane(rightPanel);
 
 		contactsPanel.setBackground(new Color(170,170,170,255));
 		groupsPanel.setBackground(new Color(187,187,187,187));
+		rightPanel.setBackground(new Color(253, 253, 253,255));
 
 		JLabel contactHeader = new JLabel("Contacts");
 		JLabel groupHeader = new JLabel("Groups");
+		JLabel unreadHeader = new JLabel("Unread Messages");
 
 		contactsPanel.setBounds(0, 0, leftContainer.getWidth() / 2, leftContainer.getHeight());
 		groupsPanel.setBounds(contactsPanel.getWidth(), 0, leftContainer.getWidth() / 2, leftContainer.getHeight());
+		rightPanel.setBounds(0, 0, rightContainer.getWidth(), this.getHeight());
 
 		contactsPane.setSize(new Dimension(contactsPanel.getWidth(), contactsPanel.getHeight()));
 		groupsPane.setSize(new Dimension(groupsPanel.getWidth(), groupsPanel.getHeight()));
-
-		contactsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-		groupsPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		rightPane.setSize(new Dimension(rightPanel.getWidth(), rightPanel.getHeight()));
 
 		contactHeader.setFont(new Font("Arial", Font.BOLD, 20));
 		groupHeader.setFont(new Font("Arial", Font.BOLD, 20));
+		unreadHeader.setFont(new Font("Arial", Font.BOLD, 20));
 
 		contactHeader.setBounds(contactsPanel.getWidth() / 3, 0, contactsPanel.getWidth(), 50);
 		groupHeader.setBounds(groupsPanel.getWidth() / 3, 0, contactsPanel.getWidth(), 50);
+		unreadHeader.setBounds(rightPanel.getWidth() / 3, 90, rightPanel.getWidth(), 50);
+
+		JButton searchBar = new JButton("Search");
+		searchBar.setBounds(0,0, 495, 80);
+		searchBar.setFocusPainted(false);
+		searchBar.setBackground(new Color(33, 33, 33,255));
+		searchBar.setForeground(new Color(255,255,255,255));
+		searchBar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+		searchBar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new SearchResultsPanel(currUser, graph);
+			}
+		});
 
 		contactsPanel.add(contactHeader);
 		groupsPanel.add(groupHeader);
-		leftContainer.add(insertFriends(contactsPanel));
-		leftContainer.add(insertGroups(groupsPanel));
+		rightPanel.add(searchBar);
+		rightPanel.add(unreadHeader);
 
+		leftContainer.add(insertFriends(contactsPanel, rightPanel));
+		leftContainer.add(insertGroups(groupsPanel));
+		rightContainer.add(rightPanel);
 		this.add(leftContainer);
 		this.add(rightContainer);
 		this.setVisible(true);
 	}
 
 	private JComponent insertGroups(JComponent panel) {
-		int y = 0;
+		int i = 0;
 		ArrayList<String> groupList = currUser.getGroupsFileNames();
 		Groups groups = new Groups(graph, currUser);
 		groups.makeGroups();
 		groups.makeUserGroups();
 
-		for(int i = 0; i < groupList.size(); i++) {
+		for(String obj : groupList) {
+			String name = obj;
 			ArrayList<ArrayList<Account>> group1 = currUser.getGroups();
-			String[] parts = groupList.get(i).split(",");
-			String part1 = parts[0];
 
-			ArrayList<Account> allUsers = groups.getRightUsers(group1, part1);
+			ArrayList<Account> allUsers = groups.getRightUsers(group1, name);
 			allUsers.add(currUser);
-			String groupName = groups.readGroupName(part1);
+			String groupName = groups.readGroupName(name);
 			panel.add(structureGroupButton(groupName, panel, i, allUsers));
-			y = y + 60;
+			i = i + 60;
 		}
 		return panel;
 	}
 
 	private JComponent structureGroupButton(String groupName, JComponent panel, int y, ArrayList<Account> allUsers) {
-		JButton groupBtn = new JButton();
-		groupBtn.setBounds(panel.getX(), 50 + y, panel.getWidth(), 50);
+		JButton groupBtn = new JButton(groupName);
+		groupBtn.setBounds(0, 50 + y, panel.getWidth(), 50);
 		groupBtn.setFocusPainted(false);
 		groupBtn.setBackground(new Color(33, 33, 33,255));
 		groupBtn.setForeground(new Color(255,255,255,255));
@@ -126,22 +144,53 @@ public class MainWindow extends JFrame {
 		groupBtn.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ChatPanel(currUser, allUsers, graph);
+				new ChatPanel(currUser, allUsers, graph, groupName);
 			}
 		});
 		return groupBtn;
 	}
 
-	private JComponent insertFriends(JComponent panel) {
+	private JComponent insertFriends(JComponent panel, JComponent seconaryPanel) {
 		int i = 0;
 		ArrayList<Account> friendList = currUser.getFriends();
 
 		for(Account obj : friendList) {
 			String name = obj.getUser();
 			panel.add(structureFriendButton(obj, name, i, panel));
+			insertUnreadChat(seconaryPanel, obj);
 			i = i + 60;
 		}
 		return panel;
+	}
+
+
+	private void insertUnreadChat(JComponent panel, Account obj) {
+		UnreadMessages unread = new UnreadMessages(currUser, obj);
+		int numOfUnread = unread.unreadMessageCount();
+
+		JLabel newMessages = new JLabel();
+		JLabel timeOfLastMsg = new JLabel();
+
+		newMessages.setFont(new Font("Arial", Font.PLAIN, 17));
+		timeOfLastMsg.setFont(new Font("Arial", Font.PLAIN, 17));
+
+		newMessages.setBounds(50, 110, 200, 100);
+		timeOfLastMsg.setBounds(10, 180, this.getWidth() / 2, 100);
+
+		if(numOfUnread > 0) {
+			newMessages.setText("You have " + String.valueOf(numOfUnread) + " new messages!");
+			newMessages.setForeground(new Color(107, 178, 40,255));
+		}
+		else {
+			newMessages.setText("You have no new messages.");
+			newMessages.setForeground(new Color(0,0,0,255));
+		}
+
+		if(unread.getTimeofLastSentMessage() != null) {
+			timeOfLastMsg.setText("Time of last message: " + unread.getTimeofLastSentMessage());
+		}
+		panel.add(newMessages);
+		panel.add(timeOfLastMsg);
 	}
 
 	private JComponent structureFriendButton(Account obj, String username, int y, JComponent panel) {
