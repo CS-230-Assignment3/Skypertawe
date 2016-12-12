@@ -1,12 +1,11 @@
+import java.util.ArrayList;
+
 /**
  * @file AccountValidation.java
- * @author On Yui, Luke Harvey
+ * @author On Yiu (689480), Luke Harvey
  * @date 11th dec 2016
  * @see ChatPanel.java, RegisterPanel.java
  */
-
-import java.util.ArrayList;
-
 public class AccountValidation {
     private String m_username;
     private String m_password;
