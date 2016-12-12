@@ -173,6 +173,60 @@ public class ChatPanel extends JFrame {
                     }
                 });
 
+                cancelBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
+                innerPanel.add(filePathTxt);
+                innerPanel.add(descTxt);
+                innerPanel.add(filePath);
+                innerPanel.add(desc);
+                innerPanel.add(sendBtn);
+                innerPanel.add(cancelBtn);
+                popup.add(innerPanel);
+                popup.setVisible(true);
+            }
+        });
+
+        urlBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFrame popup = new JFrame("Send a URL");
+                popup.setSize(600,400);
+                JPanel innerPanel = new JPanel(null);
+                innerPanel.setSize(popup.getWidth(), popup.getHeight());
+
+                JLabel filePathTxt = new JLabel("URL: ");
+                JLabel descTxt = new JLabel("Description: ");
+                JButton sendBtn = new JButton("Send");
+                JButton cancelBtn = new JButton("Cancel");
+                JTextField filePath = new JTextField();
+                JTextField desc = new JTextField();
+
+                filePathTxt.setBounds(10, 10, 150, 25);
+                descTxt.setBounds(filePathTxt.getX(), 40, 150, 25);
+                filePath.setBounds(filePathTxt.getX() + 70, filePathTxt.getY(), 150, 25);
+                desc.setBounds(descTxt.getX() + 70, descTxt.getY(), 150, 25);
+                sendBtn.setBounds(desc.getX(),descTxt.getY() + 50,150,50);
+                cancelBtn.setBounds(desc.getX() + 150,descTxt.getY() + 50, 150, 50);
+
+                sendBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        //Add action shit here
+                    }
+                });
+
+                cancelBtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        popup.dispose();
+                    }
+                });
+
                 innerPanel.add(filePathTxt);
                 innerPanel.add(descTxt);
                 innerPanel.add(filePath);
